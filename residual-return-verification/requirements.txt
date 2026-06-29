@@ -1,0 +1,12 @@
+# Dependencies for the Residual Return verification pipeline.
+#   pip install -r requirements.txt
+#
+# pytest is the RUNNER: verify.py drives every probe, the walkthrough, and the full suites through it.
+# (Only the third witness, paper/residual_return_audit.py, runs as a bare script with no pytest.)
+# The two PROBE FILES themselves import only sympy + mpmath (no engine); pytest is required to RUN them.
+# numpy is used solely by the language layer's quarantined FLOAT readings (the exact core is numpy-free);
+# it is required to run the kira-language suite in PART C, not to verify any exact claim.
+sympy>=1.11
+mpmath>=1.2
+numpy>=1.21
+pytest>=7.0
