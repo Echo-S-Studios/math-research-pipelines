@@ -1,0 +1,74 @@
+name: Deploy GitHub Pages
+
+# Publishes the landing page (site/index.html) with interactive cards linking to:
+#   - the two lambda2c papers, compiled from .tex here (they are not committed)
+#   - the two residual-return PDFs (committed)
+#   - the interactive Matrix Plates tool
+# Static deploy via the official GitHub Actions Pages pipeline (no Jekyll).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'lambda2c-emissiongap-verification/papers/**'
+      - 'residual-return-verification/L00M/paper/*.pdf'
+      - 'matrix-plates/web/matrix_plates.html'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+# Least-privilege permissions required by the Pages deploy action.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile the lambda2c papers (.tex -> PDF)
+        # lambda_2c needs 3 passes, emission_gap 2 (cross-refs + the [13] citation);
+        # latexmk inside this action runs as many passes as needed. No bibtex.
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: lambda2c-emissiongap-verification/papers
+          root_file: |
+            lambda_2c_paper.tex
+            emission_gap_paper.tex
+
+      - name: Assemble the site
+        run: |
+          set -euo pipefail
+          mkdir -p _site/papers _site/tool
+          cp site/index.html _site/index.html
+          cp lambda2c-emissiongap-verification/papers/lambda_2c_paper.pdf      _site/papers/
+          cp lambda2c-emissiongap-verification/papers/emission_gap_paper.pdf   _site/papers/
+          cp residual-return-verification/L00M/paper/vector_substrate.pdf      _site/papers/
+          cp residual-return-verification/L00M/paper/residual_return_learning.pdf _site/papers/
+          cp matrix-plates/web/matrix_plates.html                              _site/tool/index.html
+          echo "Assembled site:" && find _site -type f | sort
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
