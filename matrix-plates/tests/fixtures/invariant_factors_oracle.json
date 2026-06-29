@@ -1,0 +1,175 @@
+{
+ "companion_phi": {
+  "invariant_factors": [
+   [
+    1,
+    -1,
+    -1
+   ]
+  ]
+ },
+ "companion_sq2": {
+  "invariant_factors": [
+   [
+    1,
+    0,
+    -2
+   ]
+  ]
+ },
+ "phi_dsum_phi": {
+  "invariant_factors": [
+   [
+    1,
+    -1,
+    -1
+   ],
+   [
+    1,
+    -1,
+    -1
+   ]
+  ]
+ },
+ "companion_of_phi2": {
+  "invariant_factors": [
+   [
+    1,
+    -2,
+    -1,
+    2,
+    1
+   ]
+  ]
+ },
+ "cartanE8": {
+  "invariant_factors": [
+   [
+    1,
+    -16,
+    105,
+    -364,
+    714,
+    -784,
+    440,
+    -96,
+    1
+   ]
+  ]
+ },
+ "ring6": {
+  "invariant_factors": [
+   [
+    1,
+    -6,
+    9,
+    -2
+   ],
+   [
+    1,
+    -6,
+    9,
+    -2
+   ]
+  ]
+ },
+ "ring5": {
+  "invariant_factors": [
+   [
+    1,
+    -3,
+    1
+   ],
+   [
+    1,
+    -7,
+    13,
+    -4
+   ]
+  ]
+ },
+ "fibcirc6": {
+  "invariant_factors": [
+   [
+    1,
+    -6,
+    -120,
+    -2056,
+    -18096,
+    -87168,
+    -170240
+   ]
+  ]
+ },
+ "jordan2_at1": {
+  "invariant_factors": [
+   [
+    1,
+    -2,
+    1
+   ]
+  ],
+  "matrix": [
+   [
+    1,
+    1
+   ],
+   [
+    0,
+    1
+   ]
+  ]
+ },
+ "I3": {
+  "invariant_factors": [
+   [
+    1,
+    -1
+   ],
+   [
+    1,
+    -1
+   ],
+   [
+    1,
+    -1
+   ]
+  ],
+  "matrix": [
+   [
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    1
+   ]
+  ]
+ },
+ "cyclo_x2p1": {
+  "invariant_factors": [
+   [
+    1,
+    0,
+    1
+   ]
+  ],
+  "matrix": [
+   [
+    0,
+    -1
+   ],
+   [
+    1,
+    0
+   ]
+  ]
+ }
+}

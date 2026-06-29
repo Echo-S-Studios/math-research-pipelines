@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matrix Plates — constructive integer matrices, graded by Mahler measure</title>
+<style>
+  :root{
+    --void:#05060b; --panel0:#0b0d18; --panel1:#0f1120; --ink:#ececf4; --muted:#8e93ac;
+    --line:#23273d; --edge:#2a2e44; --gold:#e9c46a; --teal:#5cc9c0; --violet:#8fb6ff;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L",Georgia,"Times New Roman",serif;
+    --ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  *{ box-sizing:border-box }
+  html,body{ margin:0 }
+  body{
+    background:radial-gradient(130% 100% at 50% 0%, #11142a 0%, var(--panel0) 44%, var(--void) 100%);
+    color:var(--ink); font-family:var(--ui); min-height:100vh; padding:0 0 64px;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(16px,3vw,34px) }
+
+  /* ---- masthead ---- */
+  header{ padding:clamp(26px,5vw,52px) 0 18px }
+  h1{ font-family:var(--serif); font-weight:500; font-size:clamp(30px,6vw,52px); line-height:.96; margin:0;
+      letter-spacing:.004em; background:linear-gradient(180deg,#fff,#d9c79a 70%,#b8975a);
+      -webkit-background-clip:text; background-clip:text; color:transparent }
+  .thesis{ font-family:var(--serif); font-style:italic; font-size:clamp(14px,2.3vw,18px); color:#cfd3e6;
+           margin:12px 0 0; max-width:62ch; opacity:.92 }
+  .sub{ font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+        color:var(--muted); margin-top:14px }
+
+  /* ---- console ---- */
+  .console{ display:flex; flex-wrap:wrap; gap:10px 14px; align-items:flex-end; margin:22px 0 6px;
+            padding:16px; border:1px solid var(--line); border-radius:14px; background:rgba(15,17,32,.55);
+            backdrop-filter:blur(7px) }
+  .ctl{ display:flex; flex-direction:column; gap:5px }
+  .ctl label{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+  select,input[type="number"]{ font-family:var(--mono); font-size:13px; color:var(--ink);
+    background:rgba(10,12,22,.85); border:1px solid var(--edge); border-radius:9px; padding:8px 11px; min-width:108px }
+  input[type="number"]{ width:78px; min-width:0 }
+  select:focus-visible,input:focus-visible{ outline:2px solid var(--gold); outline-offset:1px }
+  .ctl.hide{ display:none }
+  .btn{ font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+    background:rgba(16,18,32,.7); border:1px solid var(--edge); border-radius:999px; padding:9px 15px;
+    cursor:pointer; transition:border-color .18s, background .18s, color .18s; user-select:none }
+  .btn:hover{ border-color:#454c70; background:rgba(24,27,46,.85) }
+  .btn:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+  .btn.go{ color:#0a0b12; background:var(--gold); border-color:var(--gold) }
+  .btn.go:hover{ background:var(--gold) }
+  .btn.ghost{ background:transparent }
+  .spacer{ flex:1 1 auto }
+  .opdesc{ flex:1 1 100%; font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:2px; line-height:1.5 }
+  .opdesc b{ color:#cfd3e6; font-weight:600 }
+  .opdesc .warn{ color:#e8a06a }
+
+  /* ---- plate sheet ---- */
+  .sheet{ display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; margin-top:18px }
+  .empty{ grid-column:1/-1; padding:38px 18px; text-align:center; border:1px dashed var(--line); border-radius:14px;
+          font-family:var(--mono); font-size:12.5px; color:var(--muted); letter-spacing:.04em }
+
+  .plate{ position:relative; border:1px solid var(--line); border-radius:13px; overflow:hidden;
+          background:linear-gradient(180deg,var(--panel1),#0a0b15); padding:15px 15px 13px 19px }
+  .plate .edge{ position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--muted) }
+  .reveal{ animation:rise .42s cubic-bezier(.2,.8,.2,1) both }
+  @keyframes rise{ from{ opacity:0; transform:translateY(8px) scale(.985) } to{ opacity:1; transform:none } }
+  @media (prefers-reduced-motion: reduce){ .reveal{ animation:none } }
+
+  .p-head{ display:flex; align-items:baseline; justify-content:space-between; gap:10px }
+  .p-name{ font-family:var(--serif); font-size:18px; font-weight:500 }
+  .p-prov{ font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);
+           margin-top:3px }
+  .p-mahler{ display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11.5px; color:#cfd3e6;
+             white-space:nowrap }
+  .p-mahler i{ width:9px; height:9px; border-radius:50%; display:inline-block }
+
+  /* matrix with brackets */
+  .matwrap{ display:flex; justify-content:flex-start; margin:13px 0 11px; overflow-x:auto }
+  .mat{ position:relative; padding:5px 12px }
+  .mat::before,.mat::after{ content:""; position:absolute; top:0; bottom:0; width:6px; border:1.5px solid #5b628a }
+  .mat::before{ left:0; border-right:0 }
+  .mat::after{ right:0; border-left:0 }
+  .grid{ display:grid; gap:2px 13px; font-family:var(--mono); font-size:13.5px; font-variant-numeric:tabular-nums }
+  .grid span{ text-align:right; color:#eef0fb; min-width:1ch }
+  .grid span.zero{ color:#5a607e }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px }
+  .chip{ font-family:var(--mono); font-size:11px; letter-spacing:.02em; padding:4px 9px; border-radius:999px;
+         border:1px solid var(--edge); background:rgba(255,255,255,.02); color:#cfd3e6; white-space:nowrap }
+  .chip b{ color:#fff; font-weight:600 }
+  .chip.flag{ border-color:#3b5a47; color:#9fe6b0 }
+  .chip.flagv{ border-color:#3b4570; color:var(--violet) }
+
+  .p-toggle{ margin-top:11px; width:100%; text-align:left; font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--muted); background:transparent; border:0;
+    border-top:1px solid var(--line); padding:10px 0 0; cursor:pointer }
+  .p-toggle:hover{ color:#cfd3e6 }
+  .p-toggle:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+  .detail{ display:none; margin-top:11px }
+  .detail.open{ display:block }
+  .detail .lbl{ font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+                margin:12px 0 5px }
+  .cpoly{ font-family:var(--mono); font-size:14px; color:#fff; word-break:break-word }
+  .specnote{ font-family:var(--mono); font-size:10.5px; color:var(--muted); line-height:1.55; margin-top:8px }
+  .specnote .out{ color:var(--violet) } .specnote .in{ color:var(--teal) } .specnote .on{ color:var(--gold) }
+  canvas.spec{ width:100%; max-width:268px; aspect-ratio:1/1; display:block; border:1px solid var(--line);
+               border-radius:10px; background:#070810; margin-top:6px }
+
+  /* ---- footer stats + methods ---- */
+  .bar{ position:fixed; left:0; right:0; bottom:0; z-index:10; display:flex; align-items:center; gap:14px;
+        padding:11px clamp(16px,3vw,34px); background:rgba(5,6,11,.82); border-top:1px solid var(--line);
+        backdrop-filter:blur(8px); font-family:var(--mono); font-size:11.5px; color:#cfd3e6; letter-spacing:.02em }
+  .bar .gloss{ color:var(--muted) }
+  .bar .scale{ display:inline-flex; align-items:center; gap:7px; margin-left:auto }
+  .bar .ramp{ width:84px; height:9px; border-radius:5px;
+    background:linear-gradient(90deg,#440154,#414487,#2a788e,#22a884,#7ad151,#fde725) }
+  .ilink{ color:var(--gold); cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px }
+
+  .modal-bg{ position:fixed; inset:0; z-index:20; background:rgba(3,4,9,.6); backdrop-filter:blur(3px);
+             opacity:0; pointer-events:none; transition:opacity .25s }
+  .modal-bg.open{ opacity:1; pointer-events:auto }
+  .modal{ position:fixed; z-index:21; top:50%; left:50%; transform:translate(-50%,-46%); width:min(560px,92vw);
+    max-height:82vh; overflow-y:auto; background:linear-gradient(180deg,var(--panel1),#0a0b15);
+    border:1px solid var(--edge); border-radius:16px; padding:24px; box-shadow:0 24px 80px rgba(0,0,0,.6);
+    opacity:0; pointer-events:none; transition:opacity .25s, transform .25s }
+  .modal.open{ opacity:1; pointer-events:auto; transform:translate(-50%,-50%) }
+  .modal h2{ font-family:var(--serif); font-weight:500; font-size:22px; margin:0 0 4px }
+  .modal p,.modal li{ font-size:13.5px; line-height:1.62; color:#c7cbe0 }
+  .modal .lbl{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+               margin:18px 0 6px; border-bottom:1px solid var(--line); padding-bottom:6px }
+  .modal code{ font-family:var(--mono); font-size:12.5px; color:#eef0fb }
+  .modal ul{ margin:6px 0; padding-left:18px } .modal li{ margin:3px 0 }
+  .mclose{ position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; cursor:pointer;
+    border:1px solid var(--edge); background:rgba(255,255,255,.03); color:var(--ink); font-size:17px }
+  .mclose:hover{ background:rgba(255,255,255,.08) }
+
+  /* ---- Mahler-spectrum layout (Goal 1) ---- */
+  .sheet.spectrum{ display:grid; grid-template-columns:repeat(var(--bins,6),minmax(0,1fr));
+                   align-items:start; gap:10px; overflow-x:auto }
+  .mbin{ display:flex; flex-direction:column; gap:10px; min-width:0 }
+  .mbin .plate{ width:100% }
+  .maxis{ position:relative; height:30px; margin:16px 0 2px; border-bottom:1px solid var(--line) }
+  .maxis .mtick{ position:absolute; bottom:0; transform:translateX(-50%);
+                 font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--muted); white-space:nowrap }
+  .maxis .mtick::after{ content:""; display:block; width:1px; height:8px; margin:3px auto 0; background:var(--edge) }
+  .maxis .mtick.floor{ color:var(--teal) }   .maxis .mtick.floor::after{ background:var(--teal) }
+  .maxis .mtick.lehmer{ color:var(--gold) }  .maxis .mtick.lehmer::after{ background:var(--gold) }
+  .plate.fam-random{ border-style:dashed; border-color:#3a4258 }
+
+  /* ---- charpoly ↦ companion lift (Goal 2) ---- */
+  .p-actions{ margin-top:9px }
+  .p-lift{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--gold);
+    background:rgba(233,196,106,.08); border:1px solid #4a4226; border-radius:999px; padding:6px 11px; cursor:pointer;
+    transition:background .18s }
+  .p-lift:hover{ background:rgba(233,196,106,.16) }
+  .p-lift:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+  .p-lift[disabled]{ opacity:.5; cursor:not-allowed }
+
+  /* ---- custom matrix input + companion view + per-plate export (v1.1) ---- */
+  #ctlMatrix textarea{ width:210px; font-family:var(--mono); font-size:12px; line-height:1.5;
+    background:#0c0e1a; color:var(--ink); border:1px solid var(--line); border-radius:8px;
+    padding:6px 8px; resize:vertical }
+  .p-companion{ margin:4px 0 2px }
+  .p-exports{ display:flex; gap:8px; margin-top:4px; flex-wrap:wrap }
+  .p-exp{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--muted);
+    background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
+    padding:5px 11px; cursor:pointer; transition:background .18s, color .18s }
+  .p-exp:hover{ background:rgba(255,255,255,.10); color:var(--ink) }
+  .p-exp:focus-visible{ outline:2px solid var(--teal); outline-offset:2px }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Matrix Plates</h1>
+    <p class="thesis">Each plate is an integer matrix built by a named construction, then graded by the Mahler
+      measure of its characteristic polynomial — the same height that orders the bloom.</p>
+    <div class="sub">constructive · exact char-poly · spectral grading</div>
+  </header>
+
+  <div class="console" role="group" aria-label="Plate generator controls">
+    <div class="ctl">
+      <label for="op">Construction</label>
+      <select id="op" aria-label="Construction operator"></select>
+    </div>
+    <div class="ctl" id="ctlA">
+      <label for="seedA">Seed A</label>
+      <select id="seedA"></select>
+    </div>
+    <div class="ctl" id="ctlB">
+      <label for="seedB">Seed B</label>
+      <select id="seedB"></select>
+    </div>
+    <div class="ctl" id="ctlType">
+      <label for="ctype">Diagram</label>
+      <select id="ctype"><option value="A">Aₙ</option><option value="D">Dₙ</option><option value="E8">E₈</option></select>
+    </div>
+    <div class="ctl" id="ctlWord">
+      <label for="word">Row word</label>
+      <select id="word"><option value="fib">Fibonacci</option><option value="lucas">Lucas</option></select>
+    </div>
+    <div class="ctl" id="ctlN">
+      <label for="nparam" id="nlabel">Size n</label>
+      <input id="nparam" type="number" min="2" max="9" step="1" value="5">
+    </div>
+    <div class="ctl" id="ctlSeedInt">
+      <label for="rseed">RNG seed</label>
+      <input id="rseed" type="number" min="0" step="1" value="42">
+    </div>
+    <div class="ctl hide" id="ctlMatrix">
+      <label for="cmatrix">Matrix (rows on lines)</label>
+      <textarea id="cmatrix" rows="3" spellcheck="false"
+        placeholder="0 1 0 0&#10;1 1 0 0&#10;0 0 0 1&#10;0 0 1 1"></textarea>
+    </div>
+    <div class="ctl" id="ctlLayout">
+      <label for="layout">Layout</label>
+      <select id="layout">
+        <option value="insertion">Insertion</option>
+        <option value="spectrum">Mahler spectrum</option>
+      </select>
+    </div>
+    <button class="btn go" id="gen">Press plate</button>
+    <button class="btn ghost" id="batch">Seed batch</button>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="export">Export .html</button>
+    <button class="btn ghost" id="clear">Clear</button>
+    <div class="opdesc" id="opdesc"></div>
+  </div>
+
+  <div id="maxis" class="maxis" aria-hidden="true" style="display:none"></div>
+  <div class="sheet" id="sheet" aria-live="polite">
+    <div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>
+  </div>
+</div>
+
+<div class="bar">
+  <span id="stat" class="gloss">0 plates</span>
+  <span class="ilink" id="methods" role="button" tabindex="0">ⓘ methods &amp; sources</span>
+  <span class="scale"><span class="gloss">M(p)</span><span class="ramp" title="low → high Mahler measure"></span></span>
+</div>
+
+<div class="modal-bg" id="mbg"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mh" tabindex="-1">
+  <button class="mclose" id="mclose" aria-label="Close">×</button>
+  <h2 id="mh">Methods &amp; sources</h2>
+  <p>The plates are <b>exact integer matrices</b>. The individual constructions are classical; the system here is
+     the composition — an operator algebra over an algebraic-number seed registry, graded by one transferable
+     invariant. No new mathematics is claimed.</p>
+  <div class="lbl">how each number is computed</div>
+  <ul>
+    <li><b>Characteristic polynomial &amp; determinant</b> — Faddeev–LeVerrier (integer coefficients for integer
+        matrices, <code>O(n⁴)</code>). Householder, <i>The Theory of Matrices in Numerical Analysis</i>.</li>
+    <li><b>Eigenvalues</b> — Durand–Kerner / Weierstrass simultaneous iteration on the characteristic polynomial,
+        <code>O(n²)</code> per step.</li>
+    <li><b>Mahler measure</b> — M(p) = |aₙ|·∏ max(1, |λᵢ|); the char-poly is monic so M = ∏ over eigenvalues
+        outside the unit circle. Entropy of the associated ℤ-action (Lind–Schmidt–Ward, <i>Invent. Math.</i> 1990);
+        Lehmer's problem remains open.</li>
+  </ul>
+  <div class="lbl">where the matrices come from</div>
+  <ul>
+    <li><b>Companion</b> of a monic integer minimal polynomial — eigenvalues are the Galois conjugates; non-monic
+        ZFP values (4x²−3, 9x²−9x+1, …) are excluded because they are not algebraic integers.</li>
+    <li><b>Kronecker ⊗ / direct sum ⊕ / commutator [A,B]</b> — products give pairwise eigenvalue products;
+        commutators are trace-free by construction (a live check).</li>
+    <li><b>Cartan matrices</b> Aₙ, Dₙ, E₈ — Bourbaki, <i>Lie Groups and Lie Algebras</i>. det Aₙ = n+1, det Dₙ = 4,
+        det E₈ = 1 (E₈ is unimodular; Conway &amp; Sloane, <i>SPLAG</i>).</li>
+    <li><b>Fibonacci / Lucas circulant</b> — eigenvalues are the DFT of the first row (Davis,
+        <i>Circulant Matrices</i>); the golden row connects to the bloom's quasiperiodic floor.</li>
+    <li><b>Frustrated ring Laplacian</b> — signed ring (alternating ±1), D̄ − A → positive-semidefinite signed
+        Laplacian (singular exactly when balanced); the matrix form of antiphase Kuramoto coupling
+        (Harary balance; signed-network synchronization).</li>
+    <li><b>Random (seeded)</b> — mulberry32 PRNG, reproducible from the seed; the control family against which the
+        structured Mahler grading is read.</li>
+  </ul>
+  <p class="specnote">Verify independently — this runs offline and cannot browse.</p>
+</div>
+
+<script>
+"use strict";
+
+/* =================== complex arithmetic =================== */
+const cadd=(a,b)=>({re:a.re+b.re,im:a.im+b.im});
+const csub=(a,b)=>({re:a.re-b.re,im:a.im-b.im});
+const cmul=(a,b)=>({re:a.re*b.re-a.im*b.im,im:a.re*b.im+a.im*b.re});
+const cdiv=(a,b)=>{const d=(b.re*b.re+b.im*b.im)||1e-18;return{re:(a.re*b.re+a.im*b.im)/d,im:(a.im*b.re-a.re*b.im)/d};};
+const cabs=z=>Math.hypot(z.re,z.im);
+
+/* =================== matrix primitives =================== */
+const zeros=n=>Array.from({length:n},()=>new Array(n).fill(0));
+const clone=A=>A.map(r=>r.slice());
+const trace=A=>{let t=0;for(let i=0;i<A.length;i++)t+=A[i][i];return t;};
+function matmul(A,B){const n=A.length,p=B[0].length,m=B.length,C=Array.from({length:n},()=>new Array(p).fill(0));
+  for(let i=0;i<n;i++)for(let k=0;k<m;k++){const a=A[i][k];if(!a)continue;for(let j=0;j<p;j++)C[i][j]+=a*B[k][j];}return C;}
+function addScaledI(A,c){const B=clone(A);for(let i=0;i<B.length;i++)B[i][i]+=c;return B;}
+function frob(A){let s=0;for(const r of A)for(const x of r)s+=x*x;return Math.sqrt(s);}
+function isIntegerMat(A){for(const r of A)for(const x of r)if(Math.abs(x-Math.round(x))>1e-9)return false;return true;}
+
+/* Faddeev–LeVerrier: monic char-poly coeffs [1,c1,...,cn] (high→low) + integer determinant */
+function charPoly(A){
+  const n=A.length;if(n===0)return{coeffs:[1],det:1};
+  const c=[];let M=clone(A);
+  for(let k=1;k<=n;k++){
+    if(k>1){const T=addScaledI(M,c[k-2]);M=matmul(A,T);}
+    c.push(-trace(M)/k);
+  }
+  const coeffs=[1,...c.map(v=>Math.round(v))];
+  const det=Math.round(Math.pow(-1,n)*coeffs[n]);
+  return{coeffs,det};
+}
+
+/* Durand–Kerner roots of a monic polynomial (coeffs high→low) */
+function dkRoots(coeffs){
+  const n=coeffs.length-1;if(n<=0)return[];
+  const P=z=>{let r={re:coeffs[0],im:0};for(let i=1;i<=n;i++)r=cadd(cmul(r,z),{re:coeffs[i],im:0});return r;};
+  let R=1;for(let i=1;i<=n;i++)R=Math.max(R,Math.abs(coeffs[i]));R=1+R;
+  let z=[];for(let k=0;k<n;k++){const a=2*Math.PI*k/n+0.37;z.push({re:0.6*R*Math.cos(a),im:0.6*R*Math.sin(a)});}
+  for(let it=0;it<240;it++){
+    let md=0;
+    for(let i=0;i<n;i++){
+      let den={re:coeffs[0],im:0};
+      for(let j=0;j<n;j++)if(j!==i)den=cmul(den,csub(z[i],z[j]));
+      const corr=cdiv(P(z[i]),den);z[i]=csub(z[i],corr);md=Math.max(md,cabs(corr));
+    }
+    if(md<1e-13)break;
+  }
+  return z;
+}
+function mahlerFromRoots(roots,lead){let m=Math.abs(lead||1);for(const z of roots)m*=Math.max(1,cabs(z));return m;}
+function numericRank(A){ // float elimination, count pivots
+  const B=A.map(r=>r.map(Number)),n=B.length,m=B[0].length;let rank=0,row=0;
+  for(let col=0;col<m&&row<n;col++){
+    let piv=row;for(let r=row+1;r<n;r++)if(Math.abs(B[r][col])>Math.abs(B[piv][col]))piv=r;
+    if(Math.abs(B[piv][col])<1e-9)continue;
+    [B[row],B[piv]]=[B[piv],B[row]];
+    for(let r=0;r<n;r++){if(r===row)continue;const f=B[r][col]/B[row][col];for(let c=col;c<m;c++)B[r][c]-=f*B[row][c];}
+    row++;rank++;
+  }
+  return rank;
+}
+
+/* seeded PRNG (reproducible) */
+function mulberry32(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+/* =================== algebraic seed registry (monic integer minimal polynomials) =================== */
+// poly = coeffs high→low; companion eigenvalues are the Galois conjugates of the named value.
+const SEEDS=[
+  {id:"phi", glyph:"φ",  field:"ℚ(√5)",  poly:[1,-1,-1], note:"Fibonacci Q-matrix — its powers list the Fibonacci numbers."},
+  {id:"tau", glyph:"τ",  field:"ℚ(√5)",  poly:[1,1,-1],  note:"reciprocal golden root, x²+x−1."},
+  {id:"sq2", glyph:"√2", field:"ℚ(√2)",  poly:[1,0,-2],  note:"binary axis."},
+  {id:"sq3", glyph:"√3", field:"ℚ(√3)",  poly:[1,0,-3],  note:"hexagonal axis."},
+  {id:"sq5", glyph:"√5", field:"ℚ(√5)",  poly:[1,0,-5],  note:"golden discriminant."},
+  {id:"gap", glyph:"φ⁻⁴",field:"ℚ(√5)",  poly:[1,-7,1],  note:"golden gap; conjugate is φ⁴ (x²−7x+1)."},
+  {id:"K",   glyph:"K",  field:"ℚ(5¼)",  poly:[1,0,5,0,-5], note:"quartic coherence; spectrum ±K real, ±iβ imaginary."},
+  {id:"cons",glyph:"◇",  field:"ℚ(5¼)",  poly:[1,-6,26,-16,-4], note:"consolidation quartic."},
+  {id:"res", glyph:"◆",  field:"ℚ(5¼)",  poly:[1,2,39,-52,11],  note:"resonance quartic."},
+];
+const seedById=Object.fromEntries(SEEDS.map(s=>[s.id,s]));
+const SIG_TO_ID=Object.fromEntries(SEEDS.map(s=>[s.poly.join(','),s.id]));  // poly signature -> seed id
+const bySig=key=>SIG_TO_ID[key];
+let genCount=0;
+
+function companion(poly){ // monic high→low [1,a_{n-1},...,a0] -> n x n, char poly = poly
+  const n=poly.length-1,C=zeros(n);
+  for(let i=1;i<n;i++)C[i][i-1]=1;            // sub-diagonal ones
+  for(let i=0;i<n;i++)C[i][n-1]=-poly[n-i];   // last column = -coeffs (low→high)
+  return C;
+}
+function kron(A,B){const n=A.length,m=B.length,C=zeros(n*m);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)for(let k=0;k<m;k++)for(let l=0;l<m;l++)C[i*m+k][j*m+l]=A[i][j]*B[k][l];return C;}
+function dsum(A,B){const n=A.length,m=B.length,C=zeros(n+m);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)C[i][j]=A[i][j];
+  for(let i=0;i<m;i++)for(let j=0;j<m;j++)C[n+i][n+j]=B[i][j];return C;}
+function commutator(A,B){const AB=matmul(A,B),BA=matmul(B,A),n=A.length,C=zeros(n);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)C[i][j]=AB[i][j]-BA[i][j];return C;}
+
+function cartanEdges(n,edges){const A=zeros(n);for(let i=0;i<n;i++)A[i][i]=2;for(const[a,b]of edges){A[a][b]=-1;A[b][a]=-1;}return A;}
+function cartanA(n){const e=[];for(let i=0;i<n-1;i++)e.push([i,i+1]);return cartanEdges(n,e);}
+function cartanD(n){const e=[];for(let i=0;i<=n-3;i++)e.push([i,i+1]);e.push([n-3,n-1]);return cartanEdges(n,e);}
+function cartanE8(){return cartanEdges(8,[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[2,7]]);} // arms 1,2,4 from the trivalent node
+
+function fibWord(n){const a=[1,1];while(a.length<n)a.push(a[a.length-1]+a[a.length-2]);return a.slice(0,n);}
+function lucasWord(n){const a=[2,1];while(a.length<n)a.push(a[a.length-1]+a[a.length-2]);return a.slice(0,n);}
+function circulant(row){const n=row.length,C=zeros(n);for(let i=0;i<n;i++)for(let j=0;j<n;j++)C[i][j]=row[(j-i+n)%n];return C;}
+
+function frustratedRing(n){ // alternating ±1 edges on a cycle -> signed Laplacian L = D - W
+  const W=zeros(n);
+  for(let i=0;i<n;i++){const j=(i+1)%n,s=(i%2===0)?-1:1;W[i][j]+=s;W[j][i]+=s;}
+  const L=zeros(n);
+  for(let i=0;i<n;i++){let d=0;for(let j=0;j<n;j++)d+=Math.abs(W[i][j]);L[i][i]=d;for(let j=0;j<n;j++)if(j!==i)L[i][j]=-W[i][j];}
+  return L;
+}
+function randIntMat(n,seed){const rnd=mulberry32(seed),C=zeros(n);
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++)C[i][j]=Math.floor(rnd()*7)-3;return C;} // entries in [-3,3]
+
+/* =================== operator catalogue =================== */
+const OPS={
+  companion:{label:"Companion C(p)", needs:["A"], glyph:"C",
+    desc:"<b>Companion matrix</b> of a monic integer minimal polynomial. Eigenvalues = the Galois conjugates; characteristic polynomial = the seed polynomial.",
+    build:a=>({M:companion(seedById[a].poly), name:"C("+seedById[a].glyph+")", prov:"companion · "+seedById[a].field,
+               note:seedById[a].note})},
+  kron:{label:"Kronecker A ⊗ B", needs:["A","B"], glyph:"⊗",
+    desc:"<b>Tensor product</b> of two companion matrices. Eigenvalues are pairwise products λᵢμⱼ; Mahler measures compose multiplicatively over the conjugate sets.",
+    build:(a,b)=>({M:kron(companion(seedById[a].poly),companion(seedById[b].poly)),
+               name:seedById[a].glyph+" ⊗ "+seedById[b].glyph, prov:"kronecker · "+seedById[a].field+" × "+seedById[b].field,
+               note:"spectrum = pairwise products of the two conjugate orbits."})},
+  dsum:{label:"Direct sum A ⊕ B", needs:["A","B"], glyph:"⊕",
+    desc:"<b>Block-diagonal sum</b>. The two spectra coexist without interaction; char-poly = product of the two.",
+    build:(a,b)=>({M:dsum(companion(seedById[a].poly),companion(seedById[b].poly)),
+               name:seedById[a].glyph+" ⊕ "+seedById[b].glyph, prov:"direct sum · "+seedById[a].field+" ⊕ "+seedById[b].field,
+               note:"char-poly is the product of the two seed polynomials."})},
+  comm:{label:"Commutator [A,B]", needs:["A","B"], glyph:"[,]",
+    desc:"<b>Lie bracket</b> AB − BA of two equal-size companions. Always trace-free — a live check on the engine.",
+    build:(a,b)=>{const A=companion(seedById[a].poly),B=companion(seedById[b].poly);
+      if(A.length!==B.length)return{error:"[A,B] needs equal sizes — "+seedById[a].glyph+" is "+A.length+"×"+A.length+", "+seedById[b].glyph+" is "+B.length+"×"+B.length+"."};
+      return{M:commutator(A,B),name:"["+seedById[a].glyph+","+seedById[b].glyph+"]",prov:"commutator · trace 0",
+             note:"trace(AB−BA)=0 by construction; verify the trace chip reads 0."};}},
+  cartan:{label:"Cartan matrix", needs:["type","N"], glyph:"𝒞",
+    desc:"<b>Cartan matrix</b> of a root system. det Aₙ = n+1, det Dₙ = 4, det E₈ = 1 (unimodular).",
+    build:(type,n)=>{
+      let M,name,prov;
+      if(type==="E8"){M=cartanE8();name="E₈";prov="cartan · rank 8 · unimodular";}
+      else if(type==="D"){n=Math.max(4,n);M=cartanD(n);name="D"+sub(n);prov="cartan · det 4";}
+      else{n=Math.max(1,n);M=cartanA(n);name="A"+sub(n);prov="cartan · det "+(n+1);}
+      return{M,name,prov,note:"positive-definite; eigenvalues are 2−2cos(angle) for the Aₙ chain."};}},
+  circ:{label:"Fibonacci/Lucas circulant", needs:["word","N"], glyph:"↻",
+    desc:"<b>Circulant matrix</b> from a Fibonacci or Lucas first row. Eigenvalues = DFT of that row; the golden row is the bloom's quasiperiodic chain.",
+    build:(word,n)=>{n=Math.max(2,n);const row=(word==="lucas")?lucasWord(n):fibWord(n);
+      return{M:circulant(row),name:(word==="lucas"?"luc":"fib")+"-circ"+sub(n),prov:"circulant · row ["+row.join(",")+"]",
+             note:"eigenvalues are the discrete Fourier transform of the first row."};}},
+  ring:{label:"Frustrated ring Laplacian", needs:["N"], glyph:"∿",
+    desc:"<b>Signed ring Laplacian</b> (alternating ±1 edges, D̄ − A) — the matrix form of antiphase coupling. Positive semidefinite: smallest eigenvalue is 0 when the signs balance, strictly positive when frustrated.",
+    build:n=>{n=Math.max(2,n-(n%2));if(n<2)n=4;return{M:frustratedRing(n),name:"ring∓"+sub(n),prov:"signed Laplacian · D̄−A",
+             note:"λ_min = 0 ⇒ signs split into two consistent sides (det reads 0); λ_min > 0 ⇒ frustrated, unbalanceable (Harary). Read det/ρ to see which case this n falls in."};}},
+  rand:{label:"Random integer (seeded)", needs:["N","seed"], glyph:"⚄",
+    desc:"<b>Reproducible random</b> integer matrix, entries in [−3, 3] from a mulberry32 seed — the control against the structured families.",
+    build:(n,seed)=>{n=Math.max(1,n);return{M:randIntMat(n,seed),name:"rand·s"+seed,prov:"seeded mulberry32 · n="+n,
+             note:"reproducible from the seed; compare its Mahler measure to the structured plates."};}},
+  custom:{label:"Custom matrix", needs:["matrix"], glyph:"⌨",
+    desc:"<b>Custom integer matrix</b>. Type an n×n grid (one row per line, entries separated by spaces or commas, or JSON) to get its full spectral data and companion (rational-canonical) form in one view.",
+    build:src=>{const r=parseMatrix(src);if(r.error)return{error:r.error};const n=r.matrix.length;
+      return{M:r.matrix,name:"A "+n+"×"+n,prov:"user matrix · n="+n,note:"custom integer matrix — companion form below."};}},
+};
+function sub(n){const map={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+  return String(n).split('').map(d=>map[d]||d).join('');}
+
+/* =================== analyse a built matrix =================== */
+/* =================== exact rational arithmetic (BigInt) ===================
+   A Fraction {n,d} (BigInt, d>0, gcd=1) and polynomials over ℚ (arrays of
+   Fraction, low→high). These power the EXACT minimal polynomial and invariant
+   factors via the Smith normal form of xI−A over ℚ[x], so this tool decides
+   similarity (derogatory / defective / "similar to its companion?") itself —
+   no backend, no floating-point. Mirrors src/matrix_plates/{polynomial,canonical}.py. */
+const SNF_MAX_N = 24;   // cap the Smith path (derogatory branch only); the generic case never reaches it
+function bgcd(a,b){a=a<0n?-a:a;b=b<0n?-b:b;while(b){const t=a%b;a=b;b=t;}return a;}
+function fr(n,d){ n=BigInt(n); d=(d===undefined?1n:BigInt(d));
+  if(d===0n)throw new Error("rational division by zero");
+  if(d<0n){n=-n;d=-d;} const g=bgcd(n,d)||1n; return {n:n/g,d:d/g}; }
+const FR0=fr(0n), FR1=fr(1n);
+function frAdd(a,b){return fr(a.n*b.d+b.n*a.d, a.d*b.d);}
+function frSub(a,b){return fr(a.n*b.d-b.n*a.d, a.d*b.d);}
+function frMul(a,b){return fr(a.n*b.n, a.d*b.d);}
+function frDiv(a,b){return fr(a.n*b.d, a.d*b.n);}
+function frIsZero(a){return a.n===0n;}
+function rpTrim(c){let i=c.length-1;while(i>0&&frIsZero(c[i]))i--;return c.slice(0,i+1);}
+function rpIsZero(c){return c.length===1&&frIsZero(c[0]);}
+function rpDeg(c){return rpIsZero(c)?-1:c.length-1;}
+function rpAdd(a,b){const n=Math.max(a.length,b.length),o=[];for(let i=0;i<n;i++)o.push(frAdd(a[i]||FR0,b[i]||FR0));return rpTrim(o);}
+function rpSub(a,b){const n=Math.max(a.length,b.length),o=[];for(let i=0;i<n;i++)o.push(frSub(a[i]||FR0,b[i]||FR0));return rpTrim(o);}
+function rpMul(a,b){if(rpIsZero(a)||rpIsZero(b))return[FR0];const o=new Array(a.length+b.length-1).fill(FR0);
+  for(let i=0;i<a.length;i++){if(frIsZero(a[i]))continue;for(let j=0;j<b.length;j++)o[i+j]=frAdd(o[i+j],frMul(a[i],b[j]));}return rpTrim(o);}
+function rpScale(a,k){return a.map(x=>frMul(x,k));}
+function rpDivmod(a,b){ if(rpIsZero(b))throw new Error("poly div by zero");
+  let r=a.slice(), q=[FR0]; const bd=rpDeg(b), bl=b[b.length-1];
+  while(!rpIsZero(r)&&rpDeg(r)>=bd){ const sh=rpDeg(r)-bd, coef=frDiv(r[r.length-1],bl);
+    const term=new Array(sh+1).fill(FR0); term[sh]=coef; q=rpAdd(q,term); r=rpSub(r,rpMul(term,b)); }
+  return [q,r]; }
+function rpMod(a,b){return rpDivmod(a,b)[1];}
+function rpMonic(a){if(rpIsZero(a))return[FR0];const l=a[a.length-1];return a.map(x=>frDiv(x,l));}
+function rpGcd(a,b){a=a.slice();b=b.slice();while(!rpIsZero(b)){const r=rpMod(a,b);a=b;b=r;}return rpMonic(a);}
+function rpDeriv(a){if(rpDeg(a)<1)return[FR0];const o=[];for(let i=1;i<a.length;i++)o.push(frMul(a[i],fr(i)));return rpTrim(o);}
+function rpIsSquarefree(a){if(rpDeg(a)<=1)return true;return rpDeg(rpGcd(a,rpDeriv(a)))===0;}
+function rpToIntHighLow(a){const o=[];for(let i=a.length-1;i>=0;i--){const f=a[i];o.push(Math.round(f.d===1n?Number(f.n):Number(f.n)/Number(f.d)));}return o;}
+function xIminusA(M){const n=M.length,o=[];for(let i=0;i<n;i++){const row=[];for(let j=0;j<n;j++){
+  const a=fr(-Math.round(M[i][j])); row.push(i===j?rpTrim([a,FR1]):[a]); } o.push(row);} return o;}
+function smithDiagonal(Min){ const n=Min.length; let M=Min.map(r=>r.map(p=>p.slice()));
+  for(let t=0;t<n;t++){
+    while(true){
+      let piv=null,pdeg=Infinity;
+      for(let i=t;i<n;i++)for(let j=t;j<n;j++){if(!rpIsZero(M[i][j])){const d=rpDeg(M[i][j]);if(d<pdeg){pdeg=d;piv=[i,j];}}}
+      if(!piv)break; const pi=piv[0],pj=piv[1];
+      if(pi!==t){const tmp=M[t];M[t]=M[pi];M[pi]=tmp;}
+      if(pj!==t){for(let r=0;r<n;r++){const tmp=M[r][t];M[r][t]=M[r][pj];M[r][pj]=tmp;}}
+      let changed=false;
+      for(let i=0;i<n;i++){ if(i===t||rpIsZero(M[i][t]))continue;
+        const q=rpDivmod(M[i][t],M[t][t])[0];
+        for(let k=0;k<n;k++)M[i][k]=rpSub(M[i][k],rpMul(q,M[t][k]));
+        if(!rpIsZero(M[i][t]))changed=true; }
+      for(let j=0;j<n;j++){ if(j===t||rpIsZero(M[t][j]))continue;
+        const q=rpDivmod(M[t][j],M[t][t])[0];
+        for(let i=0;i<n;i++)M[i][j]=rpSub(M[i][j],rpMul(q,M[i][t]));
+        if(!rpIsZero(M[t][j]))changed=true; }
+      if(changed)continue;
+      let bad=-1;
+      for(let i=t+1;i<n&&bad<0;i++)for(let j=t+1;j<n;j++){if(!rpIsZero(M[i][j])&&!rpIsZero(rpMod(M[i][j],M[t][t]))){bad=i;break;}}
+      if(bad>=0){for(let k=0;k<n;k++)M[t][k]=rpAdd(M[t][k],M[bad][k]);continue;}
+      break;
+    }
+    if(!rpIsZero(M[t][t])){const inv=frDiv(FR1,M[t][t][M[t][t].length-1]);M[t]=M[t].map(p=>rpScale(p,inv));}
+  }
+  const diag=[];for(let i=0;i<n;i++)diag.push(M[i][i]);return diag;
+}
+function invariantFactorsExact(M){return smithDiagonal(xIminusA(M)).filter(p=>rpDeg(p)>=1).map(rpMonic);}
+function rpFromIntHL(ints){return rpTrim(ints.slice().reverse().map(x=>fr(x)));}
+/* Minimal polynomial via rational Krylov: the first power A^k that is linearly
+   dependent on I,A,…,A^{k-1} (flattened) gives the monic dependence = min-poly.
+   Low coefficient swell (unlike the ℚ[x] Smith form), so it is the fast path
+   that decides derogatory / defective and lets the Smith form run ONLY for
+   derogatory matrices. Mirrors src/matrix_plates/linalg.py:min_poly. */
+function matmulBig(A,B){const n=A.length,m=B.length,p=B[0].length,C=Array.from({length:n},()=>new Array(p).fill(0n));
+  for(let i=0;i<n;i++)for(let k=0;k<m;k++){const a=A[i][k];if(a===0n)continue;for(let j=0;j<p;j++)C[i][j]+=a*B[k][j];}return C;}
+function minPolyKrylov(M){ const n=M.length; if(n===0)return [1];
+  const Mb=M.map(r=>r.map(x=>BigInt(Math.round(x))));              // exact integer powers (no float overflow)
+  const basis=[]; let P=M.map((r,i)=>r.map((_,j)=>i===j?1n:0n));   // identity (BigInt)
+  for(let k=0;k<=n;k++){
+    let vec=[]; for(const row of P)for(const x of row)vec.push(fr(x));
+    let coeffs=new Array(k+1).fill(FR0); coeffs[k]=FR1;
+    for(const b of basis){ if(!frIsZero(vec[b.piv])){
+      const f=frDiv(vec[b.piv],b.vec[b.piv]);
+      vec=vec.map((v,i)=>frSub(v,frMul(f,b.vec[i])));
+      const L=Math.max(coeffs.length,b.coeffs.length);
+      const cc=coeffs.concat(new Array(L-coeffs.length).fill(FR0));
+      const bb=b.coeffs.concat(new Array(L-b.coeffs.length).fill(FR0));
+      coeffs=cc.map((c,i)=>frSub(c,frMul(f,bb[i]))); } }
+    let piv=-1; for(let i=0;i<vec.length;i++){if(!frIsZero(vec[i])){piv=i;break;}}
+    if(piv<0){ const o=[]; for(let i=coeffs.length-1;i>=0;i--){const f=coeffs[i];o.push(Math.round(f.d===1n?Number(f.n):Number(f.n)/Number(f.d)));} return o; }
+    const nrm=vec[piv]; vec=vec.map(v=>frDiv(v,nrm)); coeffs=coeffs.map(c=>frDiv(c,nrm));
+    basis.push({vec,piv,coeffs}); P=matmulBig(Mb,P);
+  }
+  return charPoly(M).coeffs;   // unreachable for n×n
+}
+function isSimilarExact(A,B){ if(A.length!==B.length)return false;
+  const fa=invariantInfo(A).invariantFactors, fb=invariantInfo(B).invariantFactors;
+  if(fa===null||fb===null)return null;   // huge derogatory: cannot decide inline
+  return JSON.stringify(fa)===JSON.stringify(fb); }
+function invariantInfo(M){ const n=M.length;
+  if(n===0)return {minpoly:[1],invariantFactors:[],degMin:0,numFactors:0,derogatory:false,defective:false};
+  const cp=charPoly(M).coeffs;            // fraction-free integer
+  const mp=minPolyKrylov(M);              // fast, low-swell — drives the hybrid
+  const degMin=mp.length-1, derog=degMin<n, defective=!rpIsSquarefree(rpFromIntHL(mp));
+  let facs;
+  if(!derog) facs=[cp];                   // non-derogatory ⇒ one factor = charpoly (no Smith, no swell)
+  else if(n<=SNF_MAX_N) facs=invariantFactorsExact(M).map(rpToIntHighLow);   // derogatory ⇒ Smith (structured, cheap)
+  else facs=null;                         // derogatory & n>SNF_MAX_N: defer the full list
+  return { minpoly:mp, invariantFactors:facs, degMin, numFactors:(facs?facs.length:null),
+           derogatory:derog, defective:defective }; }
+
+function analyse(M){
+  const n=M.length;
+  const {coeffs,det}=charPoly(M);
+  const roots=dkRoots(coeffs);
+  const M_=mahlerFromRoots(roots,coeffs[0]);
+  const rho=roots.reduce((m,z)=>Math.max(m,cabs(z)),0);
+  const tr=Math.round(trace(M)*1e6)/1e6;
+  const rank=numericRank(M);
+  const integer=isIntegerMat(M);
+  const unimodular=integer&&Math.abs(det)===1;
+  const inv=invariantInfo(M);
+  return {M,n,coeffs,det,roots,mahler:M_,rho,tr,frob:frob(M),rank,integer,unimodular,
+    minpoly:inv.minpoly,invariantFactors:inv.invariantFactors,degMin:inv.degMin,
+    numFactors:inv.numFactors,derogatory:inv.derogatory,defective:inv.defective};
+}
+
+/* =================== rendering: the plate system =================== */
+const VIRIDIS=[[68,1,84],[72,40,120],[62,74,137],[49,104,142],[38,130,142],[31,158,137],[53,183,121],[110,206,88],[253,231,37]];
+function viridis(t){t=Math.max(0,Math.min(1,t));const f=t*(VIRIDIS.length-1),i=Math.min(VIRIDIS.length-2,Math.floor(f)),fr=f-i;
+  const c=VIRIDIS[i].map((v,k)=>Math.round(v+(VIRIDIS[i+1][k]-v)*fr));return"rgb("+c[0]+","+c[1]+","+c[2]+")";}
+
+const GALLERY=[];
+let maxLogM=Math.log(1.6);
+let uid=0;
+let layoutMode='insertion';
+const PLATE_NODES=new Map();                       // id -> { el, p }   (node reuse on relayout)
+const familyOf=prov=>/^seeded mulberry32/.test(prov)?'random':'structured';
+const spectrumBins=n=>Math.max(3,Math.min(12,Math.ceil(Math.sqrt(n))));   // √n rule, capped
+
+function fmt(x){const r=Math.round(x);const v=(Math.abs(x-r)<1e-9)?r:Math.round(x*100)/100;
+  return v<0?("\u2212"+Math.abs(v)):String(v);}
+function polyStr(c){ // coeffs high->low
+  const n=c.length-1;let out="";
+  for(let i=0;i<=n;i++){const p=n-i,a=c[i];if(a===0&&!(p===0&&out===""))continue;
+    const mag=Math.abs(a);let term=(mag===1&&p>0)?"":String(mag);
+    if(p>1)term+="x"+sub(p);else if(p===1)term+="x";
+    if(out===""){out=(a<0?"\u2212":"")+term;}
+    else out+=(a<0?" \u2212 ":" + ")+term;
+  }
+  return out||"0";
+}
+function matHTML(M){
+  const n=M.length;let cells="";
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const z=M[i][j]===0;cells+='<span class="'+(z?'zero':'')+'">'+fmt(M[i][j])+'</span>';}
+  return '<div class="matwrap"><div class="mat"><div class="grid" style="grid-template-columns:repeat('+n+',auto)">'+cells+'</div></div></div>';
+}
+function tFor(M_){return Math.max(0,Math.min(1,Math.log(M_)/Math.max(maxLogM,1e-6)));}
+
+function plateHTML(p){
+  const t=tFor(p.mahler),col=viridis(t);
+  const chips=[
+    '<span class="chip"><b>'+p.n+'×'+p.n+'</b></span>',
+    '<span class="chip">det <b>'+fmt(p.det)+'</b></span>',
+    '<span class="chip">tr <b>'+fmt(p.tr)+'</b></span>',
+    '<span class="chip">ρ <b>'+(Math.round(p.rho*1000)/1000)+'</b></span>',
+    '<span class="chip">‖·‖<sub>F</sub> <b>'+(Math.round(p.frob*100)/100)+'</b></span>',
+    '<span class="chip">rank <b>'+p.rank+'</b></span>',
+  ];
+  if(p.integer)chips.push('<span class="chip flag">integer</span>');
+  if(p.unimodular)chips.push('<span class="chip flagv">unimodular</span>');
+  if(p.derogatory)chips.push('<span class="chip flag">derogatory</span>');
+  if(p.defective)chips.push('<span class="chip flag">defective</span>');
+  let outside=0,inside=0,onc=0;
+  for(const z of p.roots){const r=cabs(z);if(r>1.0001)outside++;else if(r<0.9999)inside++;else onc++;}
+  return ''+
+    '<div class="edge" style="background:'+col+'"></div>'+
+    '<div class="p-head"><div><div class="p-name">'+p.name+'</div><div class="p-prov">'+p.prov+'</div></div>'+
+      '<span class="p-mahler"><i style="background:'+col+'"></i>M '+(Math.round(p.mahler*1000)/1000)+'</span></div>'+
+    matHTML(p.M)+
+    '<div class="chips">'+chips.join('')+'</div>'+
+    '<div class="p-actions"><button class="p-lift" type="button" '+
+      'title="lift this characteristic polynomial into the seed registry, then build its companion">'+
+      '↦ companion seed</button></div>'+
+    '<button class="p-toggle" aria-expanded="false">spectrum &amp; characteristic polynomial ▾</button>'+
+    '<div class="detail">'+
+      '<div class="lbl">characteristic polynomial</div><div class="cpoly">'+polyStr(p.coeffs)+'</div>'+
+      '<div class="lbl">minimal polynomial</div><div class="cpoly">'+
+        polyStr(p.minpoly)+(p.derogatory?'  · derogatory (deg '+p.degMin+' &lt; '+p.n+')':'  · = char-poly (non-derogatory)')+'</div>'+
+      '<div class="lbl">invariant factors · rational canonical form</div><div class="cpoly">'+
+        (p.invariantFactors?p.invariantFactors.map(polyStr).join('   ·   ')
+                           :'derogatory, n &gt; '+SNF_MAX_N+' — minimal polynomial shown above; full factor list via the backend')+'</div>'+
+      '<div class="lbl">spectrum on the complex plane</div><canvas class="spec" width="536" height="536"></canvas>'+
+      '<div class="specnote"><span class="out">'+outside+' outside</span> · <span class="on">'+onc+' on</span> · '+
+        '<span class="in">'+inside+' inside</span> the unit circle. '+
+        'M is the product of |λ| over the points <span class="out">outside</span>.'+
+        (p.note?'<br>'+p.note:'')+'</div>'+
+      '<div class="lbl">companion form · rational-canonical of the char-poly</div>'+
+      '<div class="p-companion">'+companionPanel(p)+'</div>'+
+      '<div class="lbl">export</div>'+
+      '<div class="p-exports">'+
+        '<button class="p-exp" type="button" data-fmt="json">JSON</button>'+
+        '<button class="p-exp" type="button" data-fmt="latex">LaTeX</button>'+
+        '<button class="p-exp" type="button" data-fmt="sympy">SymPy</button>'+
+      '</div>'+
+    '</div>';
+}
+
+function drawSpectrum(canvas,p){
+  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height,cx=w/2,cy=h/2;
+  let R=1.2;for(const z of p.roots)R=Math.max(R,cabs(z));R*=1.12;
+  const sc=(Math.min(w,h)*0.42)/R;
+  ctx.clearRect(0,0,w,h);
+  // axes
+  ctx.strokeStyle="rgba(120,126,160,.22)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(w,cy);ctx.moveTo(cx,0);ctx.lineTo(cx,h);ctx.stroke();
+  // unit circle (the Mahler horizon)
+  ctx.strokeStyle="rgba(233,196,106,.55)";ctx.setLineDash([5,6]);ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.arc(cx,cy,sc,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  // eigenvalues
+  for(const z of p.roots){
+    const x=cx+z.re*sc,y=cy-z.im*sc,r=cabs(z);
+    const col=r>1.0001?"#8fb6ff":(r<0.9999?"#5cc9c0":"#e9c46a");
+    ctx.beginPath();ctx.fillStyle=col.replace(')',',0.16)').replace('rgb','rgba').replace('#','');
+    ctx.fillStyle=hexA(col,0.18);ctx.arc(x,y,9,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=col;ctx.beginPath();ctx.arc(x,y,3.4,0,Math.PI*2);ctx.fill();
+  }
+}
+function hexA(hex,a){const n=parseInt(hex.slice(1),16);return"rgba("+((n>>16)&255)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
+
+function addPlate(built){
+  if(built.error){ flashDesc(built.error, true); return; }
+  const a = analyse(built.M);
+  const p = { id:++uid, name:built.name, prov:built.prov, note:built.note, ...a };
+  GALLERY.push(p);
+  const rangeGrew = Math.log(p.mahler) > maxLogM;
+  if(rangeGrew) maxLogM = Math.log(p.mahler);
+  const el = document.createElement('div');
+  el.className = 'plate reveal fam-' + familyOf(p.prov);
+  el.dataset.id = p.id;
+  el.innerHTML = plateHTML(p);
+  el.addEventListener('animationend', () => el.classList.remove('reveal'), { once:true });
+  wirePlate(el, p);
+  PLATE_NODES.set(p.id, { el, p });
+  if(rangeGrew) recolorAll();           // re-grade existing edge/dot colors against the new maxLogM
+  relayout();                           // single layout path (insertion or spectrum)
+  renderStat();
+}
+function wirePlate(el,p){
+  const tog=el.querySelector('.p-toggle'),det=el.querySelector('.detail');
+  tog.addEventListener('click',()=>{
+    const open=det.classList.toggle('open');
+    tog.setAttribute('aria-expanded',String(open));
+    tog.innerHTML=open?'spectrum &amp; characteristic polynomial ▴':'spectrum &amp; characteristic polynomial ▾';
+    if(open){const cv=el.querySelector('canvas.spec');if(cv&&!cv.dataset.drawn){drawSpectrum(cv,p);cv.dataset.drawn="1";}}
+  });
+  const lift=el.querySelector('.p-lift');
+  if(lift) lift.addEventListener('click',()=>liftToSeed(p,lift));
+  for(const b of el.querySelectorAll('.p-exp')) b.addEventListener('click',()=>exportPlate(p,b.dataset.fmt,b));
+}
+function recolorAll(){
+  for(const el of document.querySelectorAll('.plate')){
+    const p=GALLERY.find(g=>g.id==el.dataset.id);if(!p)continue;
+    const col=viridis(tFor(p.mahler));
+    el.querySelector('.edge').style.background=col;
+    const dot=el.querySelector('.p-mahler i');if(dot)dot.style.background=col;
+  }
+}
+function relayout(){
+  const sheet = document.getElementById('sheet');
+  const axis  = document.getElementById('maxis');
+  if(!GALLERY.length){
+    sheet.className = 'sheet';
+    sheet.innerHTML = '<div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>';
+    if(axis){ axis.style.display = 'none'; axis.replaceChildren(); }
+    return;
+  }
+  if(layoutMode === 'insertion'){
+    sheet.className = 'sheet';
+    if(axis) axis.style.display = 'none';
+    sheet.replaceChildren(...GALLERY.map(g => PLATE_NODES.get(g.id).el));   // moves nodes, preserves state
+    return;
+  }
+  // ---- Mahler spectrum: histogram in log M, floor pinned at M = 1 ----
+  sheet.className = 'sheet spectrum';
+  const B = spectrumBins(GALLERY.length);
+  sheet.style.setProperty('--bins', B);
+  const hi   = Math.max(maxLogM, Math.log(1.18));   // keep Lehmer (≈1.176) on-axis for tiny galleries
+  const span = hi || 1;
+  const bins = Array.from({ length:B }, () => []);
+  for(const p of GALLERY){
+    let k = Math.floor(Math.log(p.mahler) / span * B);   // lo = 0  ⇒  log 1 = 0 sits at the left edge
+    if(k >= B) k = B - 1; if(k < 0) k = 0;               // M_max lands in the last bin
+    bins[k].push(p);
+  }
+  const cols = bins.map(bucket => {
+    bucket.sort((x, y) => x.mahler - y.mahler);          // clean gradient within a column
+    const col = document.createElement('div'); col.className = 'mbin';
+    for(const p of bucket) col.appendChild(PLATE_NODES.get(p.id).el);
+    return col;
+  });
+  sheet.replaceChildren(...cols);
+  if(axis){ axis.style.display = 'block'; drawMahlerAxis(0, hi); }
+}
+
+function drawMahlerAxis(lo, hi){
+  const axis = document.getElementById('maxis'); if(!axis) return;
+  const span = (hi - lo) || 1;
+  const frac = v => (Math.log(v) - lo) / span;
+  const Mmax = Math.exp(hi);
+  const ticks = [
+    { M:1,        cls:'floor',  label:'M=1' },         // cyclotomic floor (Kronecker)
+    { M:1.17628,  cls:'lehmer', label:'Lehmer' },      // smallest known measure > 1
+    { M:Mmax,     cls:'',       label:String(Math.round(Mmax * 1000) / 1000) },
+  ];
+  const out = [];
+  for(const t of ticks){
+    const f = frac(t.M);
+    if(f < -0.02 || f > 1.02) continue;                // hide ticks outside the current range
+    const el = document.createElement('span');
+    el.className = 'mtick' + (t.cls ? ' ' + t.cls : '');
+    el.style.left = (Math.max(0, Math.min(1, f)) * 100) + '%';
+    el.textContent = t.label;
+    out.push(el);
+  }
+  axis.replaceChildren(...out);
+}
+function renderStat(){
+  const stat=document.getElementById('stat');
+  if(!GALLERY.length){stat.className="gloss";stat.textContent="0 plates";return;}
+  const Ms=GALLERY.map(g=>g.mahler),lo=Math.min(...Ms),hi=Math.max(...Ms);
+  const uni=GALLERY.filter(g=>g.unimodular).length;
+  stat.className="";
+  stat.innerHTML=GALLERY.length+' plates &nbsp;·&nbsp; <span class="gloss">M ∈ ['+
+    (Math.round(lo*1000)/1000)+', '+(Math.round(hi*1000)/1000)+']</span> &nbsp;·&nbsp; '+uni+' unimodular';
+}
+
+/* =================== console wiring =================== */
+const opSel=document.getElementById('op');
+for(const k in OPS){const o=document.createElement('option');o.value=k;o.textContent=OPS[k].label;opSel.appendChild(o);}
+const seedA=document.getElementById('seedA'),seedB=document.getElementById('seedB');
+for(const s of SEEDS){
+  const oa=document.createElement('option');oa.value=s.id;oa.textContent=s.glyph+"  ("+s.field+")";seedA.appendChild(oa);
+  const ob=document.createElement('option');ob.value=s.id;ob.textContent=s.glyph+"  ("+s.field+")";seedB.appendChild(ob);
+}
+seedA.value="phi";seedB.value="sq2";
+
+function refreshSeedMenus(){
+  for(const sel of [seedA, seedB]){
+    const cur = sel.value;
+    sel.replaceChildren();
+    for(const s of SEEDS){
+      const o = document.createElement('option');
+      o.value = s.id; o.textContent = s.glyph + '  (' + s.field + ')';
+      sel.appendChild(o);
+    }
+    sel.value = cur;                       // preserve the current selection
+  }
+}
+
+function liftToSeed(p, btn){
+  const c = p.coeffs;                       // monic, high->low, integer (Faddeev–LeVerrier guarantees this)
+  if(!c || c.length < 2 || c[0] !== 1 || !c.every(Number.isInteger)){
+    flashDesc('charpoly is not a monic integer polynomial — cannot lift to an algebraic-integer seed.', true);
+    return;
+  }
+  const key = c.join(',');
+  let id = bySig(key);                       // dedupe: reuse an existing seed with the same polynomial
+  if(!id){
+    id = 'gen' + (++genCount);
+    const seed = {
+      id, glyph: 'p\u0302' + sub(genCount), field: '\u211A[x]/(p)', poly: c.slice(),
+      note: 'char-poly lift of ' + p.name + ' — spectrum-preserving (same det, tr, M).'
+    };
+    SEEDS.push(seed); seedById[id] = seed; SIG_TO_ID[key] = id;
+    refreshSeedMenus();                      // self-extend: the new seed appears in Seed A / Seed B
+  }
+  addPlate(OPS.companion.build(id));         // the closure step: build companion(charpoly)
+  if(btn) btn.textContent = '\u21A6 ' + seedById[id].glyph + ' added';
+}
+
+// ---- custom matrix input + companion view + per-plate export (v1.1) ----
+function parseMatrix(src){
+  src = (src || '').trim();
+  if(!src) return {error:"Enter a matrix — one row per line, e.g.  0 1 / 1 1  (or JSON)."};
+  let M;
+  try{
+    M = (src[0] === '[') ? JSON.parse(src)
+      : src.split(/[\n;]+/).filter(r => r.trim())
+           .map(r => r.trim().split(/[\s,]+/).map(Number));
+  }catch(e){ return {error:"Could not parse matrix: " + e.message}; }
+  if(!Array.isArray(M) || !M.length || !Array.isArray(M[0]))
+    return {error:"Matrix must be a 2-D array of integers."};
+  const n = M.length;
+  for(const row of M){
+    if(!Array.isArray(row) || row.length !== n)
+      return {error:"Matrix must be square; got " + n + " rows of unequal length."};
+    for(const x of row)
+      if(!Number.isFinite(x) || Math.abs(x - Math.round(x)) > 1e-9)
+        return {error:"Entries must be integers (this engine works over ℤ); got " + x + "."};
+  }
+  return {matrix: M.map(r => r.map(x => Math.round(x)))};
+}
+
+function companionPanel(p){
+  const C = companion(p.coeffs), same = JSON.stringify(C) === JSON.stringify(p.M);
+  let verdict;
+  if(same) verdict = 'A is already in companion form — Φ = companion∘charpoly fixes it (Φ∘Φ = Φ).';
+  else if(p.derogatory) verdict = 'Same spectrum as A, but A is <b>derogatory</b> (minimal polynomial degree '
+      + p.degMin + ' &lt; ' + p.n + '), so A is <b>NOT similar</b> to this companion'
+      + (p.invariantFactors ? ' — its invariant factors are ' + p.invariantFactors.map(polyStr).join(' · ')
+          + ', and the companion has a single block.' : '.');
+  else verdict = 'Same spectrum as A, and A is <b>non-derogatory</b>, so A <b>is similar</b> to this companion '
+      + '(identical invariant factors).';
+  return matHTML(C) + '<div class="specnote">' + verdict + '</div>';
+}
+
+function polyLatex(coeffs){
+  const n = coeffs.length - 1; let out = '';
+  for(let i = 0; i < coeffs.length; i++){
+    const a = coeffs[i], p = n - i;
+    if(a === 0 && !(p === 0 && out === '')) continue;
+    const mag = Math.abs(a), c = (mag === 1 && p > 0) ? '' : String(mag);
+    const body = p > 1 ? (c + 'x^{' + p + '}') : p === 1 ? (c + 'x') : (c || '1');
+    out += out === '' ? ((a < 0 ? '-' : '') + body) : ((a < 0 ? ' - ' : ' + ') + body);
+  }
+  return out || '0';
+}
+function bmatrixLatex(M){
+  return '\\begin{bmatrix}\n' + M.map(r => r.join(' & ')).join(' \\\\\n') + '\n\\end{bmatrix}';
+}
+function sanitizeName(s){
+  return (s || 'plate').replace(/[^0-9A-Za-z]+/g, '_').replace(/^_+|_+$/g, '') || 'plate';
+}
+function downloadText(name, text, mime){
+  const blob = new Blob([text], {type: mime || 'text/plain'}),
+        url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+function exportPlate(p, kind, btn){
+  const base = sanitizeName(p.name);
+  let text, name, mime = 'text/plain';
+  if(kind === 'json'){
+    text = JSON.stringify({
+      name: p.name, prov: p.prov, matrix: p.M, char_poly: p.coeffs,
+      min_poly: p.minpoly, invariant_factors: p.invariantFactors,
+      det: p.det, trace: p.tr, rho: p.rho, mahler: p.mahler, rank: p.rank,
+      derogatory: p.derogatory, defective: p.defective, unimodular: p.unimodular,
+      companion_of_charpoly: companion(p.coeffs)
+    }, null, 2);
+    name = base + '.json'; mime = 'application/json';
+  } else if(kind === 'latex'){
+    text = '% ' + p.name + ' — ' + p.prov + '\n\\[ A = ' + bmatrixLatex(p.M) + ' \\]\n'
+         + '\\[ \\chi_A(x) = ' + polyLatex(p.coeffs) + ' \\]\n'
+         + '% det ' + p.det + ', tr ' + p.tr + ', M ' + (Math.round(p.mahler * 1e6) / 1e6);
+    name = base + '.tex';
+  } else {
+    const ident = /[A-Za-z]/.test(base[0]) ? base : ('A_' + base);
+    text = "from sympy import Matrix, symbols\nx = symbols('x')\n\n# " + p.name + " — " + p.prov + "\n"
+         + ident + " = Matrix([\n    " + p.M.map(r => '[' + r.join(', ') + ']').join(',\n    ') + ",\n])\n"
+         + "# char-poly coefficients (high->low): " + JSON.stringify(p.coeffs) + "\n"
+         + "assert " + ident + ".charpoly(x).all_coeffs() == " + JSON.stringify(p.coeffs) + "\n";
+    name = base + '.py';
+  }
+  downloadText(name, text, mime);
+  if(btn){ const old = btn.textContent; btn.textContent = 'downloaded ✓';
+           setTimeout(() => btn.textContent = old, 1400); }
+}
+const ctl={A:document.getElementById('ctlA'),B:document.getElementById('ctlB'),type:document.getElementById('ctlType'),
+  word:document.getElementById('ctlWord'),N:document.getElementById('ctlN'),seed:document.getElementById('ctlSeedInt'),
+  matrix:document.getElementById('ctlMatrix')};
+function syncControls(){
+  const need=OPS[opSel.value].needs;
+  ctl.A.classList.toggle('hide',!need.includes('A'));
+  ctl.B.classList.toggle('hide',!need.includes('B'));
+  ctl.type.classList.toggle('hide',!need.includes('type'));
+  ctl.word.classList.toggle('hide',!need.includes('word'));
+  ctl.N.classList.toggle('hide',!need.includes('N'));
+  ctl.seed.classList.toggle('hide',!need.includes('seed'));
+  ctl.matrix.classList.toggle('hide',!need.includes('matrix'));
+  // size label + range cues
+  const nl=document.getElementById('nlabel');
+  if(opSel.value==='cartan')nl.textContent='Rank n';
+  else if(opSel.value==='circ'||opSel.value==='ring')nl.textContent='Order n';
+  else nl.textContent='Size n';
+  flashDesc(OPS[opSel.value].desc,false);
+}
+let descTimer=null;
+function flashDesc(html,isWarn){
+  const d=document.getElementById('opdesc');
+  d.innerHTML=(isWarn?'<span class="warn">⚠ '+html+'</span>':html);
+  if(isWarn){clearTimeout(descTimer);descTimer=setTimeout(()=>{d.innerHTML=OPS[opSel.value].desc;},4200);}
+}
+opSel.addEventListener('change',syncControls);
+syncControls();
+
+function readParams(){
+  const op=opSel.value,need=OPS[op].needs,n=parseInt(document.getElementById('nparam').value)||5,
+    seed=parseInt(document.getElementById('rseed').value)||0,type=document.getElementById('ctype').value,
+    word=document.getElementById('word').value,a=seedA.value,b=seedB.value;
+  switch(op){
+    case 'companion':return OPS.companion.build(a);
+    case 'kron':return OPS.kron.build(a,b);
+    case 'dsum':return OPS.dsum.build(a,b);
+    case 'comm':return OPS.comm.build(a,b);
+    case 'cartan':return OPS.cartan.build(type,n);
+    case 'circ':return OPS.circ.build(word,n);
+    case 'ring':return OPS.ring.build(n);
+    case 'rand':return OPS.rand.build(n,seed);
+    case 'custom':return OPS.custom.build(document.getElementById('cmatrix').value);
+  }
+}
+document.getElementById('gen').addEventListener('click',()=>addPlate(readParams()));
+document.getElementById('layout').addEventListener('change', e => { layoutMode = e.target.value; relayout(); });
+document.getElementById('batch').addEventListener('click',()=>{
+  const set=[
+    OPS.companion.build('phi'),OPS.companion.build('gap'),OPS.companion.build('K'),
+    OPS.cartan.build('E8',8),OPS.cartan.build('A',5),
+    OPS.kron.build('phi','sq3'),OPS.circ.build('fib',6),OPS.ring.build('',6),OPS.rand.build('',4),
+  ];
+  for(const b of set)addPlate(b);
+});
+document.getElementById('clear').addEventListener('click', () => {
+  GALLERY.length = 0; maxLogM = Math.log(1.6); uid = 0; PLATE_NODES.clear();
+  relayout();        // restores the empty placeholder and hides the axis
+  renderStat();
+});
+
+/* export the current gallery to a self-contained HTML plate sheet */
+function staticPlate(p){
+  const t=tFor(p.mahler),col=viridis(t);
+  return '<div class="plate"><span class="edge" style="background:'+col+'"></span>'+
+    '<div class="hd"><span class="nm">'+p.name+'</span><span class="mh">M '+(Math.round(p.mahler*1000)/1000)+'</span></div>'+
+    '<div class="pv">'+p.prov+'</div>'+matHTML(p.M)+
+    '<div class="cp">'+polyStr(p.coeffs)+'</div>'+
+    '<div class="iv">'+p.n+'×'+p.n+' · det '+fmt(p.det)+' · tr '+fmt(p.tr)+' · ρ '+(Math.round(p.rho*1000)/1000)+
+      (p.unimodular?' · unimodular':'')+'</div></div>';
+}
+document.getElementById('export').addEventListener('click',()=>{
+  if(!GALLERY.length){flashDesc("No plates to export yet.",true);return;}
+  const css=`body{background:#0b0d18;color:#ececf4;font-family:ui-sans-serif,system-ui,sans-serif;margin:0;padding:28px}
+h1{font-family:Georgia,serif;font-weight:500}.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.plate{position:relative;border:1px solid #23273d;border-radius:12px;background:#0f1120;padding:14px 14px 12px 18px;overflow:hidden}
+.edge{position:absolute;left:0;top:0;bottom:0;width:4px}.hd{display:flex;justify-content:space-between;align-items:baseline}
+.nm{font-family:Georgia,serif;font-size:17px}.mh,.pv,.cp,.iv{font-family:ui-monospace,Menlo,monospace}
+.mh{font-size:11px;color:#cfd3e6}.pv{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8e93ac;margin-top:3px}
+.matwrap{margin:11px 0;overflow-x:auto}.mat{position:relative;padding:4px 11px;display:inline-block}
+.mat:before,.mat:after{content:"";position:absolute;top:0;bottom:0;width:6px;border:1.5px solid #5b628a}
+.mat:before{left:0;border-right:0}.mat:after{right:0;border-left:0}
+.grid{display:grid;gap:2px 12px;font-family:ui-monospace,Menlo,monospace;font-size:13px}.grid span{text-align:right;color:#eef0fb}
+.grid span.zero{color:#5a607e}.cp{font-size:13px;color:#fff;margin-top:2px}.iv{font-size:11px;color:#cfd3e6;margin-top:8px}`;
+  let body='';for(const p of GALLERY)body+=staticPlate(p);
+  const doc='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Matrix Plates — export</title><style>'+css+'</style></head><body><h1>Matrix Plates</h1><div class="sheet">'+body+'</div></body></html>';
+  const blob=new Blob([doc],{type:'text/html'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='matrix-plates-export.html';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
+});
+
+/* methods modal */
+const mbg=document.getElementById('mbg'),modal=document.getElementById('modal');
+function openM(){mbg.classList.add('open');modal.classList.add('open');modal.focus();}
+function closeM(){mbg.classList.remove('open');modal.classList.remove('open');}
+document.getElementById('methods').addEventListener('click',openM);
+document.getElementById('methods').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openM();}});
+document.getElementById('mclose').addEventListener('click',closeM);
+mbg.addEventListener('click',closeM);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM();});
+
+renderStat();
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+{
+ "companion_phi": {
+  "charpoly": [
+   1,
+   -1,
+   -1
+  ],
+  "minpoly": [
+   1,
+   -1,
+   -1
+  ],
+  "deg_char": 2,
+  "deg_min": 2,
+  "derogatory": false,
+  "mahler": 1.618034,
+  "rho": 1.618034,
+  "det": -1,
+  "trace": 1,
+  "rank": 2
+ },
+ "companion_sq2": {
+  "charpoly": [
+   1,
+   0,
+   -2
+  ],
+  "minpoly": [
+   1,
+   0,
+   -2
+  ],
+  "deg_char": 2,
+  "deg_min": 2,
+  "derogatory": false,
+  "mahler": 2.0,
+  "rho": 1.414214,
+  "det": -2,
+  "trace": 0,
+  "rank": 2
+ },
+ "companion_gap": {
+  "charpoly": [
+   1,
+   -7,
+   1
+  ],
+  "minpoly": [
+   1,
+   -7,
+   1
+  ],
+  "deg_char": 2,
+  "deg_min": 2,
+  "derogatory": false,
+  "mahler": 6.854102,
+  "rho": 6.854102,
+  "det": 1,
+  "trace": 7,
+  "rank": 2
+ },
+ "companion_K": {
+  "charpoly": [
+   1,
+   0,
+   5,
+   0,
+   -5
+  ],
+  "minpoly": [
+   1,
+   0,
+   5,
+   0,
+   -5
+  ],
+  "deg_char": 4,
+  "deg_min": 4,
+  "derogatory": false,
+  "mahler": 5.854102,
+  "rho": 2.419525,
+  "det": -5,
+  "trace": 0,
+  "rank": 4
+ },
+ "phi_dsum_phi": {
+  "charpoly": [
+   1,
+   -2,
+   -1,
+   2,
+   1
+  ],
+  "minpoly": [
+   1,
+   -1,
+   -1
+  ],
+  "deg_char": 4,
+  "deg_min": 2,
+  "derogatory": true,
+  "mahler": 2.618034,
+  "rho": 1.618034,
+  "det": 1,
+  "trace": 2,
+  "rank": 4,
+  "jordan_blocks_note": "jordan computed"
+ },
+ "companion_of_phi2": {
+  "charpoly": [
+   1,
+   -2,
+   -1,
+   2,
+   1
+  ],
+  "minpoly": [
+   1,
+   -2,
+   -1,
+   2,
+   1
+  ],
+  "deg_char": 4,
+  "deg_min": 4,
+  "derogatory": false,
+  "mahler": 2.618034,
+  "rho": 1.618034,
+  "det": 1,
+  "trace": 2,
+  "rank": 4,
+  "jordan_blocks_note": "jordan computed"
+ },
+ "cartanE8": {
+  "charpoly": [
+   1,
+   -16,
+   105,
+   -364,
+   714,
+   -784,
+   440,
+   -96,
+   1
+  ],
+  "minpoly": [
+   1,
+   -16,
+   105,
+   -364,
+   714,
+   -784,
+   440,
+   -96,
+   1
+  ],
+  "deg_char": 8,
+  "deg_min": 8,
+  "derogatory": false,
+  "mahler": 177.672972,
+  "rho": 3.989044,
+  "det": 1,
+  "trace": 16,
+  "rank": 8
+ },
+ "fibcirc6": {
+  "charpoly": [
+   1,
+   -6,
+   -120,
+   -2056,
+   -18096,
+   -87168,
+   -170240
+  ],
+  "minpoly": [
+   1,
+   -6,
+   -120,
+   -2056,
+   -18096,
+   -87168,
+   -170240
+  ],
+  "deg_char": 6,
+  "deg_min": 6,
+  "derogatory": false,
+  "mahler": 170240.0,
+  "rho": 20.0,
+  "det": -170240,
+  "trace": 6,
+  "rank": 6
+ },
+ "ring6": {
+  "charpoly": [
+   1,
+   -12,
+   54,
+   -112,
+   105,
+   -36,
+   4
+  ],
+  "minpoly": [
+   1,
+   -6,
+   9,
+   -2
+  ],
+  "deg_char": 6,
+  "deg_min": 3,
+  "derogatory": true,
+  "mahler": 55.712813,
+  "rho": 3.732051,
+  "det": 4,
+  "trace": 12,
+  "rank": 6
+ },
+ "ring5": {
+  "charpoly": [
+   1,
+   -10,
+   35,
+   -50,
+   25,
+   -4
+  ],
+  "minpoly": [
+   1,
+   -7,
+   13,
+   -4
+  ],
+  "deg_char": 5,
+  "deg_min": 3,
+  "derogatory": true,
+  "mahler": 27.416408,
+  "rho": 4.0,
+  "det": 4,
+  "trace": 10,
+  "rank": 5
+ }
+}

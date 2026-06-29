@@ -1,0 +1,543 @@
+--- a/matrix_plates.html
++++ b/matrix_plates.html
+@@ -134,6 +134,40 @@
+   .mclose{ position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; cursor:pointer;
+     border:1px solid var(--edge); background:rgba(255,255,255,.03); color:var(--ink); font-size:17px }
+   .mclose:hover{ background:rgba(255,255,255,.08) }
++
++  /* ---- Mahler-spectrum layout (Goal 1) ---- */
++  .sheet.spectrum{ display:grid; grid-template-columns:repeat(var(--bins,6),minmax(0,1fr));
++                   align-items:start; gap:10px; overflow-x:auto }
++  .mbin{ display:flex; flex-direction:column; gap:10px; min-width:0 }
++  .mbin .plate{ width:100% }
++  .maxis{ position:relative; height:30px; margin:16px 0 2px; border-bottom:1px solid var(--line) }
++  .maxis .mtick{ position:absolute; bottom:0; transform:translateX(-50%);
++                 font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--muted); white-space:nowrap }
++  .maxis .mtick::after{ content:""; display:block; width:1px; height:8px; margin:3px auto 0; background:var(--edge) }
++  .maxis .mtick.floor{ color:var(--teal) }   .maxis .mtick.floor::after{ background:var(--teal) }
++  .maxis .mtick.lehmer{ color:var(--gold) }  .maxis .mtick.lehmer::after{ background:var(--gold) }
++  .plate.fam-random{ border-style:dashed; border-color:#3a4258 }
++
++  /* ---- charpoly ↦ companion lift (Goal 2) ---- */
++  .p-actions{ margin-top:9px }
++  .p-lift{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--gold);
++    background:rgba(233,196,106,.08); border:1px solid #4a4226; border-radius:999px; padding:6px 11px; cursor:pointer;
++    transition:background .18s }
++  .p-lift:hover{ background:rgba(233,196,106,.16) }
++  .p-lift:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
++  .p-lift[disabled]{ opacity:.5; cursor:not-allowed }
++
++  /* ---- custom matrix input + companion view + per-plate export (v1.1) ---- */
++  #ctlMatrix textarea{ width:210px; font-family:var(--mono); font-size:12px; line-height:1.5;
++    background:#0c0e1a; color:var(--ink); border:1px solid var(--line); border-radius:8px;
++    padding:6px 8px; resize:vertical }
++  .p-companion{ margin:4px 0 2px }
++  .p-exports{ display:flex; gap:8px; margin-top:4px; flex-wrap:wrap }
++  .p-exp{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--muted);
++    background:rgba(255,255,255,.04); border:1px solid var(--line); border-radius:999px;
++    padding:5px 11px; cursor:pointer; transition:background .18s, color .18s }
++  .p-exp:hover{ background:rgba(255,255,255,.10); color:var(--ink) }
++  .p-exp:focus-visible{ outline:2px solid var(--teal); outline-offset:2px }
+ </style>
+ </head>
+ <body>
+@@ -174,6 +208,18 @@
+       <label for="rseed">RNG seed</label>
+       <input id="rseed" type="number" min="0" step="1" value="42">
+     </div>
++    <div class="ctl hide" id="ctlMatrix">
++      <label for="cmatrix">Matrix (rows on lines)</label>
++      <textarea id="cmatrix" rows="3" spellcheck="false"
++        placeholder="0 1 0 0&#10;1 1 0 0&#10;0 0 0 1&#10;0 0 1 1"></textarea>
++    </div>
++    <div class="ctl" id="ctlLayout">
++      <label for="layout">Layout</label>
++      <select id="layout">
++        <option value="insertion">Insertion</option>
++        <option value="spectrum">Mahler spectrum</option>
++      </select>
++    </div>
+     <button class="btn go" id="gen">Press plate</button>
+     <button class="btn ghost" id="batch">Seed batch</button>
+     <div class="spacer"></div>
+@@ -182,6 +228,7 @@
+     <div class="opdesc" id="opdesc"></div>
+   </div>
+ 
++  <div id="maxis" class="maxis" aria-hidden="true" style="display:none"></div>
+   <div class="sheet" id="sheet" aria-live="polite">
+     <div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>
+   </div>
+@@ -309,6 +356,9 @@
+   {id:"res", glyph:"◆",  field:"ℚ(5¼)",  poly:[1,2,39,-52,11],  note:"resonance quartic."},
+ ];
+ const seedById=Object.fromEntries(SEEDS.map(s=>[s.id,s]));
++const SIG_TO_ID=Object.fromEntries(SEEDS.map(s=>[s.poly.join(','),s.id]));  // poly signature -> seed id
++const bySig=key=>SIG_TO_ID[key];
++let genCount=0;
+ 
+ function companion(poly){ // monic high→low [1,a_{n-1},...,a0] -> n x n, char poly = poly
+   const n=poly.length-1,C=zeros(n);
+@@ -386,11 +436,125 @@
+     desc:"<b>Reproducible random</b> integer matrix, entries in [−3, 3] from a mulberry32 seed — the control against the structured families.",
+     build:(n,seed)=>{n=Math.max(1,n);return{M:randIntMat(n,seed),name:"rand·s"+seed,prov:"seeded mulberry32 · n="+n,
+              note:"reproducible from the seed; compare its Mahler measure to the structured plates."};}},
++  custom:{label:"Custom matrix", needs:["matrix"], glyph:"⌨",
++    desc:"<b>Custom integer matrix</b>. Type an n×n grid (one row per line, entries separated by spaces or commas, or JSON) to get its full spectral data and companion (rational-canonical) form in one view.",
++    build:src=>{const r=parseMatrix(src);if(r.error)return{error:r.error};const n=r.matrix.length;
++      return{M:r.matrix,name:"A "+n+"×"+n,prov:"user matrix · n="+n,note:"custom integer matrix — companion form below."};}},
+ };
+ function sub(n){const map={'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+   return String(n).split('').map(d=>map[d]||d).join('');}
+ 
+ /* =================== analyse a built matrix =================== */
++/* =================== exact rational arithmetic (BigInt) ===================
++   A Fraction {n,d} (BigInt, d>0, gcd=1) and polynomials over ℚ (arrays of
++   Fraction, low→high). These power the EXACT minimal polynomial and invariant
++   factors via the Smith normal form of xI−A over ℚ[x], so this tool decides
++   similarity (derogatory / defective / "similar to its companion?") itself —
++   no backend, no floating-point. Mirrors src/matrix_plates/{polynomial,canonical}.py. */
++const SNF_MAX_N = 24;   // cap the Smith path (derogatory branch only); the generic case never reaches it
++function bgcd(a,b){a=a<0n?-a:a;b=b<0n?-b:b;while(b){const t=a%b;a=b;b=t;}return a;}
++function fr(n,d){ n=BigInt(n); d=(d===undefined?1n:BigInt(d));
++  if(d===0n)throw new Error("rational division by zero");
++  if(d<0n){n=-n;d=-d;} const g=bgcd(n,d)||1n; return {n:n/g,d:d/g}; }
++const FR0=fr(0n), FR1=fr(1n);
++function frAdd(a,b){return fr(a.n*b.d+b.n*a.d, a.d*b.d);}
++function frSub(a,b){return fr(a.n*b.d-b.n*a.d, a.d*b.d);}
++function frMul(a,b){return fr(a.n*b.n, a.d*b.d);}
++function frDiv(a,b){return fr(a.n*b.d, a.d*b.n);}
++function frIsZero(a){return a.n===0n;}
++function rpTrim(c){let i=c.length-1;while(i>0&&frIsZero(c[i]))i--;return c.slice(0,i+1);}
++function rpIsZero(c){return c.length===1&&frIsZero(c[0]);}
++function rpDeg(c){return rpIsZero(c)?-1:c.length-1;}
++function rpAdd(a,b){const n=Math.max(a.length,b.length),o=[];for(let i=0;i<n;i++)o.push(frAdd(a[i]||FR0,b[i]||FR0));return rpTrim(o);}
++function rpSub(a,b){const n=Math.max(a.length,b.length),o=[];for(let i=0;i<n;i++)o.push(frSub(a[i]||FR0,b[i]||FR0));return rpTrim(o);}
++function rpMul(a,b){if(rpIsZero(a)||rpIsZero(b))return[FR0];const o=new Array(a.length+b.length-1).fill(FR0);
++  for(let i=0;i<a.length;i++){if(frIsZero(a[i]))continue;for(let j=0;j<b.length;j++)o[i+j]=frAdd(o[i+j],frMul(a[i],b[j]));}return rpTrim(o);}
++function rpScale(a,k){return a.map(x=>frMul(x,k));}
++function rpDivmod(a,b){ if(rpIsZero(b))throw new Error("poly div by zero");
++  let r=a.slice(), q=[FR0]; const bd=rpDeg(b), bl=b[b.length-1];
++  while(!rpIsZero(r)&&rpDeg(r)>=bd){ const sh=rpDeg(r)-bd, coef=frDiv(r[r.length-1],bl);
++    const term=new Array(sh+1).fill(FR0); term[sh]=coef; q=rpAdd(q,term); r=rpSub(r,rpMul(term,b)); }
++  return [q,r]; }
++function rpMod(a,b){return rpDivmod(a,b)[1];}
++function rpMonic(a){if(rpIsZero(a))return[FR0];const l=a[a.length-1];return a.map(x=>frDiv(x,l));}
++function rpGcd(a,b){a=a.slice();b=b.slice();while(!rpIsZero(b)){const r=rpMod(a,b);a=b;b=r;}return rpMonic(a);}
++function rpDeriv(a){if(rpDeg(a)<1)return[FR0];const o=[];for(let i=1;i<a.length;i++)o.push(frMul(a[i],fr(i)));return rpTrim(o);}
++function rpIsSquarefree(a){if(rpDeg(a)<=1)return true;return rpDeg(rpGcd(a,rpDeriv(a)))===0;}
++function rpToIntHighLow(a){const o=[];for(let i=a.length-1;i>=0;i--){const f=a[i];o.push(Math.round(f.d===1n?Number(f.n):Number(f.n)/Number(f.d)));}return o;}
++function xIminusA(M){const n=M.length,o=[];for(let i=0;i<n;i++){const row=[];for(let j=0;j<n;j++){
++  const a=fr(-Math.round(M[i][j])); row.push(i===j?rpTrim([a,FR1]):[a]); } o.push(row);} return o;}
++function smithDiagonal(Min){ const n=Min.length; let M=Min.map(r=>r.map(p=>p.slice()));
++  for(let t=0;t<n;t++){
++    while(true){
++      let piv=null,pdeg=Infinity;
++      for(let i=t;i<n;i++)for(let j=t;j<n;j++){if(!rpIsZero(M[i][j])){const d=rpDeg(M[i][j]);if(d<pdeg){pdeg=d;piv=[i,j];}}}
++      if(!piv)break; const pi=piv[0],pj=piv[1];
++      if(pi!==t){const tmp=M[t];M[t]=M[pi];M[pi]=tmp;}
++      if(pj!==t){for(let r=0;r<n;r++){const tmp=M[r][t];M[r][t]=M[r][pj];M[r][pj]=tmp;}}
++      let changed=false;
++      for(let i=0;i<n;i++){ if(i===t||rpIsZero(M[i][t]))continue;
++        const q=rpDivmod(M[i][t],M[t][t])[0];
++        for(let k=0;k<n;k++)M[i][k]=rpSub(M[i][k],rpMul(q,M[t][k]));
++        if(!rpIsZero(M[i][t]))changed=true; }
++      for(let j=0;j<n;j++){ if(j===t||rpIsZero(M[t][j]))continue;
++        const q=rpDivmod(M[t][j],M[t][t])[0];
++        for(let i=0;i<n;i++)M[i][j]=rpSub(M[i][j],rpMul(q,M[i][t]));
++        if(!rpIsZero(M[t][j]))changed=true; }
++      if(changed)continue;
++      let bad=-1;
++      for(let i=t+1;i<n&&bad<0;i++)for(let j=t+1;j<n;j++){if(!rpIsZero(M[i][j])&&!rpIsZero(rpMod(M[i][j],M[t][t]))){bad=i;break;}}
++      if(bad>=0){for(let k=0;k<n;k++)M[t][k]=rpAdd(M[t][k],M[bad][k]);continue;}
++      break;
++    }
++    if(!rpIsZero(M[t][t])){const inv=frDiv(FR1,M[t][t][M[t][t].length-1]);M[t]=M[t].map(p=>rpScale(p,inv));}
++  }
++  const diag=[];for(let i=0;i<n;i++)diag.push(M[i][i]);return diag;
++}
++function invariantFactorsExact(M){return smithDiagonal(xIminusA(M)).filter(p=>rpDeg(p)>=1).map(rpMonic);}
++function rpFromIntHL(ints){return rpTrim(ints.slice().reverse().map(x=>fr(x)));}
++/* Minimal polynomial via rational Krylov: the first power A^k that is linearly
++   dependent on I,A,…,A^{k-1} (flattened) gives the monic dependence = min-poly.
++   Low coefficient swell (unlike the ℚ[x] Smith form), so it is the fast path
++   that decides derogatory / defective and lets the Smith form run ONLY for
++   derogatory matrices. Mirrors src/matrix_plates/linalg.py:min_poly. */
++function matmulBig(A,B){const n=A.length,m=B.length,p=B[0].length,C=Array.from({length:n},()=>new Array(p).fill(0n));
++  for(let i=0;i<n;i++)for(let k=0;k<m;k++){const a=A[i][k];if(a===0n)continue;for(let j=0;j<p;j++)C[i][j]+=a*B[k][j];}return C;}
++function minPolyKrylov(M){ const n=M.length; if(n===0)return [1];
++  const Mb=M.map(r=>r.map(x=>BigInt(Math.round(x))));              // exact integer powers (no float overflow)
++  const basis=[]; let P=M.map((r,i)=>r.map((_,j)=>i===j?1n:0n));   // identity (BigInt)
++  for(let k=0;k<=n;k++){
++    let vec=[]; for(const row of P)for(const x of row)vec.push(fr(x));
++    let coeffs=new Array(k+1).fill(FR0); coeffs[k]=FR1;
++    for(const b of basis){ if(!frIsZero(vec[b.piv])){
++      const f=frDiv(vec[b.piv],b.vec[b.piv]);
++      vec=vec.map((v,i)=>frSub(v,frMul(f,b.vec[i])));
++      const L=Math.max(coeffs.length,b.coeffs.length);
++      const cc=coeffs.concat(new Array(L-coeffs.length).fill(FR0));
++      const bb=b.coeffs.concat(new Array(L-b.coeffs.length).fill(FR0));
++      coeffs=cc.map((c,i)=>frSub(c,frMul(f,bb[i]))); } }
++    let piv=-1; for(let i=0;i<vec.length;i++){if(!frIsZero(vec[i])){piv=i;break;}}
++    if(piv<0){ const o=[]; for(let i=coeffs.length-1;i>=0;i--){const f=coeffs[i];o.push(Math.round(f.d===1n?Number(f.n):Number(f.n)/Number(f.d)));} return o; }
++    const nrm=vec[piv]; vec=vec.map(v=>frDiv(v,nrm)); coeffs=coeffs.map(c=>frDiv(c,nrm));
++    basis.push({vec,piv,coeffs}); P=matmulBig(Mb,P);
++  }
++  return charPoly(M).coeffs;   // unreachable for n×n
++}
++function isSimilarExact(A,B){ if(A.length!==B.length)return false;
++  const fa=invariantInfo(A).invariantFactors, fb=invariantInfo(B).invariantFactors;
++  if(fa===null||fb===null)return null;   // huge derogatory: cannot decide inline
++  return JSON.stringify(fa)===JSON.stringify(fb); }
++function invariantInfo(M){ const n=M.length;
++  if(n===0)return {minpoly:[1],invariantFactors:[],degMin:0,numFactors:0,derogatory:false,defective:false};
++  const cp=charPoly(M).coeffs;            // fraction-free integer
++  const mp=minPolyKrylov(M);              // fast, low-swell — drives the hybrid
++  const degMin=mp.length-1, derog=degMin<n, defective=!rpIsSquarefree(rpFromIntHL(mp));
++  let facs;
++  if(!derog) facs=[cp];                   // non-derogatory ⇒ one factor = charpoly (no Smith, no swell)
++  else if(n<=SNF_MAX_N) facs=invariantFactorsExact(M).map(rpToIntHighLow);   // derogatory ⇒ Smith (structured, cheap)
++  else facs=null;                         // derogatory & n>SNF_MAX_N: defer the full list
++  return { minpoly:mp, invariantFactors:facs, degMin, numFactors:(facs?facs.length:null),
++           derogatory:derog, defective:defective }; }
++
+ function analyse(M){
+   const n=M.length;
+   const {coeffs,det}=charPoly(M);
+@@ -401,7 +565,10 @@
+   const rank=numericRank(M);
+   const integer=isIntegerMat(M);
+   const unimodular=integer&&Math.abs(det)===1;
+-  return {M,n,coeffs,det,roots,mahler:M_,rho,tr,frob:frob(M),rank,integer,unimodular};
++  const inv=invariantInfo(M);
++  return {M,n,coeffs,det,roots,mahler:M_,rho,tr,frob:frob(M),rank,integer,unimodular,
++    minpoly:inv.minpoly,invariantFactors:inv.invariantFactors,degMin:inv.degMin,
++    numFactors:inv.numFactors,derogatory:inv.derogatory,defective:inv.defective};
+ }
+ 
+ /* =================== rendering: the plate system =================== */
+@@ -412,6 +579,10 @@
+ const GALLERY=[];
+ let maxLogM=Math.log(1.6);
+ let uid=0;
++let layoutMode='insertion';
++const PLATE_NODES=new Map();                       // id -> { el, p }   (node reuse on relayout)
++const familyOf=prov=>/^seeded mulberry32/.test(prov)?'random':'structured';
++const spectrumBins=n=>Math.max(3,Math.min(12,Math.ceil(Math.sqrt(n))));   // √n rule, capped
+ 
+ function fmt(x){const r=Math.round(x);const v=(Math.abs(x-r)<1e-9)?r:Math.round(x*100)/100;
+   return v<0?("\u2212"+Math.abs(v)):String(v);}
+@@ -444,6 +615,8 @@
+   ];
+   if(p.integer)chips.push('<span class="chip flag">integer</span>');
+   if(p.unimodular)chips.push('<span class="chip flagv">unimodular</span>');
++  if(p.derogatory)chips.push('<span class="chip flag">derogatory</span>');
++  if(p.defective)chips.push('<span class="chip flag">defective</span>');
+   let outside=0,inside=0,onc=0;
+   for(const z of p.roots){const r=cabs(z);if(r>1.0001)outside++;else if(r<0.9999)inside++;else onc++;}
+   return ''+
+@@ -452,14 +625,30 @@
+       '<span class="p-mahler"><i style="background:'+col+'"></i>M '+(Math.round(p.mahler*1000)/1000)+'</span></div>'+
+     matHTML(p.M)+
+     '<div class="chips">'+chips.join('')+'</div>'+
++    '<div class="p-actions"><button class="p-lift" type="button" '+
++      'title="lift this characteristic polynomial into the seed registry, then build its companion">'+
++      '↦ companion seed</button></div>'+
+     '<button class="p-toggle" aria-expanded="false">spectrum &amp; characteristic polynomial ▾</button>'+
+     '<div class="detail">'+
+       '<div class="lbl">characteristic polynomial</div><div class="cpoly">'+polyStr(p.coeffs)+'</div>'+
++      '<div class="lbl">minimal polynomial</div><div class="cpoly">'+
++        polyStr(p.minpoly)+(p.derogatory?'  · derogatory (deg '+p.degMin+' &lt; '+p.n+')':'  · = char-poly (non-derogatory)')+'</div>'+
++      '<div class="lbl">invariant factors · rational canonical form</div><div class="cpoly">'+
++        (p.invariantFactors?p.invariantFactors.map(polyStr).join('   ·   ')
++                           :'derogatory, n &gt; '+SNF_MAX_N+' — minimal polynomial shown above; full factor list via the backend')+'</div>'+
+       '<div class="lbl">spectrum on the complex plane</div><canvas class="spec" width="536" height="536"></canvas>'+
+       '<div class="specnote"><span class="out">'+outside+' outside</span> · <span class="on">'+onc+' on</span> · '+
+         '<span class="in">'+inside+' inside</span> the unit circle. '+
+         'M is the product of |λ| over the points <span class="out">outside</span>.'+
+         (p.note?'<br>'+p.note:'')+'</div>'+
++      '<div class="lbl">companion form · rational-canonical of the char-poly</div>'+
++      '<div class="p-companion">'+companionPanel(p)+'</div>'+
++      '<div class="lbl">export</div>'+
++      '<div class="p-exports">'+
++        '<button class="p-exp" type="button" data-fmt="json">JSON</button>'+
++        '<button class="p-exp" type="button" data-fmt="latex">LaTeX</button>'+
++        '<button class="p-exp" type="button" data-fmt="sympy">SymPy</button>'+
++      '</div>'+
+     '</div>';
+ }
+ 
+@@ -486,16 +675,21 @@
+ function hexA(hex,a){const n=parseInt(hex.slice(1),16);return"rgba("+((n>>16)&255)+","+((n>>8)&255)+","+(n&255)+","+a+")";}
+ 
+ function addPlate(built){
+-  if(built.error){flashDesc(built.error,true);return;}
+-  const a=analyse(built.M);
+-  const p={id:++uid,name:built.name,prov:built.prov,note:built.note,...a};
++  if(built.error){ flashDesc(built.error, true); return; }
++  const a = analyse(built.M);
++  const p = { id:++uid, name:built.name, prov:built.prov, note:built.note, ...a };
+   GALLERY.push(p);
+-  if(Math.log(p.mahler)>maxLogM){maxLogM=Math.log(p.mahler);recolorAll();}
+-  document.getElementById('empty')?.remove();
+-  const el=document.createElement('div');el.className='plate reveal';el.dataset.id=p.id;
+-  el.innerHTML=plateHTML(p);
+-  wirePlate(el,p);
+-  document.getElementById('sheet').appendChild(el);
++  const rangeGrew = Math.log(p.mahler) > maxLogM;
++  if(rangeGrew) maxLogM = Math.log(p.mahler);
++  const el = document.createElement('div');
++  el.className = 'plate reveal fam-' + familyOf(p.prov);
++  el.dataset.id = p.id;
++  el.innerHTML = plateHTML(p);
++  el.addEventListener('animationend', () => el.classList.remove('reveal'), { once:true });
++  wirePlate(el, p);
++  PLATE_NODES.set(p.id, { el, p });
++  if(rangeGrew) recolorAll();           // re-grade existing edge/dot colors against the new maxLogM
++  relayout();                           // single layout path (insertion or spectrum)
+   renderStat();
+ }
+ function wirePlate(el,p){
+@@ -506,6 +700,9 @@
+     tog.innerHTML=open?'spectrum &amp; characteristic polynomial ▴':'spectrum &amp; characteristic polynomial ▾';
+     if(open){const cv=el.querySelector('canvas.spec');if(cv&&!cv.dataset.drawn){drawSpectrum(cv,p);cv.dataset.drawn="1";}}
+   });
++  const lift=el.querySelector('.p-lift');
++  if(lift) lift.addEventListener('click',()=>liftToSeed(p,lift));
++  for(const b of el.querySelectorAll('.p-exp')) b.addEventListener('click',()=>exportPlate(p,b.dataset.fmt,b));
+ }
+ function recolorAll(){
+   for(const el of document.querySelectorAll('.plate')){
+@@ -515,6 +712,65 @@
+     const dot=el.querySelector('.p-mahler i');if(dot)dot.style.background=col;
+   }
+ }
++function relayout(){
++  const sheet = document.getElementById('sheet');
++  const axis  = document.getElementById('maxis');
++  if(!GALLERY.length){
++    sheet.className = 'sheet';
++    sheet.innerHTML = '<div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>';
++    if(axis){ axis.style.display = 'none'; axis.replaceChildren(); }
++    return;
++  }
++  if(layoutMode === 'insertion'){
++    sheet.className = 'sheet';
++    if(axis) axis.style.display = 'none';
++    sheet.replaceChildren(...GALLERY.map(g => PLATE_NODES.get(g.id).el));   // moves nodes, preserves state
++    return;
++  }
++  // ---- Mahler spectrum: histogram in log M, floor pinned at M = 1 ----
++  sheet.className = 'sheet spectrum';
++  const B = spectrumBins(GALLERY.length);
++  sheet.style.setProperty('--bins', B);
++  const hi   = Math.max(maxLogM, Math.log(1.18));   // keep Lehmer (≈1.176) on-axis for tiny galleries
++  const span = hi || 1;
++  const bins = Array.from({ length:B }, () => []);
++  for(const p of GALLERY){
++    let k = Math.floor(Math.log(p.mahler) / span * B);   // lo = 0  ⇒  log 1 = 0 sits at the left edge
++    if(k >= B) k = B - 1; if(k < 0) k = 0;               // M_max lands in the last bin
++    bins[k].push(p);
++  }
++  const cols = bins.map(bucket => {
++    bucket.sort((x, y) => x.mahler - y.mahler);          // clean gradient within a column
++    const col = document.createElement('div'); col.className = 'mbin';
++    for(const p of bucket) col.appendChild(PLATE_NODES.get(p.id).el);
++    return col;
++  });
++  sheet.replaceChildren(...cols);
++  if(axis){ axis.style.display = 'block'; drawMahlerAxis(0, hi); }
++}
++
++function drawMahlerAxis(lo, hi){
++  const axis = document.getElementById('maxis'); if(!axis) return;
++  const span = (hi - lo) || 1;
++  const frac = v => (Math.log(v) - lo) / span;
++  const Mmax = Math.exp(hi);
++  const ticks = [
++    { M:1,        cls:'floor',  label:'M=1' },         // cyclotomic floor (Kronecker)
++    { M:1.17628,  cls:'lehmer', label:'Lehmer' },      // smallest known measure > 1
++    { M:Mmax,     cls:'',       label:String(Math.round(Mmax * 1000) / 1000) },
++  ];
++  const out = [];
++  for(const t of ticks){
++    const f = frac(t.M);
++    if(f < -0.02 || f > 1.02) continue;                // hide ticks outside the current range
++    const el = document.createElement('span');
++    el.className = 'mtick' + (t.cls ? ' ' + t.cls : '');
++    el.style.left = (Math.max(0, Math.min(1, f)) * 100) + '%';
++    el.textContent = t.label;
++    out.push(el);
++  }
++  axis.replaceChildren(...out);
++}
+ function renderStat(){
+   const stat=document.getElementById('stat');
+   if(!GALLERY.length){stat.className="gloss";stat.textContent="0 plates";return;}
+@@ -534,8 +790,132 @@
+   const ob=document.createElement('option');ob.value=s.id;ob.textContent=s.glyph+"  ("+s.field+")";seedB.appendChild(ob);
+ }
+ seedA.value="phi";seedB.value="sq2";
++
++function refreshSeedMenus(){
++  for(const sel of [seedA, seedB]){
++    const cur = sel.value;
++    sel.replaceChildren();
++    for(const s of SEEDS){
++      const o = document.createElement('option');
++      o.value = s.id; o.textContent = s.glyph + '  (' + s.field + ')';
++      sel.appendChild(o);
++    }
++    sel.value = cur;                       // preserve the current selection
++  }
++}
++
++function liftToSeed(p, btn){
++  const c = p.coeffs;                       // monic, high->low, integer (Faddeev–LeVerrier guarantees this)
++  if(!c || c.length < 2 || c[0] !== 1 || !c.every(Number.isInteger)){
++    flashDesc('charpoly is not a monic integer polynomial — cannot lift to an algebraic-integer seed.', true);
++    return;
++  }
++  const key = c.join(',');
++  let id = bySig(key);                       // dedupe: reuse an existing seed with the same polynomial
++  if(!id){
++    id = 'gen' + (++genCount);
++    const seed = {
++      id, glyph: 'p\u0302' + sub(genCount), field: '\u211A[x]/(p)', poly: c.slice(),
++      note: 'char-poly lift of ' + p.name + ' — spectrum-preserving (same det, tr, M).'
++    };
++    SEEDS.push(seed); seedById[id] = seed; SIG_TO_ID[key] = id;
++    refreshSeedMenus();                      // self-extend: the new seed appears in Seed A / Seed B
++  }
++  addPlate(OPS.companion.build(id));         // the closure step: build companion(charpoly)
++  if(btn) btn.textContent = '\u21A6 ' + seedById[id].glyph + ' added';
++}
++
++// ---- custom matrix input + companion view + per-plate export (v1.1) ----
++function parseMatrix(src){
++  src = (src || '').trim();
++  if(!src) return {error:"Enter a matrix — one row per line, e.g.  0 1 / 1 1  (or JSON)."};
++  let M;
++  try{
++    M = (src[0] === '[') ? JSON.parse(src)
++      : src.split(/[\n;]+/).filter(r => r.trim())
++           .map(r => r.trim().split(/[\s,]+/).map(Number));
++  }catch(e){ return {error:"Could not parse matrix: " + e.message}; }
++  if(!Array.isArray(M) || !M.length || !Array.isArray(M[0]))
++    return {error:"Matrix must be a 2-D array of integers."};
++  const n = M.length;
++  for(const row of M){
++    if(!Array.isArray(row) || row.length !== n)
++      return {error:"Matrix must be square; got " + n + " rows of unequal length."};
++    for(const x of row)
++      if(!Number.isFinite(x) || Math.abs(x - Math.round(x)) > 1e-9)
++        return {error:"Entries must be integers (this engine works over ℤ); got " + x + "."};
++  }
++  return {matrix: M.map(r => r.map(x => Math.round(x)))};
++}
++
++function companionPanel(p){
++  const C = companion(p.coeffs), same = JSON.stringify(C) === JSON.stringify(p.M);
++  let verdict;
++  if(same) verdict = 'A is already in companion form — Φ = companion∘charpoly fixes it (Φ∘Φ = Φ).';
++  else if(p.derogatory) verdict = 'Same spectrum as A, but A is <b>derogatory</b> (minimal polynomial degree '
++      + p.degMin + ' &lt; ' + p.n + '), so A is <b>NOT similar</b> to this companion'
++      + (p.invariantFactors ? ' — its invariant factors are ' + p.invariantFactors.map(polyStr).join(' · ')
++          + ', and the companion has a single block.' : '.');
++  else verdict = 'Same spectrum as A, and A is <b>non-derogatory</b>, so A <b>is similar</b> to this companion '
++      + '(identical invariant factors).';
++  return matHTML(C) + '<div class="specnote">' + verdict + '</div>';
++}
++
++function polyLatex(coeffs){
++  const n = coeffs.length - 1; let out = '';
++  for(let i = 0; i < coeffs.length; i++){
++    const a = coeffs[i], p = n - i;
++    if(a === 0 && !(p === 0 && out === '')) continue;
++    const mag = Math.abs(a), c = (mag === 1 && p > 0) ? '' : String(mag);
++    const body = p > 1 ? (c + 'x^{' + p + '}') : p === 1 ? (c + 'x') : (c || '1');
++    out += out === '' ? ((a < 0 ? '-' : '') + body) : ((a < 0 ? ' - ' : ' + ') + body);
++  }
++  return out || '0';
++}
++function bmatrixLatex(M){
++  return '\\begin{bmatrix}\n' + M.map(r => r.join(' & ')).join(' \\\\\n') + '\n\\end{bmatrix}';
++}
++function sanitizeName(s){
++  return (s || 'plate').replace(/[^0-9A-Za-z]+/g, '_').replace(/^_+|_+$/g, '') || 'plate';
++}
++function downloadText(name, text, mime){
++  const blob = new Blob([text], {type: mime || 'text/plain'}),
++        url = URL.createObjectURL(blob), a = document.createElement('a');
++  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
++  setTimeout(() => URL.revokeObjectURL(url), 1500);
++}
++function exportPlate(p, kind, btn){
++  const base = sanitizeName(p.name);
++  let text, name, mime = 'text/plain';
++  if(kind === 'json'){
++    text = JSON.stringify({
++      name: p.name, prov: p.prov, matrix: p.M, char_poly: p.coeffs,
++      min_poly: p.minpoly, invariant_factors: p.invariantFactors,
++      det: p.det, trace: p.tr, rho: p.rho, mahler: p.mahler, rank: p.rank,
++      derogatory: p.derogatory, defective: p.defective, unimodular: p.unimodular,
++      companion_of_charpoly: companion(p.coeffs)
++    }, null, 2);
++    name = base + '.json'; mime = 'application/json';
++  } else if(kind === 'latex'){
++    text = '% ' + p.name + ' — ' + p.prov + '\n\\[ A = ' + bmatrixLatex(p.M) + ' \\]\n'
++         + '\\[ \\chi_A(x) = ' + polyLatex(p.coeffs) + ' \\]\n'
++         + '% det ' + p.det + ', tr ' + p.tr + ', M ' + (Math.round(p.mahler * 1e6) / 1e6);
++    name = base + '.tex';
++  } else {
++    const ident = /[A-Za-z]/.test(base[0]) ? base : ('A_' + base);
++    text = "from sympy import Matrix, symbols\nx = symbols('x')\n\n# " + p.name + " — " + p.prov + "\n"
++         + ident + " = Matrix([\n    " + p.M.map(r => '[' + r.join(', ') + ']').join(',\n    ') + ",\n])\n"
++         + "# char-poly coefficients (high->low): " + JSON.stringify(p.coeffs) + "\n"
++         + "assert " + ident + ".charpoly(x).all_coeffs() == " + JSON.stringify(p.coeffs) + "\n";
++    name = base + '.py';
++  }
++  downloadText(name, text, mime);
++  if(btn){ const old = btn.textContent; btn.textContent = 'downloaded ✓';
++           setTimeout(() => btn.textContent = old, 1400); }
++}
+ const ctl={A:document.getElementById('ctlA'),B:document.getElementById('ctlB'),type:document.getElementById('ctlType'),
+-  word:document.getElementById('ctlWord'),N:document.getElementById('ctlN'),seed:document.getElementById('ctlSeedInt')};
++  word:document.getElementById('ctlWord'),N:document.getElementById('ctlN'),seed:document.getElementById('ctlSeedInt'),
++  matrix:document.getElementById('ctlMatrix')};
+ function syncControls(){
+   const need=OPS[opSel.value].needs;
+   ctl.A.classList.toggle('hide',!need.includes('A'));
+@@ -544,6 +924,7 @@
+   ctl.word.classList.toggle('hide',!need.includes('word'));
+   ctl.N.classList.toggle('hide',!need.includes('N'));
+   ctl.seed.classList.toggle('hide',!need.includes('seed'));
++  ctl.matrix.classList.toggle('hide',!need.includes('matrix'));
+   // size label + range cues
+   const nl=document.getElementById('nlabel');
+   if(opSel.value==='cartan')nl.textContent='Rank n';
+@@ -573,9 +954,11 @@
+     case 'circ':return OPS.circ.build(word,n);
+     case 'ring':return OPS.ring.build(n);
+     case 'rand':return OPS.rand.build(n,seed);
++    case 'custom':return OPS.custom.build(document.getElementById('cmatrix').value);
+   }
+ }
+ document.getElementById('gen').addEventListener('click',()=>addPlate(readParams()));
++document.getElementById('layout').addEventListener('change', e => { layoutMode = e.target.value; relayout(); });
+ document.getElementById('batch').addEventListener('click',()=>{
+   const set=[
+     OPS.companion.build('phi'),OPS.companion.build('gap'),OPS.companion.build('K'),
+@@ -584,9 +967,9 @@
+   ];
+   for(const b of set)addPlate(b);
+ });
+-document.getElementById('clear').addEventListener('click',()=>{
+-  GALLERY.length=0;maxLogM=Math.log(1.6);uid=0;
+-  const sheet=document.getElementById('sheet');sheet.innerHTML='<div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>';
++document.getElementById('clear').addEventListener('click', () => {
++  GALLERY.length = 0; maxLogM = Math.log(1.6); uid = 0; PLATE_NODES.clear();
++  relayout();        // restores the empty placeholder and hides the axis
+   renderStat();
+ });
+ 

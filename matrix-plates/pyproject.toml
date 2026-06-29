@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matrix-plates"
+version = "1.1.2"
+description = "Exact integer-matrix construction, Mahler-measure spectrum layout, and the companion∘charpoly closure — the computational backend for matrix_plates.html."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Matrix Plates contributors" }]
+keywords = ["mahler-measure", "companion-matrix", "minimal-polynomial",
+            "lehmer", "cartan", "circulant", "spectral", "exact-arithmetic"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = []  # stdlib only — no third-party runtime dependencies
+
+[project.optional-dependencies]
+# Used ONLY by the test suite to cross-check the pure-Python core against an
+# independent CAS and the reference JS engine. Not needed at runtime.
+dev = ["sympy", "numpy", "hypothesis"]
+
+[project.scripts]
+matrix-plates = "matrix_plates.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
