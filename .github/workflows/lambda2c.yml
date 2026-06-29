@@ -1,0 +1,36 @@
+name: lambda2c
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lambda2c-emissiongap-verification/**"
+      - ".github/workflows/lambda2c.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "lambda2c-emissiongap-verification/**"
+      - ".github/workflows/lambda2c.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        working-directory: lambda2c-emissiongap-verification
+        run: pip install -r requirements.txt
+      - name: Test
+        working-directory: lambda2c-emissiongap-verification
+        run: pytest -v
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda2c-results
+          path: lambda2c-emissiongap-verification/output/results.json
+          if-no-files-found: warn

@@ -1,0 +1,36 @@
+name: matrix-plates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "matrix-plates/**"
+      - ".github/workflows/matrix-plates.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "matrix-plates/**"
+      - ".github/workflows/matrix-plates.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install (dev extras)
+        working-directory: matrix-plates
+        run: pip install -e ".[dev]"
+      - name: Test
+        working-directory: matrix-plates
+        run: make test
+      - name: Verify
+        working-directory: matrix-plates
+        run: make verify

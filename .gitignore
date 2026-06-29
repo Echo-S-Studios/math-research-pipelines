@@ -1,0 +1,56 @@
+# ---------------------------------------------------------------------------
+# math-research-pipelines — root .gitignore
+#
+# These pipelines run entirely from committed source; everything ignored here
+# is a *generated* artifact (caches, build output, rendered PDFs). Running the
+# test suites repeatedly is therefore tree-clean.
+#
+# NOTE: lambda2c-emissiongap-verification/output/results.json is intentionally
+# TRACKED — it ships as a mostly-empty template and is repopulated on each run
+# (see that package's README §6). It is *not* ignored here; reset it with
+# `git checkout -- lambda2c-emissiongap-verification/output/results.json`
+# rather than committing a locally-populated copy.
+# ---------------------------------------------------------------------------
+
+# --- Python bytecode / caches ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+
+# --- Packaging / build output ---
+*.egg-info/
+*.egg
+build/
+dist/
+.build/            # matrix-plates `make export` target
+pip-wheel-metadata/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Coverage ---
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- Generated papers (rendered by build_pdfs.py / LaTeX) ---
+lambda2c-emissiongap-verification/output/*.pdf
+*.aux
+*.log
+*.out
+*.toc
+
+# --- Editor / OS noise ---
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/

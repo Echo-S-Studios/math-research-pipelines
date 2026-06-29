@@ -1,0 +1,49 @@
+name: residual-return
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "residual-return-verification/**"
+      - ".github/workflows/residual-return.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "residual-return-verification/**"
+      - ".github/workflows/residual-return.yml"
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  quick:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        working-directory: residual-return-verification
+        run: pip install -r requirements.txt
+      - name: Quick verify
+        working-directory: residual-return-verification
+        run: python3 verify.py --quick
+
+  full:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        working-directory: residual-return-verification
+        run: pip install -r requirements.txt
+      - name: Full verify
+        working-directory: residual-return-verification
+        run: python3 verify.py
