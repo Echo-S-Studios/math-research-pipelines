@@ -11,6 +11,7 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'papers/**'
       - 'lambda2c-emissiongap-verification/papers/**'
       - 'residual-return-verification/L00M/paper/*.pdf'
       - 'matrix-plates/web/matrix_plates.html'
@@ -55,6 +56,9 @@ jobs:
           cp residual-return-verification/L00M/paper/vector_substrate.pdf      _site/papers/
           cp residual-return-verification/L00M/paper/residual_return_learning.pdf _site/papers/
           cp matrix-plates/web/matrix_plates.html                              _site/tool/index.html
+          # Contributed PDFs from the repo's /papers drop-zone + their catalog.
+          cp papers/catalog.json _site/papers/catalog.json
+          shopt -s nullglob; for f in papers/*.pdf; do cp "$f" _site/papers/; done
           echo "Assembled site:" && find _site -type f | sort
 
       - name: Upload Pages artifact

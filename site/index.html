@@ -179,11 +179,81 @@
     </div>
   </section>
 
+  <section aria-labelledby="more-head" id="more-section" hidden>
+    <h2 id="more-head">Additional papers</h2>
+    <div class="grid" id="more-grid"></div>
+  </section>
+
   <footer>
     <span>© 2026 Echo-S Studios</span>
     <a href="https://github.com/Echo-S-Studios/math-research-pipelines">Source &amp; verification pipelines on GitHub</a>
     <a href="https://github.com/Echo-S-Studios/math-research-pipelines/blob/main/LICENSE">MIT License</a>
   </footer>
 </main>
+
+<script>
+  // Render an "Additional papers" card per entry in papers/catalog.json.
+  // Each PDF dropped in the repo's /papers folder + listed there appears here
+  // automatically on deploy. Cards are built with the DOM API (no innerHTML).
+  (function () {
+    fetch("papers/catalog.json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (list) {
+        if (!Array.isArray(list) || list.length === 0) return;
+        var grid = document.getElementById("more-grid");
+        list.forEach(function (p) {
+          if (!p || !p.file || !p.title) return;
+          var a = document.createElement("a");
+          a.className = "card";
+          a.href = "papers/" + p.file;
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.setAttribute("aria-label", p.title + " — PDF, opens in a new tab");
+
+          var top = document.createElement("div");
+          top.className = "toprow";
+          var tag = document.createElement("span");
+          tag.className = "tag pdf";
+          tag.textContent = (p.tag || "PDF") + " ↗";
+          top.appendChild(tag);
+          if (p.pages) {
+            var pp = document.createElement("span");
+            pp.className = "pp";
+            pp.textContent = p.pages;
+            top.appendChild(pp);
+          }
+          a.appendChild(top);
+
+          var series = document.createElement("p");
+          series.className = "series";
+          series.textContent = p.series || "Contributed";
+          a.appendChild(series);
+
+          var h3 = document.createElement("h3");
+          h3.textContent = p.title;
+          a.appendChild(h3);
+
+          if (p.description) {
+            var desc = document.createElement("p");
+            desc.textContent = p.description;
+            a.appendChild(desc);
+          }
+
+          var go = document.createElement("span");
+          go.className = "go";
+          go.appendChild(document.createTextNode("Read PDF "));
+          var arr = document.createElement("span");
+          arr.className = "arr";
+          arr.textContent = "→";
+          go.appendChild(arr);
+          a.appendChild(go);
+
+          grid.appendChild(a);
+        });
+        document.getElementById("more-section").hidden = false;
+      })
+      .catch(function () { /* no catalog reachable — leave section hidden */ });
+  })();
+</script>
 </body>
 </html>
