@@ -4,9 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Matrix Plates — constructive integer matrices, graded by Mahler measure</title>
+<meta name="description" content="An interactive, dependency-free tool for building integer matrices graded by Mahler measure, with the companion∘charpoly closure, minimal polynomial, invariant factors, and exact in-browser rational arithmetic.">
+<meta name="author" content="Echo-S Studios">
+<meta name="theme-color" content="#05060b">
+<link rel="canonical" href="https://github.com/Echo-S-Studios/math-research-pipelines/tree/main/matrix-plates/web">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%2305060b%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20font-family%3D%22Georgia%2Cserif%22%20font-size%3D%2222%22%20fill%3D%22%23e9c46a%22%20text-anchor%3D%22middle%22%3E%CF%86%3C%2Ftext%3E%3C%2Fsvg%3E">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Matrix Plates — constructive integer matrices, graded by Mahler measure">
+<meta property="og:description" content="An interactive, dependency-free tool for building integer matrices graded by Mahler measure, with the companion∘charpoly closure, minimal polynomial, invariant factors, and exact in-browser rational arithmetic.">
+<meta property="og:site_name" content="Matrix Plates">
+<meta property="og:url" content="https://github.com/Echo-S-Studios/math-research-pipelines/tree/main/matrix-plates/web">
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Matrix Plates — constructive integer matrices, graded by Mahler measure">
+<meta name="twitter:description" content="An interactive, dependency-free tool for building integer matrices graded by Mahler measure, with the companion∘charpoly closure, minimal polynomial, invariant factors, and exact in-browser rational arithmetic.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Matrix Plates",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "An interactive, dependency-free tool for building integer matrices graded by Mahler measure, with the companion∘charpoly closure, minimal polynomial, invariant factors, and exact in-browser rational arithmetic.",
+  "author": { "@type": "Organization", "name": "Echo-S Studios" },
+  "url": "https://github.com/Echo-S-Studios/math-research-pipelines/tree/main/matrix-plates/web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 <style>
   :root{
-    --void:#05060b; --panel0:#0b0d18; --panel1:#0f1120; --ink:#ececf4; --muted:#8e93ac;
+    --void:#05060b; --panel0:#0b0d18; --panel1:#0f1120; --ink:#ececf4; --muted:#a2a7c0;
     --line:#23273d; --edge:#2a2e44; --gold:#e9c46a; --teal:#5cc9c0; --violet:#8fb6ff;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L",Georgia,"Times New Roman",serif;
     --ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -168,10 +196,57 @@
     padding:5px 11px; cursor:pointer; transition:background .18s, color .18s }
   .p-exp:hover{ background:rgba(255,255,255,.10); color:var(--ink) }
   .p-exp:focus-visible{ outline:2px solid var(--teal); outline-offset:2px }
+
+  /* ---- accessibility: visually-hidden skip link ---- */
+  .skip-link{ position:absolute; left:-9999px; top:0; z-index:100;
+    font-family:var(--mono); font-size:12px; color:#0a0b12; background:var(--gold);
+    border-radius:0 0 9px 0; padding:10px 16px; text-decoration:none }
+  .skip-link:focus{ left:0 }
+  .skip-link:focus-visible{ outline:2px solid var(--ink); outline-offset:2px }
+
+  /* ---- page footer (backlinks / license) ---- */
+  .pagefoot{ max-width:1180px; margin:30px auto 0; padding:18px clamp(16px,3vw,34px) 0;
+    border-top:1px solid var(--line); font-family:var(--mono); font-size:11px; letter-spacing:.04em;
+    color:var(--muted); display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center }
+  .pagefoot a{ color:var(--muted); text-decoration:underline dotted; text-underline-offset:3px }
+  .pagefoot a:hover{ color:#cfd3e6 }
+  .pagefoot a:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+  .pagefoot .sep{ color:var(--edge) }
+
+  /* ---- reduced motion: disable all transitions/animations ---- */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ transition:none !important; animation:none !important;
+      scroll-behavior:auto !important }
+  }
+
+  /* ---- small screens: keep the spectrum canvas / sheet inside the viewport ---- */
+  @media (max-width:560px){
+    .sheet{ grid-template-columns:1fr }
+    canvas.spec{ width:100%; max-width:100% }
+    .matwrap{ overflow-x:auto }
+    .bar{ flex-wrap:wrap; gap:6px 12px }
+  }
+
+  /* ---- print: legible light theme (the dark UI prints poorly) ---- */
+  @media print{
+    body{ background:#fff !important; color:#111 !important; padding:0 }
+    h1{ -webkit-text-fill-color:#111; color:#111 !important; background:none }
+    .thesis{ color:#222 }
+    .console,.bar,.modal-bg,.modal,.skip-link,.p-toggle,.p-actions,.p-exports{ display:none !important }
+    .wrap{ max-width:none }
+    .plate{ background:#fff !important; border-color:#bbb; break-inside:avoid; page-break-inside:avoid }
+    .plate .edge{ background:#888 !important }
+    .grid span{ color:#111 !important } .grid span.zero{ color:#888 !important }
+    .chip,.p-name,.p-prov,.p-mahler,.cpoly,.specnote,.lbl{ color:#222 !important }
+    canvas.spec{ border-color:#bbb }
+    .pagefoot{ color:#444; border-color:#ccc } .pagefoot a{ color:#444 }
+    .detail{ display:block !important }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#main">Skip to main content</a>
+<main class="wrap" id="main">
   <header>
     <h1>Matrix Plates</h1>
     <p class="thesis">Each plate is an integer matrix built by a named construction, then graded by the Mahler
@@ -229,12 +304,12 @@
   </div>
 
   <div id="maxis" class="maxis" aria-hidden="true" style="display:none"></div>
-  <div class="sheet" id="sheet" aria-live="polite">
+  <div class="sheet" id="sheet" role="region" aria-label="Generated plates" aria-live="polite">
     <div class="empty" id="empty">No plates yet. Choose a construction and press a plate — or load the seed batch.</div>
   </div>
-</div>
+</main>
 
-<div class="bar">
+<div class="bar" role="region" aria-label="Gallery summary">
   <span id="stat" class="gloss">0 plates</span>
   <span class="ilink" id="methods" role="button" tabindex="0">ⓘ methods &amp; sources</span>
   <span class="scale"><span class="gloss">M(p)</span><span class="ramp" title="low → high Mahler measure"></span></span>
@@ -275,6 +350,16 @@
   </ul>
   <p class="specnote">Verify independently — this runs offline and cannot browse.</p>
 </div>
+
+<footer class="pagefoot">
+  <a href="https://github.com/Echo-S-Studios/math-research-pipelines/tree/main/matrix-plates">Source &amp; docs on GitHub</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://github.com/Echo-S-Studios/math-research-pipelines/blob/main/matrix-plates/web/README.md">Companion docs</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://github.com/Echo-S-Studios/math-research-pipelines/blob/main/matrix-plates/LICENSE">MIT License</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <span>Echo-S Studios</span>
+</footer>
 
 <script>
 "use strict";
