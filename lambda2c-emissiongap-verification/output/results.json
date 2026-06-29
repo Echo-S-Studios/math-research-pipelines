@@ -1,0 +1,8 @@
+{
+  "suite": "lambda2c-emissiongap-verification",
+  "description": "Per-claim exact-arithmetic verification of the two companion papers.",
+  "generated_utc": null,
+  "completed_utc": null,
+  "meta": {},
+  "results": []
+}
