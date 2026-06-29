@@ -5,6 +5,9 @@ name: Deploy GitHub Pages
 #   - the two residual-return PDFs (committed)
 #   - the interactive Matrix Plates tool
 # Static deploy via the official GitHub Actions Pages pipeline (no Jekyll).
+# NOTE: this is the SOLE GitHub Pages deployer. The Static-HTML starter workflow
+# (static.yml, which uploaded the whole repo root) was removed so it cannot race
+# this build and publish the raw repository tree instead of the assembled _site/.
 
 on:
   push:
