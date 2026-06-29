@@ -80,6 +80,7 @@
   .tag{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
     padding:4px 9px; border-radius:999px; border:1px solid var(--edge); color:var(--muted) }
   .tag.pdf{ color:var(--gold); border-color:rgba(233,196,106,.4) }
+  .tag.doc{ color:var(--violet); border-color:rgba(143,182,255,.4) }
   .tag.live{ color:var(--teal); border-color:rgba(92,201,192,.4) }
   .pp{ font-family:var(--mono); font-size:11px; color:var(--muted) }
   .card h3{ font-family:var(--serif); font-weight:500; font-size:22px; line-height:1.15; margin:2px 0 0 }
@@ -179,11 +180,84 @@
     </div>
   </section>
 
+  <section aria-labelledby="more-head" id="more-section" hidden>
+    <h2 id="more-head">Additional papers</h2>
+    <div class="grid" id="more-grid"></div>
+  </section>
+
   <footer>
     <span>© 2026 Echo-S Studios</span>
     <a href="https://github.com/Echo-S-Studios/math-research-pipelines">Source &amp; verification pipelines on GitHub</a>
     <a href="https://github.com/Echo-S-Studios/math-research-pipelines/blob/main/LICENSE">MIT License</a>
   </footer>
 </main>
+
+<script>
+  // Render an "Additional papers" card per entry in papers/catalog.json.
+  // Each PDF dropped in the repo's /papers folder + listed there appears here
+  // automatically on deploy. Cards are built with the DOM API (no innerHTML).
+  (function () {
+    fetch("papers/catalog.json", { cache: "no-cache" })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (list) {
+        if (!Array.isArray(list) || list.length === 0) return;
+        var grid = document.getElementById("more-grid");
+        list.forEach(function (p) {
+          if (!p || !p.file || !p.title) return;
+          var isDoc = p.kind === "doc";
+          var a = document.createElement("a");
+          a.className = "card";
+          a.href = isDoc
+            ? "papers/" + p.file.replace(/\.md$/i, ".html")
+            : "papers/" + p.file;
+          if (!isDoc) { a.target = "_blank"; a.rel = "noopener"; }
+          a.setAttribute("aria-label",
+            p.title + (isDoc ? " — read the article" : " — PDF, opens in a new tab"));
+
+          var top = document.createElement("div");
+          top.className = "toprow";
+          var tag = document.createElement("span");
+          tag.className = isDoc ? "tag doc" : "tag pdf";
+          tag.textContent = (p.tag || (isDoc ? "DOC" : "PDF")) + " ↗";
+          top.appendChild(tag);
+          if (p.pages) {
+            var pp = document.createElement("span");
+            pp.className = "pp";
+            pp.textContent = p.pages;
+            top.appendChild(pp);
+          }
+          a.appendChild(top);
+
+          var series = document.createElement("p");
+          series.className = "series";
+          series.textContent = p.series || "Contributed";
+          a.appendChild(series);
+
+          var h3 = document.createElement("h3");
+          h3.textContent = p.title;
+          a.appendChild(h3);
+
+          if (p.description) {
+            var desc = document.createElement("p");
+            desc.textContent = p.description;
+            a.appendChild(desc);
+          }
+
+          var go = document.createElement("span");
+          go.className = "go";
+          go.appendChild(document.createTextNode(isDoc ? "Read " : "Read PDF "));
+          var arr = document.createElement("span");
+          arr.className = "arr";
+          arr.textContent = "→";
+          go.appendChild(arr);
+          a.appendChild(go);
+
+          grid.appendChild(a);
+        });
+        document.getElementById("more-section").hidden = false;
+      })
+      .catch(function () { /* no catalog reachable — leave section hidden */ });
+  })();
+</script>
 </body>
 </html>
