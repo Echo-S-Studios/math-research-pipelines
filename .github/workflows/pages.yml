@@ -46,6 +46,11 @@ jobs:
             lambda_2c_paper.tex
             emission_gap_paper.tex
 
+      - name: Set up Python (for Markdown doc rendering)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Assemble the site
         run: |
           set -euo pipefail
@@ -56,9 +61,17 @@ jobs:
           cp residual-return-verification/L00M/paper/vector_substrate.pdf      _site/papers/
           cp residual-return-verification/L00M/paper/residual_return_learning.pdf _site/papers/
           cp matrix-plates/web/matrix_plates.html                              _site/tool/index.html
-          # Contributed PDFs from the repo's /papers drop-zone + their catalog.
+          # Contributed drop-zone: catalog + every PDF, plus raw .md sources (except the folder README).
           cp papers/catalog.json _site/papers/catalog.json
-          shopt -s nullglob; for f in papers/*.pdf; do cp "$f" _site/papers/; done
+          shopt -s nullglob
+          for f in papers/*.pdf; do cp "$f" _site/papers/; done
+          for f in papers/*.md; do [ "$(basename "$f")" = "README.md" ] || cp "$f" _site/papers/; done
+
+      - name: Render Markdown docs to HTML
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet markdown pymdown-extensions
+          python site/render_docs.py papers _site/papers
           echo "Assembled site:" && find _site -type f | sort
 
       - name: Upload Pages artifact

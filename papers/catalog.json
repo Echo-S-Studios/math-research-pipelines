@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "kind": "pdf",
+    "file": "lehmers_box.pdf",
+    "title": "Lehmer's Box",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "14 pp",
+    "tag": "PDF",
+    "description": "A golden floor and an angle lattice that confine spectral emission away from Salem numbers — without resolving Lehmer's problem. Companion to the Emission-Gap Theorem and λ = 2c."
+  },
+  {
+    "kind": "doc",
+    "file": "lehmersproblemanintroduction.md",
+    "title": "Lehmer's Problem: An Introduction",
+    "series": "Primer",
+    "pages": "read",
+    "tag": "DOC",
+    "description": "A question first asked in 1933, still unresolved: the Mahler measure, Lehmer's number 1.17628…, Smyth & Dobrowolski, and why the reciprocal/Salem case is the open heart — explained from the ground up."
+  }
+]

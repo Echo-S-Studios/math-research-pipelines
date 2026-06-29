@@ -80,6 +80,7 @@
   .tag{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
     padding:4px 9px; border-radius:999px; border:1px solid var(--edge); color:var(--muted) }
   .tag.pdf{ color:var(--gold); border-color:rgba(233,196,106,.4) }
+  .tag.doc{ color:var(--violet); border-color:rgba(143,182,255,.4) }
   .tag.live{ color:var(--teal); border-color:rgba(92,201,192,.4) }
   .pp{ font-family:var(--mono); font-size:11px; color:var(--muted) }
   .card h3{ font-family:var(--serif); font-weight:500; font-size:22px; line-height:1.15; margin:2px 0 0 }
@@ -203,18 +204,21 @@
         var grid = document.getElementById("more-grid");
         list.forEach(function (p) {
           if (!p || !p.file || !p.title) return;
+          var isDoc = p.kind === "doc";
           var a = document.createElement("a");
           a.className = "card";
-          a.href = "papers/" + p.file;
-          a.target = "_blank";
-          a.rel = "noopener";
-          a.setAttribute("aria-label", p.title + " — PDF, opens in a new tab");
+          a.href = isDoc
+            ? "papers/" + p.file.replace(/\.md$/i, ".html")
+            : "papers/" + p.file;
+          if (!isDoc) { a.target = "_blank"; a.rel = "noopener"; }
+          a.setAttribute("aria-label",
+            p.title + (isDoc ? " — read the article" : " — PDF, opens in a new tab"));
 
           var top = document.createElement("div");
           top.className = "toprow";
           var tag = document.createElement("span");
-          tag.className = "tag pdf";
-          tag.textContent = (p.tag || "PDF") + " ↗";
+          tag.className = isDoc ? "tag doc" : "tag pdf";
+          tag.textContent = (p.tag || (isDoc ? "DOC" : "PDF")) + " ↗";
           top.appendChild(tag);
           if (p.pages) {
             var pp = document.createElement("span");
@@ -241,7 +245,7 @@
 
           var go = document.createElement("span");
           go.className = "go";
-          go.appendChild(document.createTextNode("Read PDF "));
+          go.appendChild(document.createTextNode(isDoc ? "Read " : "Read PDF "));
           var arr = document.createElement("span");
           arr.className = "arr";
           arr.textContent = "→";
