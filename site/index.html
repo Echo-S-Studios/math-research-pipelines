@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Echo-S Studios — Research Pipelines</title>
+<meta name="description" content="Machine-verified, exact-arithmetic mathematics research: the λ=2c conformal identity and the emission-gap theorem, the vector substrate, and residual-return learning dynamics — each paper backed by a runnable verification pipeline.">
+<meta name="author" content="Echo-S Studios">
+<meta name="theme-color" content="#05060b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Echo-S Studios — Research Pipelines">
+<meta property="og:description" content="Four companion papers, each re-derived in exact arithmetic by a runnable verification pipeline. Read the PDFs and explore the interactive Matrix Plates tool.">
+<meta property="og:site_name" content="Echo-S Studios Research">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Echo-S Studios — Research Pipelines">
+<meta name="twitter:description" content="Four companion papers, each re-derived in exact arithmetic by a runnable verification pipeline.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%2305060b'/%3E%3Ctext%20x='16'%20y='23'%20font-size='20'%20text-anchor='middle'%20fill='%23e9c46a'%20font-family='Georgia,serif'%3E%CF%86%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Echo-S Studios — Research Pipelines",
+  "description": "Four companion mathematics papers, each backed by a runnable exact-arithmetic verification pipeline.",
+  "author": { "@type": "Organization", "name": "Echo-S Studios" },
+  "url": "https://github.com/Echo-S-Studios/math-research-pipelines"
+}
+</script>
+<style>
+  :root{
+    --void:#05060b; --panel0:#0b0d18; --panel1:#0f1120; --ink:#ececf4; --muted:#a2a7c0;
+    --line:#23273d; --edge:#2a2e44; --gold:#e9c46a; --teal:#5cc9c0; --violet:#8fb6ff;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"URW Palladio L",Georgia,"Times New Roman",serif;
+    --ui:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  }
+  *{ box-sizing:border-box }
+  html,body{ margin:0 }
+  body{
+    background:radial-gradient(130% 100% at 50% 0%, #11142a 0%, var(--panel0) 44%, var(--void) 100%);
+    color:var(--ink); font-family:var(--ui); min-height:100vh; padding:0 0 72px;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 clamp(16px,3vw,34px) }
+  a{ color:inherit }
+
+  /* skip-link */
+  .skip{ position:absolute; left:-9999px; top:0; background:var(--gold); color:#0a0b12;
+    font-family:var(--mono); font-size:12px; padding:8px 14px; border-radius:0 0 8px 0; z-index:50 }
+  .skip:focus{ left:0 }
+
+  /* masthead */
+  header{ padding:clamp(34px,6vw,68px) 0 8px }
+  .eyebrow{ font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 14px }
+  h1{ font-family:var(--serif); font-weight:500; font-size:clamp(32px,6vw,56px); line-height:.98; margin:0;
+    letter-spacing:.004em; background:linear-gradient(180deg,#fff,#d9c79a 70%,#b8975a);
+    -webkit-background-clip:text; background-clip:text; color:transparent }
+  .thesis{ font-family:var(--serif); font-style:italic; font-size:clamp(15px,2.4vw,19px); color:#cfd3e6;
+    margin:16px 0 0; max-width:64ch; opacity:.95 }
+  .lede{ font-size:15px; line-height:1.65; color:#c4c8dd; max-width:70ch; margin:20px 0 0 }
+  .lede b{ color:#e7ebf8; font-weight:600 }
+
+  /* section heads */
+  h2{ font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin:42px 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line) }
+
+  /* card grid */
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:18px }
+  .card{ display:flex; flex-direction:column; gap:12px; text-decoration:none;
+    border:1px solid var(--line); border-radius:16px; padding:22px 22px 20px;
+    background:linear-gradient(180deg, rgba(15,17,32,.7), rgba(11,13,24,.7));
+    transition:border-color .2s, transform .2s, box-shadow .2s; position:relative; overflow:hidden }
+  .card::before{ content:""; position:absolute; inset:0 0 auto 0; height:2px;
+    background:linear-gradient(90deg, var(--gold), var(--teal)); opacity:.0; transition:opacity .2s }
+  .card:hover, .card:focus-visible{ border-color:#454c70; transform:translateY(-3px);
+    box-shadow:0 14px 38px -18px rgba(0,0,0,.8); outline:none }
+  .card:hover::before, .card:focus-visible::before{ opacity:.9 }
+  .card:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+  .card .toprow{ display:flex; align-items:center; justify-content:space-between; gap:10px }
+  .tag{ font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    padding:4px 9px; border-radius:999px; border:1px solid var(--edge); color:var(--muted) }
+  .tag.pdf{ color:var(--gold); border-color:rgba(233,196,106,.4) }
+  .tag.live{ color:var(--teal); border-color:rgba(92,201,192,.4) }
+  .pp{ font-family:var(--mono); font-size:11px; color:var(--muted) }
+  .card h3{ font-family:var(--serif); font-weight:500; font-size:22px; line-height:1.15; margin:2px 0 0 }
+  .series{ font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--violet); margin:0 }
+  .card p{ font-size:13.5px; line-height:1.6; color:#b9bdd4; margin:2px 0 0 }
+  .go{ margin-top:auto; padding-top:10px; font-family:var(--mono); font-size:12px; letter-spacing:.06em;
+    color:var(--gold); display:inline-flex; align-items:center; gap:7px }
+  .card:hover .go .arr{ transform:translateX(3px) }
+  .arr{ transition:transform .2s }
+
+  /* footer */
+  footer{ margin-top:54px; padding-top:22px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px 20px }
+  footer a{ color:var(--muted); text-decoration:none; border-bottom:1px solid transparent; transition:color .18s, border-color .18s }
+  footer a:hover, footer a:focus-visible{ color:var(--ink); border-color:var(--edge); outline:none }
+  footer a:focus-visible{ outline:2px solid var(--gold); outline-offset:2px }
+
+  @media (max-width:560px){
+    .grid{ grid-template-columns:1fr }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ transition:none !important; animation:none !important; scroll-behavior:auto !important }
+  }
+  @media print{
+    body{ background:#fff; color:#111 }
+    h1{ -webkit-text-fill-color:#111; color:#111 }
+    .card{ border-color:#ccc; background:#fff; break-inside:avoid }
+    .skip{ display:none }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main class="wrap" id="main">
+  <header>
+    <p class="eyebrow">Echo-S Studios · Research</p>
+    <h1>Exact-arithmetic mathematics, made runnable.</h1>
+    <p class="thesis">Four companion papers — and behind each one, a pipeline that re-derives its load-bearing claims in exact arithmetic, so every displayed number can be reproduced rather than trusted.</p>
+    <p class="lede">No float crosses a decision boundary. Each paper below links to its rendered PDF; each is backed by a machine-checked verification suite in the
+      <a href="https://github.com/Echo-S-Studios/math-research-pipelines" style="color:var(--gold);text-decoration:none;border-bottom:1px solid var(--edge)">source repository</a>.
+      The interactive <b>Matrix Plates</b> explorer runs the same exact algebra in your browser, with no install.</p>
+  </header>
+
+  <section aria-labelledby="papers-head">
+    <h2 id="papers-head">The papers</h2>
+    <div class="grid">
+
+      <a class="card" href="papers/lambda_2c_paper.pdf" target="_blank" rel="noopener"
+         aria-label="The Exchange Rate lambda = 2c — PDF, 24 pages, opens in a new tab">
+        <div class="toprow"><span class="tag pdf">PDF ↗</span><span class="pp">24 pp</span></div>
+        <p class="series">λ=2c &amp; Emission-Gap · Paper 1</p>
+        <h3>The Exchange Rate λ = 2c</h3>
+        <p>A conformal identity, its gate, and its flip. Derives λ = 2c as forced, the gate set {¼,½,1} → {2,3,5}, and the flip at C = −1 — 90 FORCED claims, machine-checked in exact arithmetic.</p>
+        <span class="go">Read PDF <span class="arr">→</span></span>
+      </a>
+
+      <a class="card" href="papers/emission_gap_paper.pdf" target="_blank" rel="noopener"
+         aria-label="The Emission-Gap Theorem — PDF, 16 pages, opens in a new tab">
+        <div class="toprow"><span class="tag pdf">PDF ↗</span><span class="pp">16 pp</span></div>
+        <p class="series">λ=2c &amp; Emission-Gap · Paper 2</p>
+        <h3>The Emission-Gap Theorem</h3>
+        <p>The integer-quadratic Mahler spectrum {1} ∪ [φ, ∞) and the cost floor ≥ log φ. A closure argument — not an enumeration — rules out an emitted Salem number.</p>
+        <span class="go">Read PDF <span class="arr">→</span></span>
+      </a>
+
+      <a class="card" href="papers/vector_substrate.pdf" target="_blank" rel="noopener"
+         aria-label="The Vector Substrate — PDF, 29 pages, opens in a new tab">
+        <div class="toprow"><span class="tag pdf">PDF ↗</span><span class="pp">29 pp</span></div>
+        <p class="series">Residual Return · Paper 1</p>
+        <h3>The Vector Substrate</h3>
+        <p>Number fields as exact learning geometry. The trace form is the Minkowski-embedding Gram (det G = d_K); residuals, projectors, and admissibility are all decided exactly over ℚ.</p>
+        <span class="go">Read PDF <span class="arr">→</span></span>
+      </a>
+
+      <a class="card" href="papers/residual_return_learning.pdf" target="_blank" rel="noopener"
+         aria-label="Residual Return: Exact Learning Dynamics and Language — PDF, 30 pages, opens in a new tab">
+        <div class="toprow"><span class="tag pdf">PDF ↗</span><span class="pp">30 pp</span></div>
+        <p class="series">Residual Return · Paper 2</p>
+        <h3>Residual Return</h3>
+        <p>Exact learning dynamics and language. Learning as the residual r = x − Px under a growth gate; the Cl(2,0) carrier, the return operator, and a content-hash lexicon — capture ⟺ residual = 0.</p>
+        <span class="go">Read PDF <span class="arr">→</span></span>
+      </a>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="tool-head">
+    <h2 id="tool-head">Interactive</h2>
+    <div class="grid">
+      <a class="card" href="tool/" aria-label="Matrix Plates — interactive in-browser tool">
+        <div class="toprow"><span class="tag live">Live tool</span><span class="pp">no install</span></div>
+        <p class="series">matrix-plates</p>
+        <h3>Matrix Plates explorer</h3>
+        <p>Build integer matrices graded by Mahler measure; follow the companion∘charpoly closure; read the minimal polynomial, invariant factors, and an exact similarity verdict — all in exact in-browser rational arithmetic.</p>
+        <span class="go">Open the tool <span class="arr">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Echo-S Studios</span>
+    <a href="https://github.com/Echo-S-Studios/math-research-pipelines">Source &amp; verification pipelines on GitHub</a>
+    <a href="https://github.com/Echo-S-Studios/math-research-pipelines/blob/main/LICENSE">MIT License</a>
+  </footer>
+</main>
+</body>
+</html>
