@@ -97,6 +97,31 @@ one-way keystone bridge (`../L00M`); `verify.py` sets `KIRA_LANG_L00M_ROOT` to t
 resolves wherever you extract. The exact core (`integral_basis`, `projector`, `loom`, the entire
 `holding` carrier) is **pure stdlib `fractions`** — no float in any decision.
 
+### Module map (where each thing lives)
+
+Per-directory READMEs go a level deeper than this table:
+
+| Path | Contents | README |
+|---|---|---|
+| `L00M/` | the L0 exact core: `integral_basis.py` (coordinate object + trace-form Gram via Newton's identities), `projector.py` (the `G`-orthogonal projector + exact residual), `loom.py` (Faddeev–LeVerrier charpoly, rational Krylov minpoly, the `M=1` Kronecker floor, the weave closure) | [`L00M/README.md`](L00M/README.md) |
+| `L00M/training/` | the learner (`residual_learner`), the exact minpoly bridge (`coords_to_minpoly` + vendored `invariant_factors`), out-of-field detection + disjoint/non-disjoint compositum growth, the Northcott **capacity** gate, the anomaly detector, and `demo.py` | [`L00M/training/README.md`](L00M/training/README.md) |
+| `L00M/paper/` | the two PDFs + `.tex` sources + the companion probes (`residual_return_audit.py`, `test_residual_return_claims.py`; the third probe `test_paper_claims.py` lives in `training/`) — all importing **no engine** | [`L00M/paper/README.md`](L00M/paper/README.md) |
+| `kira-language/` | the language layer: `KL_DTA.py` (the two-route closure spine), the `kira_language/` package, the 121-test suite, `SCOPING.md`, `B1_READINESS.md` | [`kira-language/README.md`](kira-language/README.md) |
+| `kira-language/kira_language/` | the shipped package: the exact `holding` carrier, the `acquisition` return loop, the growing `lexicon`, the sha256-chain `store`, the float `semantic_kernel`, the one-way `loom_bridge`, the JSON `dispatch` shell | [`kira-language/kira_language/README.md`](kira-language/kira_language/README.md) |
+
+### The L0 ↔ language bridge (one object, two trees)
+
+The number-field engine (`L00M`) and the language layer (`kira-language`) meet at exactly **one
+shared object: the φ keystone**. The void law `x² = x + 1` gives the minimal polynomial `[1,-1,-1]`,
+whose companion matrix `loom.companion([1,-1,-1]) = [[0,1],[1,1]]` maps under the shared `mat/cl`
+convention to the Cl(2,0) holding `Cl(0.5, 1, -0.5, 0)`, with Mahler measure exactly φ. This single
+object is `loom`'s `CATALOG_SEEDS["phi"]`, the language layer's keystone `R`, and the head of the
+acquisition return operator `L(X) = R·X + X·R − X` (whose kernel is the 2-dimensional "phi-slack"
+where learned words live). `kira_language/loom_bridge.py` is the **only** runtime module that imports
+`loom`, and it does so read-only and never-raising; the dependency is strictly one-way
+(`kira-language → loom`, never the reverse), enforced by separate git history and by the readiness
+gate (`test_b1_readiness.py::test_one_way_and_live_phi`).
+
 ---
 
 ## 6. Scope — and the reviewer's open questions, answered by the code
@@ -162,4 +187,31 @@ impossible to dismiss without running it.
 All code is pinned. See `MANIFEST.txt` for the per-file commit hashes and the suite counts at the pinned
 heads (L00M `f238d6b`; kira-language `44829ff`, tag `b1-ready` = `a5892c7`; the ZFP context gate at
 Plate-Matrices `5e78d67`). The PDFs in `L00M/paper/` are the committed artifacts; the `.tex` sources are
-included so the papers themselves are auditable.
+included so the papers themselves are auditable. Per-file SHA-256 digests are in `SHA256SUMS`.
+
+---
+
+## 8. Troubleshooting
+
+| Symptom | Cause / fix |
+|---|---|
+| `ModuleNotFoundError: No module named 'sympy'` (or `mpmath`) | Required for **all** of Parts A–C. `pip install -r requirements.txt`. `verify.py`'s env check prints exactly which is missing. |
+| `numpy` missing | Needed **only** for the kira-language suite's quarantined float readings (Part C). The exact claims and the probes don't use it; `--quick` and `--walk` (without full suites) run without numpy. |
+| `pytest` missing | `verify.py` drives every probe and suite through pytest, so it is required for Parts A–C. Install it (it is in `requirements.txt`). |
+| kira-language tests fail to `import loom` | The language layer reaches `loom` one-way via `KIRA_LANG_L00M_ROOT`. `verify.py` sets this to the bundled `L00M` automatically. Running the suite by hand: `KIRA_LANG_L00M_ROOT=<abs path to L00M> py -m pytest -q` from `kira-language/` (or rely on `conftest.py`, which appends the sibling `../L00M`). |
+| `py: command not found` | `py` is the Windows launcher. Use `python3` on macOS/Linux (the commands here use `py` for brevity). |
+| Unicode/encoding error from the kira-language shell on a legacy Windows console | `kira_language/portable_io.py` transliterates to ASCII; the dispatch JSON is already `ensure_ascii`. If you still hit it, set `PYTHONUTF8=1` (or `PYTHONIOENCODING=utf-8`, which `verify.py` sets). |
+| A probe or claim **fails** | That is itself information — by design. The package is built so a dismissal must point at a specific failing test, not at absent evidence. Inspect the named node; the `shorthand` flag (one, intentional) is **not** a failure (see §4). |
+
+## 9. Related
+
+- **The other two pipelines in this repo** share the exact-arithmetic discipline:
+  [`lambda2c-emissiongap-verification`](../lambda2c-emissiongap-verification/README.md) (the λ = 2c
+  exchange-rate and Emission-Gap papers — the same `λ = 2c` closure this package derives, proven there
+  as 90 FORCED claims) and [`matrix-plates`](../matrix-plates/README.md) (exact integer-matrix
+  invariants graded by Mahler measure, the `companion ∘ charpoly` closure, and a self-contained
+  browser tool — the same `loom`-style kernel).
+- **The repo root:** [`../README.md`](../README.md) — what makes all three rigorous, and the
+  quickstart for each.
+- **The live site:** <https://echo-s-studios.github.io/math-research-pipelines/> — both PDFs are
+  mirrored at `/papers/vector_substrate.pdf` and `/papers/residual_return_learning.pdf`.

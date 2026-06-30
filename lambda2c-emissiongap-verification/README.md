@@ -65,21 +65,39 @@ each run; the large populated file is the deliverable.
 
 ```
 lambda2c-emissiongap-verification/
-├── README.md                 # this file
-├── requirements.txt          # pinned deps (section 9)
-├── run_all.py                # master: build PDFs + run suite
-├── build_pdfs.py             # step 2: render the two .tex -> output/*.pdf
-├── run_tests.py              # step 3: run suite step by step -> output/results.json
-├── conftest.py               # pytest wiring + JSON lifecycle
-├── harness/
-│   ├── algebra.py            # exact primitives (companion, ad, trace-down, Sturm, Mahler)
-│   └── results.py            # the shared append-only results JSON
-├── papers/
-│   ├── lambda_2c_paper.tex   # canonical source (Paper 1)
-│   └── emission_gap_paper.tex# canonical source (Paper 2)
-├── tests/                    # the suite (one core equation per file, section 5)
-└── output/                   # PDFs + results.json land here
+├── README.md                  # this file
+├── requirements.txt           # pinned deps (section 9)
+├── run_all.py                 # master: build PDFs + run suite (step 2 then step 3)
+├── build_pdfs.py              # step 2: render the two .tex -> output/*.pdf
+├── run_tests.py               # step 3: run suite file-by-file -> output/results.json
+├── conftest.py                # pytest wiring + JSON init/finalize lifecycle
+├── emission_closure_guard.py  # root engine: exact runtime closure CERTIFICATE
+│                              #   (+ foreign-op tripwire); used by test_p2_08
+├── emission_algebra.py        # root engine: the functional emission algebra with
+│                              #   the cost floor built in; used by test_p2_09
+├── harness/                   # the shared engine + ledger  (see harness/README.md)
+│   ├── algebra.py             #   exact primitives (companion, ad, trace-down, Sturm, Mahler)
+│   ├── results.py             #   the shared append-only results JSON lifecycle
+│   └── __init__.py            #   (empty; plain package)
+├── papers/                    # canonical .tex sources  (see papers/README.md)
+│   ├── lambda_2c_paper.tex    #   Paper 1 (719 lines, ~24 pp)
+│   └── emission_gap_paper.tex #   Paper 2 (462 lines, ~16 pp)
+├── tests/                     # the suite, 21 files  (see tests/README.md)
+│   ├── test_constants.py      #   9 catalog constants  (CONST-*)
+│   ├── test_p1_01..11_*.py    #   Paper 1, 41 claims    (P1-*)
+│   └── test_p2_01..09_*.py    #   Paper 2, 40 claims    (P2-*)
+├── output/                    # PDFs + results.json land here (see output/README.txt)
+└── LICENSE                    # MIT (Copyright (c) 2026 Echo-S Studios)
 ```
+
+Each subdirectory carries its own README with the detail this file summarizes:
+
+| README | Covers |
+|---|---|
+| [`harness/README.md`](harness/README.md) | every exact primitive in `algebra.py`, and the `init`/`record`/`finalize` results lifecycle in `results.py` |
+| [`papers/README.md`](papers/README.md) | what each paper establishes, page counts, the 3-/2-pass PDF build, and CI publishing to the live Pages site |
+| [`tests/README.md`](tests/README.md) | the full per-file → `test_id` map (verified against the docstrings) and the per-test → `results.json` record flow |
+| [`output/README.txt`](output/README.txt) | the run-time artifacts, the record shape, and troubleshooting |
 
 ---
 
@@ -191,6 +209,31 @@ The suite mirrors the papers' arithmetic policy:
 Only `[FORCED]`/`[COMPUTED]` claims are asserted. `[DECLARED]`/`[POSITED]` modelling choices
 (for example the Jeffreys reading `c=1`) are recorded as context, not proven.
 
+Three discipline points are worth making explicit, because they are where exact arithmetic
+actually earns its keep:
+
+- **Salem detection is a sign, not a float.** "Is this the minimal polynomial of a Salem
+  number?" is decided by the **trace-down** `R(x) = x^m T(x + 1/x)` and an exact **Sturm**
+  straddle count on `T` (one root past `t = 2`, the rest inside `(-2, 2)`, none at `±2`) — see
+  `harness.algebra.flip_straddle`. The companion paper's `beta < phi` test in
+  `emission_closure_guard.py` is likewise an **exact sign in `Q(sqrt5)`** (`R(phi) > 0`), never
+  a numeric comparison. A float `n_on_circle` exists, but only as a diagnostic readout.
+- **Closure, not enumeration — and an honest correction.** The no-Salem result is an *invariant*
+  preserved by every spectral operation (`test_p2_02`), not a finite sample; the runtime guard
+  (`test_p2_08`) is the **certificate** of that closure and the tripwire for the one
+  field-breaking operation (the free commutator). Where enumeration *is* used — the 27 subfields
+  of `K` in `test_p2_07` — it is genuinely exhaustive, and it **corrects** a uniqueness
+  overstatement: there are four `(2,1)` quartic subfields, and the exclusion rests on the lattice
+  *invariant*, not on uniqueness.
+- **The free parameter stays free.** `c` (equivalently `C`) is carried symbolically; `c = 1` and
+  `c = n` are *read off* the identity `lambda = 2c`, never hard-frozen. Freezing `c` would launder
+  a posit (Cencov), so what is forced is the **gate set** `{1/4, 1/2, 1} -> {2, 3, 5}` and the
+  cost floor `2c log phi` (linear in `c`, verified parametrically in `test_p2_09`), not a single
+  number.
+
+This is the same discipline shared across all three pipelines in the repo; see the
+[repository README](../README.md#what-makes-this-rigorous).
+
 ---
 
 ## 8. Reproducibility
@@ -209,3 +252,41 @@ FORCED, 0 failed**.
   suite (Step 3) does not depend on TeX.
 - **Python standard library** — `fractions`, `math`, `itertools`, `functools`, `random`,
   `subprocess` (no install needed).
+
+---
+
+## 10. Troubleshooting
+
+| Symptom | Cause / fix |
+|---|---|
+| `output/results.json` still shows `"results": []` after a run | the suite was not actually run, or `RESULTS_JSON` pointed elsewhere. Run `pytest -v` from this directory, or `python run_tests.py`. |
+| `[build_pdfs] pdflatex not found on PATH` and no PDFs | install **TeX Live** (provides `pdflatex`; `lmodern` optional). This is **not** a test failure — `build_pdfs.py` exits `0` by design and the suite is independent of TeX. |
+| `ModuleNotFoundError: harness` | run from the package root, or via `run_tests.py` / `pytest` (which place the root on `sys.path` through [`conftest.py`](conftest.py)); don't run a test file by raw path from another directory. |
+| `total_claims != 90` or `failed > 0` | a real failure is information. Re-run the offending file alone, e.g. `pytest -v tests/test_p2_02_angle.py`, and read its exact assertions; the per-file map is in [`tests/README.md`](tests/README.md). |
+| `"completed_utc": null` / no `summary` block | the session was interrupted before `finalize()`. Re-run to completion. |
+| version drift in `meta.versions` vs the expected numbers | reinstall the pins: `pip install -r requirements.txt` (the running versions are stamped into the JSON for exactly this check). |
+
+---
+
+## 11. Where this lives — the repo and the live site
+
+This package is one of **three** exact-arithmetic verification pipelines in
+[`math-research-pipelines`](../README.md):
+
+- [**matrix-plates**](../matrix-plates/README.md) — exact integer-matrix invariants graded by
+  Mahler measure, the `companion ∘ charpoly` closure, and a self-contained in-browser tool.
+- [**residual-return-verification**](../residual-return-verification/README.md) — the exact
+  learning substrate (*The Vector Substrate* / *Residual Return*) whose growth rule is the very
+  `‖r‖²_G ≥ λ log M(θ)` this package's `λ = 2c` identity pins down.
+
+All three share one discipline — exact arithmetic at every decision boundary, epistemic grading,
+closure over enumeration — laid out in the [repository README](../README.md#what-makes-this-rigorous).
+
+The two papers verified here are also **live on GitHub Pages**, compiled from
+[`papers/*.tex`](papers/README.md) by CI ([`pages.yml`](../.github/workflows/pages.yml)):
+
+- **<https://echo-s-studios.github.io/math-research-pipelines/>** — the landing page.
+- **`/papers/lambda_2c_paper.pdf`** and **`/papers/emission_gap_paper.pdf`** — the compiled PDFs.
+
+CI for this package ([`lambda2c.yml`](../.github/workflows/lambda2c.yml)) runs `pytest -v` on
+Python 3.12 and uploads `output/results.json` as a build artifact on every push.

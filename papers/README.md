@@ -1,4 +1,4 @@
-# `papers/` — drop-in PDFs for the Pages site
+# `papers/` — drop-in papers, docs & tools for the Pages site
 
 Put any PDF, **Markdown document**, or **self-contained HTML tool** you want published on the
 [GitHub Pages site](../site/index.html) **in this folder**, then add one entry to
@@ -54,4 +54,33 @@ as-is (keep it dependency-light), and its card appears under **Interactive**.
    branch, or run the **Deploy GitHub Pages** workflow manually). The card appears under
    *Additional papers* on the site.
 
-`catalog.json` ships as an empty list `[]`; that simply means no extra cards yet.
+An empty `catalog.json` (`[]`) simply means no extra cards yet; remove an entry (and its file) to
+take a card down.
+
+## Current contents
+
+The files in this folder and their cards on the live site (see [`catalog.json`](catalog.json) for
+the exact metadata):
+
+**Additional papers** (`pdf` / `doc`)
+
+| File | Card |
+|---|---|
+| `lehmers_box.pdf` | Lehmer's Box (14 pp) |
+| `salem_slot.pdf` | The Occupant of the Salem Slot (11 pp) |
+| `generative_emptiness.pdf` | The Generative Content of a Conserved Emptiness (7 pp) |
+| `operatoralgebrawhitepaper.pdf` | The Operator Algebra of the Emission Semiring (6 pp) |
+| `lehmersproblemanintroduction.md` → `.html` | Lehmer's Problem: An Introduction (primer) |
+| `EMISSIONALGEBRASPEC.md` → `.html` | Building on the Emission Algebra — a build spec |
+
+**Interactive** (`tool`)
+
+| File | Card |
+|---|---|
+| `lehmers_box_instrument.html` | Lehmer's Box — closure instrument |
+| `emissionalgebracompendium.html` | The Emission Algebra — a machine-verified account |
+
+The four pipeline-paper cards (the two λ=2c papers and the two residual-return papers) and the
+Matrix Plates tool are **not** listed here — they come straight from the pipelines and are
+hard-wired in [`site/index.html`](../site/index.html) and [`pages.yml`](../.github/workflows/pages.yml).
+
