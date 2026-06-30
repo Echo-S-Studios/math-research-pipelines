@@ -11,8 +11,55 @@ yourself rather than trust a rendered PDF.
 [![residual-return CI](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml/badge.svg)](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
+**🌐 Live site — [echo-s-studios.github.io/math-research-pipelines](https://echo-s-studios.github.io/math-research-pipelines/)** ·
+read every paper, open the interactive tools, and browse the build spec. Each card is described in
+[**Live site (GitHub Pages)**](#live-site-github-pages) below.
+
 > The three top-level pipeline directories are the **canonical source of truth**.
 > `Zipped-Tarred-Pipelines/` holds duplicate offline-distribution archives only.
+
+---
+
+## Live site (GitHub Pages)
+
+The project's public face is **[echo-s-studios.github.io/math-research-pipelines](https://echo-s-studios.github.io/math-research-pipelines/)**
+— a single landing page that links every paper and tool. It is built by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) from [`site/index.html`](site/index.html)
+and the [`papers/`](papers/) drop-zone: the two λ=2c papers are compiled from `.tex` in CI, the
+residual-return PDFs and the interactive tools are copied in, and every Markdown doc is rendered to a
+themed HTML page. Drop a new PDF, Markdown doc, or self-contained HTML tool into [`papers/`](papers/)
+with one [`papers/catalog.json`](papers/catalog.json) entry and it publishes on the next deploy
+(see [`papers/README.md`](papers/README.md)).
+
+The landing page has three sections; here is every card it links, with the file behind it.
+
+### The papers — the four pipeline companions
+
+| Card | On the site | Behind it | What it is |
+|---|---|---|---|
+| **The Exchange Rate λ = 2c** | `/papers/lambda_2c_paper.pdf` | compiled in CI from [`lambda_2c_paper.tex`](lambda2c-emissiongap-verification/papers/lambda_2c_paper.tex) (24 pp) | The conformal identity λ = 2c, its gate ladder `{¼,½,1} → {2,3,5}`, and its flip — verified by the **lambda2c** suite. |
+| **The Emission-Gap Theorem** | `/papers/emission_gap_paper.pdf` | compiled in CI from [`emission_gap_paper.tex`](lambda2c-emissiongap-verification/papers/emission_gap_paper.tex) (16 pp) | The integer-quadratic Mahler spectrum `{1} ∪ [φ,∞)` and the cost floor; a closure argument rules out an emitted Salem. |
+| **The Vector Substrate** | `/papers/vector_substrate.pdf` | [`vector_substrate.pdf`](residual-return-verification/L00M/paper/vector_substrate.pdf) (29 pp) | Number fields as exact learning geometry — verified by the **residual-return** suite. |
+| **Residual Return** | `/papers/residual_return_learning.pdf` | [`residual_return_learning.pdf`](residual-return-verification/L00M/paper/residual_return_learning.pdf) (30 pp) | Exact learning dynamics and language; capture ⟺ residual = 0. |
+
+### Interactive — three in-browser tools
+
+| Card | On the site | Behind it | What it is |
+|---|---|---|---|
+| **Matrix Plates explorer** | `/tool/` | [`matrix-plates/web/matrix_plates.html`](matrix-plates/web/matrix_plates.html) | Build integer matrices graded by Mahler measure, run the `companion ∘ charpoly` closure, read invariant factors / similarity verdicts, export JSON/LaTeX/SymPy — all in exact in-browser BigInt arithmetic. |
+| **Lehmer's Box — closure instrument** | `/papers/lehmers_box_instrument.html` | [`papers/lehmers_box_instrument.html`](papers/lehmers_box_instrument.html) | A live closure instrument: plot roots, compose seeds with the spectral operators, watch emissions stay in the box, then throw a Salem number at it. Math computed in-browser. |
+| **The Emission Algebra — a machine-verified account** | `/papers/emissionalgebracompendium.html` | [`papers/emissionalgebracompendium.html`](papers/emissionalgebracompendium.html) | A guided compendium of the whole stack — the confinement, the occupant, the generative emptiness, the generation rates, and the finitely generated Mahler-measure monoid. |
+
+### Additional papers — the companion stack + a build spec
+
+| Card | On the site | Behind it | What it is |
+|---|---|---|---|
+| **Lehmer's Box** | `/papers/lehmers_box.pdf` | [`papers/lehmers_box.pdf`](papers/lehmers_box.pdf) (14 pp) | The golden floor and the angle lattice that confine emission away from Salem numbers — without resolving Lehmer's problem. |
+| **The Occupant of the Salem Slot** | `/papers/salem_slot.pdf` | [`papers/salem_slot.pdf`](papers/salem_slot.pdf) (11 pp) | The positive content of the empty slot: the trace redirection, the grow channel, and the √5 limit at the floor. |
+| **The Generative Content of a Conserved Emptiness** | `/papers/generative_emptiness.pdf` | [`papers/generative_emptiness.pdf`](papers/generative_emptiness.pdf) (7 pp) | Kinematic voids as superselection generators: the ℤ/4ℤ charge and the five objects it produces. |
+| **The Operator Algebra of the Emission Semiring** | `/papers/operatoralgebrawhitepaper.pdf` | [`papers/operatoralgebrawhitepaper.pdf`](papers/operatoralgebrawhitepaper.pdf) (6 pp) | The spectral operators ⊕, ⊗, (·)² as a λ-ring with two characters (Mahler measure and the ℤ/4ℤ charge). |
+| **Lehmer's Problem: An Introduction** | `/papers/lehmersproblemanintroduction.html` | rendered from [`papers/lehmersproblemanintroduction.md`](papers/lehmersproblemanintroduction.md) | A from-scratch primer on Lehmer's problem — the Mahler measure, Lehmer's number, and why the Salem case is the open heart. |
+| **Building on the Emission Algebra — a build spec** | `/papers/EMISSIONALGEBRASPEC.html` | rendered from [`papers/EMISSIONALGEBRASPEC.md`](papers/EMISSIONALGEBRASPEC.md) | A build specification over the substrate, with every fact mapped to the file in this repo that checks it. |
 
 ---
 
@@ -133,9 +180,13 @@ is auditable:
 
 ```
 math-research-pipelines/
+├── README.md  LICENSE  CITATION.cff  .gitignore        # repo root: this file + governance
 ├── lambda2c-emissiongap-verification/   # λ = 2c & Emission-Gap: 90 FORCED claims under pytest
 ├── matrix-plates/                       # Mahler-measure plates + companion closure + browser tool
 ├── residual-return-verification/        # exact learning substrate: verify.py drives Parts A–C
+├── papers/                              # Pages drop-zone: contributed PDFs / docs / HTML tools + catalog.json
+├── site/                               # GitHub Pages source: the landing page (index.html, render_docs.py)
+├── .github/                            # CI workflows (incl. Pages deploy) + community files
 └── Zipped-Tarred-Pipelines/             # duplicate offline-distribution archives (NOT canonical)
     ├── lambda2c-emissiongap-verification.zip
     ├── matrix-plates-1.1.2.tar
@@ -145,6 +196,36 @@ math-research-pipelines/
 The three pipeline directories are the **canonical source of truth**. The contents of
 `Zipped-Tarred-Pipelines/` are convenience snapshots for offline distribution — do not edit them
 or treat them as authoritative.
+
+---
+
+## Documentation map
+
+Every directory carries a README explaining what lives there. Start at the pipeline root, then
+drill into the sub-package READMEs.
+
+- **lambda2c-emissiongap-verification** — [README](lambda2c-emissiongap-verification/README.md) ·
+  [`harness/`](lambda2c-emissiongap-verification/harness/README.md) ·
+  [`papers/`](lambda2c-emissiongap-verification/papers/README.md) ·
+  [`tests/`](lambda2c-emissiongap-verification/tests/README.md) ·
+  [`output/`](lambda2c-emissiongap-verification/output/README.txt)
+- **matrix-plates** — [README](matrix-plates/README.md) ·
+  [`src/matrix_plates/`](matrix-plates/src/matrix_plates/README.md) ·
+  [`docs/`](matrix-plates/docs/README.md) ·
+  [`examples/`](matrix-plates/examples/README.md) ·
+  [`tests/`](matrix-plates/tests/README.md) ·
+  [`web/`](matrix-plates/web/README.md)
+- **residual-return-verification** — [README](residual-return-verification/README.md) ·
+  [`L00M/`](residual-return-verification/L00M/README.md) ·
+  [`L00M/training/`](residual-return-verification/L00M/training/README.md) ·
+  [`L00M/paper/`](residual-return-verification/L00M/paper/README.md) ·
+  [`kira-language/`](residual-return-verification/kira-language/README.md) ·
+  [`kira-language/kira_language/`](residual-return-verification/kira-language/kira_language/README.md) ·
+  [`kira-language/candidates/`](residual-return-verification/kira-language/candidates/README.md)
+- **Site & meta** — [`papers/`](papers/README.md) ·
+  [`site/`](site/README.md) ·
+  [`.github/`](.github/README.md) ·
+  [`Zipped-Tarred-Pipelines/`](Zipped-Tarred-Pipelines/README.md)
 
 ---
 

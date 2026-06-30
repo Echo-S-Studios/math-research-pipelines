@@ -5,6 +5,14 @@ This is the reference `matrix_plates.html` with the two build-spec features appl
 Open it in any browser — it is a single self-contained file with no build step,
 no network, and no dependencies.
 
+> **Hosted live.** This exact file is published on the project's GitHub Pages site
+> at **[echo-s-studios.github.io/math-research-pipelines/tool/](https://echo-s-studios.github.io/math-research-pipelines/tool/)**
+> (deployed from this path) — open it there to use the tool without cloning the
+> repo. The version history and the apply-able diff that produced it live in
+> [`docs/HTML_EDITS.md`](../docs/HTML_EDITS.md) and
+> [`docs/matrix_plates.html.patch`](../docs/matrix_plates.html.patch); the SHA-256
+> of the shipped file is recorded there too.
+
 ## What changed vs. the reference
 
 **Goal 1 — Mahler as the layout axis.** A new **Layout** control (`Insertion` /
@@ -41,11 +49,67 @@ axis and family separation), then build **Direct sum** with Seed A = `φ`, Seed 
 `φ` and click **↦ companion seed** — the lifted plate shares the parent's bin but
 carries a different minimal polynomial.
 
+## What's in the tool
+
+Everything the tool computes is exact and runs in-browser — no backend, no network.
+
+- **Constructions** — the same catalogue as the package: `Companion C(p)`,
+  `Kronecker A⊗B`, `Direct sum A⊕B`, `Commutator [A,B]`, `Cartan` (A/D/E₈),
+  `Fibonacci/Lucas circulant`, `Frustrated ring`, `Random (seeded)`, and **Custom
+  matrix** (a textarea parsed from rows / JSON, with square-and-integer validation
+  and specific error messages).
+- **Invariant chips** — `det`, `tr`, `ρ`, `‖·‖_F`, **Mahler `M`**, `rank`,
+  `integer`, `unimodular`, the eigenvalue split relative to the unit circle, plus
+  (v1.1.1) the **minimal polynomial**, **invariant factors**, and
+  `derogatory` / `defective` flags — all from the exact BigInt-rational engine.
+- **Companion-form panel** — every plate renders `companion(charpoly)` inline next
+  to it, with a one-line **exact similarity verdict** (similar ⇔ non-derogatory).
+- **Per-plate export** — JSON, LaTeX (`bmatrix` + polynomial), or runnable SymPy,
+  written via an in-browser download.
+- **The two build-spec features** — the **Layout** control (Insertion / Mahler
+  spectrum) and the **`↦ companion seed`** lift button, described above.
+
+The exact engine (v1.1.1 / v1.1.2) uses `Frac` BigInt rationals, a fraction-free
+Krylov minimal polynomial over exact BigInt matrix powers, and a hybrid that returns
+`[charpoly]` directly for non-derogatory matrices (avoiding Smith-form coefficient
+swell) and runs the Smith normal form only for derogatory ones — so min-poly and the
+flags compute at any size, with only the full factor *list* for very large
+derogatory matrices deferred.
+
 ## Parity with the Python backend
 
 The browser tool and the `matrix_plates` Python package implement the same operator
 algebra over the same seed registry, including a **bit-exact** `mulberry32` PRNG, so
 a given `(construction, seeds, params, RNG seed)` tuple reproduces the same matrix
-in both. The Python package adds exact rational **minimal-polynomial** computation
-(hence the derogatory / similarity verdict) and a headless CLI; see the top-level
-[`README.md`](../README.md).
+in both. Both compute the exact rational **minimal polynomial**, **invariant
+factors**, and the **similarity verdict** (the Python package additionally exposes a
+headless CLI and the JSON/LaTeX/SymPy/HTML exporters); the patched tool was
+validated against the backend on a 14-matrix exactness battery and a 378-matrix fuzz
+(see [`docs/HTML_EDITS.md`](../docs/HTML_EDITS.md)). For the package and CLI see the
+top-level [`README.md`](../README.md); for the module map see
+[`../src/matrix_plates/README.md`](../src/matrix_plates/README.md).
+
+## Troubleshooting
+
+- **Nothing happens / no plates** — press **Seed batch** (or **Press plate** with a
+  construction selected). The sheet is empty until you generate something.
+- **Custom matrix rejected** — entries must be integers and the grid must be square;
+  the tool reports the exact offending cell or shape. This system works over ℤ — use
+  a `Companion` / `Cartan` / … construction for algebraic (irrational) seeds.
+- **`↦ companion seed` is disabled** — the lift needs a monic integer characteristic
+  polynomial; non-liftable plates leave the button inactive.
+- **The Mahler axis "starts" empty on the left** — that is intentional: the floor is
+  pinned at `M = 1` and the `(1, Lehmer)` band is shaded to keep the conjecturally
+  empty gap visible, never auto-scaled to the data minimum.
+- **The root plot smears near a double root** — eigenvalue *positions* and `M`/`ρ`
+  are floating point; the polynomial chips (char-poly, minimal polynomial, invariant
+  factors, det, tr, rank) are exact — trust those.
+
+## See also
+
+- [`../README.md`](../README.md) — the package, CLI, and exactness boundary.
+- [`../docs/README.md`](../docs/README.md) — index of the design docs.
+- [`../docs/DESIGN.md`](../docs/DESIGN.md) — the plates / companion-closure metaphors.
+- The repo's other exact-arithmetic pipelines and the full
+  [live site](https://echo-s-studios.github.io/math-research-pipelines/) — see the
+  top-level [`README.md`](../../README.md).
