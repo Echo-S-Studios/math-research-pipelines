@@ -69,6 +69,7 @@ jobs:
           shopt -s nullglob
           for f in papers/*.pdf; do cp "$f" _site/papers/; done
           for f in papers/*.md; do [ "$(basename "$f")" = "README.md" ] || cp "$f" _site/papers/; done
+          for f in papers/*.html; do cp "$f" _site/papers/; done   # interactive tool pages (kind: tool)
 
       - name: Render Markdown docs to HTML
         run: |

@@ -169,7 +169,7 @@
 
   <section aria-labelledby="tool-head">
     <h2 id="tool-head">Interactive</h2>
-    <div class="grid">
+    <div class="grid" id="tools-grid">
       <a class="card" href="tool/" aria-label="Matrix Plates — interactive in-browser tool">
         <div class="toprow"><span class="tag live">Live tool</span><span class="pp">no install</span></div>
         <p class="series">matrix-plates</p>
@@ -201,24 +201,37 @@
       .then(function (r) { return r.ok ? r.json() : []; })
       .then(function (list) {
         if (!Array.isArray(list) || list.length === 0) return;
-        var grid = document.getElementById("more-grid");
+        var moreGrid = document.getElementById("more-grid");
+        var toolsGrid = document.getElementById("tools-grid");
+        var moreCount = 0;
         list.forEach(function (p) {
           if (!p || !p.file || !p.title) return;
-          var isDoc = p.kind === "doc";
+          var kind = p.kind === "doc" ? "doc" : (p.kind === "tool" ? "tool" : "pdf");
+          var href, tagClass, tagText, cta, aria, newTab;
+          if (kind === "doc") {
+            href = "papers/" + p.file.replace(/\.md$/i, ".html");
+            tagClass = "tag doc"; tagText = (p.tag || "DOC") + " ↗"; cta = "Read ";
+            aria = " — read the article"; newTab = false;
+          } else if (kind === "tool") {
+            href = "papers/" + p.file;
+            tagClass = "tag live"; tagText = (p.tag || "TOOL") + " ↗"; cta = "Open tool ";
+            aria = " — interactive tool, opens in a new tab"; newTab = true;
+          } else {
+            href = "papers/" + p.file;
+            tagClass = "tag pdf"; tagText = (p.tag || "PDF") + " ↗"; cta = "Read PDF ";
+            aria = " — PDF, opens in a new tab"; newTab = true;
+          }
           var a = document.createElement("a");
           a.className = "card";
-          a.href = isDoc
-            ? "papers/" + p.file.replace(/\.md$/i, ".html")
-            : "papers/" + p.file;
-          if (!isDoc) { a.target = "_blank"; a.rel = "noopener"; }
-          a.setAttribute("aria-label",
-            p.title + (isDoc ? " — read the article" : " — PDF, opens in a new tab"));
+          a.href = href;
+          if (newTab) { a.target = "_blank"; a.rel = "noopener"; }
+          a.setAttribute("aria-label", p.title + aria);
 
           var top = document.createElement("div");
           top.className = "toprow";
           var tag = document.createElement("span");
-          tag.className = isDoc ? "tag doc" : "tag pdf";
-          tag.textContent = (p.tag || (isDoc ? "DOC" : "PDF")) + " ↗";
+          tag.className = tagClass;
+          tag.textContent = tagText;
           top.appendChild(tag);
           if (p.pages) {
             var pp = document.createElement("span");
@@ -245,16 +258,17 @@
 
           var go = document.createElement("span");
           go.className = "go";
-          go.appendChild(document.createTextNode(isDoc ? "Read " : "Read PDF "));
+          go.appendChild(document.createTextNode(cta));
           var arr = document.createElement("span");
           arr.className = "arr";
           arr.textContent = "→";
           go.appendChild(arr);
           a.appendChild(go);
 
-          grid.appendChild(a);
+          if (kind === "tool" && toolsGrid) { toolsGrid.appendChild(a); }
+          else { moreGrid.appendChild(a); moreCount++; }
         });
-        document.getElementById("more-section").hidden = false;
+        if (moreCount > 0) document.getElementById("more-section").hidden = false;
       })
       .catch(function () { /* no catalog reachable — leave section hidden */ });
   })();

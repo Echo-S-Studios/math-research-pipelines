@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lehmer's Box — a closure instrument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* drafting-table paper */
+    --paper:#E9E5DC; --paper-2:#E2DDD2; --ink:#1B1E20; --ink-soft:#4A4F52; --hair:#C9C2B4;
+    /* embedded scope screen */
+    --screen:#0E1518; --screen-2:#0B1114; --screen-grid:#1E2D33; --screen-ink:#9FB4BC;
+    /* semantic accents (continuity with the paper): floor=green, walls=blue, intruder=red, reference=amber */
+    --floor:#1F8A6B; --floor-glow:#3CC79C; --wall:#3E86C8; --wall-glow:#6FB4F0;
+    --salem:#C0392B; --salem-glow:#F06A5A; --amber:#C8901E; --amber-glow:#F0BC5A;
+    --forbid:#7E1C16;
+    --r:3px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Spectral",Georgia,serif; font-size:17px; line-height:1.55;
+    background-image:
+      linear-gradient(transparent 0 27px, rgba(150,140,120,.05) 27px 28px),
+      radial-gradient(circle at 1px 1px, rgba(120,110,90,.06) 1px, transparent 0);
+    background-size:100% 28px, 22px 22px;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:0 22px 80px}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+
+  /* ---- header ---- */
+  header{padding:46px 0 26px; border-bottom:1.5px solid var(--ink)}
+  .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.26em;
+    text-transform:uppercase; color:var(--floor); font-weight:500; margin:0 0 14px}
+  h1{font-weight:600; font-size:clamp(38px,7vw,72px); line-height:.98; letter-spacing:-.015em; margin:0}
+  h1 em{font-style:italic; font-weight:500}
+  .thesis{font-size:clamp(17px,2.4vw,21px); color:var(--ink-soft); max-width:62ch; margin:18px 0 0; font-style:italic}
+  .thesis b{font-style:normal; font-weight:600; color:var(--ink)}
+
+  /* ---- section chrome ---- */
+  section{padding:40px 0; border-bottom:1px solid var(--hair)}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin:0 0 8px}
+  .sec-num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--floor); font-weight:600; letter-spacing:.05em}
+  h2{font-weight:600; font-size:clamp(24px,3.6vw,33px); letter-spacing:-.01em; margin:0}
+  .lede{color:var(--ink-soft); max-width:72ch; margin:6px 0 24px}
+  .lede code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--paper-2);
+    padding:1px 5px; border-radius:var(--r); border:1px solid var(--hair)}
+
+  /* ---- the instrument ---- */
+  .instrument{display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:0;
+    border:1.5px solid var(--ink); border-radius:6px; overflow:hidden;
+    box-shadow:0 1px 0 rgba(0,0,0,.04), 0 18px 40px -28px rgba(0,0,0,.5)}
+  .scope-col{background:var(--screen);
+    background-image:radial-gradient(120% 120% at 50% 0%, #14202400 40%, #0a0f1180 100%);
+    padding:18px; display:flex; flex-direction:column; gap:10px; min-width:0}
+  .scope-cap{display:flex; justify-content:space-between; align-items:center;
+    font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--screen-ink)}
+  .scope-cap .lbl{opacity:.7}
+  svg.scope{width:100%; height:auto; display:block; border-radius:4px}
+  .gauge-wrap{padding:2px 2px 0}
+  svg.gauge{width:100%; height:auto; display:block}
+
+  .readout{background:var(--paper-2); padding:20px 20px; border-left:1.5px solid var(--ink);
+    display:flex; flex-direction:column; gap:14px; min-width:0}
+  .ro-name{font-weight:600; font-size:19px; line-height:1.15; letter-spacing:-.01em}
+  .ro-kind{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-soft); display:block; margin-top:2px}
+  .field{display:flex; flex-direction:column; gap:3px}
+  .field .k{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ink-soft)}
+  .field .v{font-family:"IBM Plex Mono",monospace; font-size:15px; word-break:break-all; color:var(--ink)}
+  .mbig{font-family:"IBM Plex Mono",monospace; font-size:30px; font-weight:600; letter-spacing:-.01em; line-height:1}
+  .verdict{margin-top:2px; border-radius:5px; padding:12px 13px; border:1.5px solid}
+  .verdict.in{background:rgba(31,138,107,.1); border-color:var(--floor)}
+  .verdict.out{background:rgba(192,57,43,.09); border-color:var(--salem)}
+  .verdict .tag{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:15px;
+    letter-spacing:.1em; display:flex; align-items:center; gap:8px}
+  .verdict.in .tag{color:var(--floor)}
+  .verdict.out .tag{color:var(--salem)}
+  .verdict .why{font-size:13.5px; line-height:1.4; margin-top:7px; color:var(--ink-soft)}
+  .verdict .why b{color:var(--ink); font-weight:600}
+  .dot{width:9px; height:9px; border-radius:50%; display:inline-block}
+
+  /* ---- controls ---- */
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px}
+  button{font-family:"IBM Plex Mono",monospace; font-size:13px; cursor:pointer;
+    border:1.4px solid var(--ink); background:var(--paper); color:var(--ink);
+    padding:8px 13px; border-radius:var(--r); transition:transform .08s ease, background .12s ease, box-shadow .12s ease}
+  button:hover{background:var(--ink); color:var(--paper)}
+  button:active{transform:translateY(1px)}
+  button.active{background:var(--floor); border-color:var(--floor); color:#fff}
+  button:focus-visible{outline:2.5px solid var(--wall); outline-offset:2px}
+  .chip .sub{opacity:.6; font-size:11px}
+
+  .lab{display:grid; grid-template-columns:1fr auto 1fr auto; gap:12px; align-items:end;
+    background:var(--paper-2); border:1.5px solid var(--ink); border-radius:6px; padding:18px}
+  .lab .cell{display:flex; flex-direction:column; gap:5px; min-width:0}
+  .lab label{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--ink-soft)}
+  select{font-family:"IBM Plex Mono",monospace; font-size:13.5px; padding:8px 10px;
+    border:1.4px solid var(--ink); border-radius:var(--r); background:var(--paper); color:var(--ink); width:100%}
+  select:focus-visible{outline:2.5px solid var(--wall); outline-offset:2px}
+  .emit-btn{background:var(--floor); border-color:var(--floor); color:#fff; padding:10px 20px; font-size:14px; font-weight:600}
+  .emit-btn:hover{background:#176B53}
+  .opwrap{display:flex; gap:6px}
+  .opwrap button{padding:8px 11px; flex:1}
+  .opwrap button.opsel{background:var(--wall); border-color:var(--wall); color:#fff}
+
+  .log{margin-top:18px; border:1.5px solid var(--ink); border-radius:6px; overflow:hidden}
+  .log-head{background:var(--ink); color:var(--paper); padding:9px 14px;
+    font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    display:flex; justify-content:space-between; align-items:center}
+  .log-head .count{color:var(--floor-glow)}
+  .log-body{max-height:240px; overflow:auto}
+  table{width:100%; border-collapse:collapse; font-family:"IBM Plex Mono",monospace; font-size:12.5px}
+  th,td{text-align:left; padding:7px 14px; border-bottom:1px solid var(--hair); white-space:nowrap}
+  th{font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:500;
+    position:sticky; top:0; background:var(--paper-2)}
+  td.poly{white-space:normal; word-break:break-all; color:var(--ink-soft)}
+  tr.row-in td .v-in{color:var(--floor); font-weight:600}
+  tr.row-out td .v-out{color:var(--salem); font-weight:600}
+  tr.clickable{cursor:pointer}
+  tr.clickable:hover{background:rgba(31,138,107,.07)}
+  .empty-row td{color:var(--ink-soft); font-style:italic; font-family:"Spectral",serif}
+
+  /* ---- catalog table ---- */
+  .data-table{border:1.5px solid var(--ink); border-radius:6px; overflow:hidden; overflow-x:auto}
+
+  /* ---- intruders ---- */
+  .intruder-note{background:var(--paper-2); border:1.5px solid var(--salem); border-left-width:5px;
+    border-radius:6px; padding:16px 18px; margin-top:16px; font-size:14.5px; color:var(--ink-soft)}
+  .intruder-note b{color:var(--ink)}
+  .intruder-note .hl{color:var(--salem); font-weight:600}
+
+  /* ---- angle lattice widget ---- */
+  .lattice{display:grid; grid-template-columns:300px 1fr; gap:24px; align-items:center}
+  .lattice .screen-mini{background:var(--screen); border-radius:6px; padding:14px}
+  .lattice svg{width:100%; height:auto; display:block}
+  .lat-controls{display:flex; flex-direction:column; gap:12px}
+  .lat-row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  .lat-readout{font-family:"IBM Plex Mono",monospace; font-size:14px; padding:12px 14px;
+    border-radius:5px; border:1.5px solid var(--hair); background:var(--paper-2)}
+  .lat-readout.ok{border-color:var(--floor); background:rgba(31,138,107,.08)}
+  .lat-readout.bad{border-color:var(--salem); background:rgba(192,57,43,.08)}
+  .lat-readout .res{font-weight:600}
+  .lat-readout.ok .res{color:var(--floor)}
+  .lat-readout.bad .res{color:var(--salem)}
+
+  /* ---- footer scope-of-claim ---- */
+  .claim{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1.5px solid var(--ink); border-radius:6px; overflow:hidden}
+  .claim>div{padding:22px 24px}
+  .claim .does{background:rgba(31,138,107,.07); border-right:1.5px solid var(--ink)}
+  .claim .doesnt{background:rgba(192,57,43,.05)}
+  .claim h3{margin:0 0 10px; font-size:14px; font-family:"IBM Plex Mono",monospace; letter-spacing:.1em; text-transform:uppercase}
+  .claim .does h3{color:var(--floor)} .claim .doesnt h3{color:var(--salem)}
+  .claim p{margin:0 0 9px; font-size:15px; color:var(--ink-soft)}
+  .claim p:last-child{margin-bottom:0}
+  .legend{display:flex; flex-wrap:wrap; gap:16px; margin:14px 0 0; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-soft)}
+  .legend span{display:flex; align-items:center; gap:6px}
+  footer{padding:34px 0 0; color:var(--ink-soft); font-size:13.5px}
+  footer a{color:var(--floor)}
+
+  .pt{transform-box:fill-box; transform-origin:center}
+  @keyframes pop{from{opacity:0; transform:scale(.2)} to{opacity:1; transform:scale(1)}}
+  .anim .pt{animation:pop .34s cubic-bezier(.2,.9,.3,1.3) backwards}
+  @media (prefers-reduced-motion: reduce){ .anim .pt{animation:none} button{transition:none} }
+
+  @media (max-width:860px){
+    .instrument{grid-template-columns:1fr}
+    .readout{border-left:none; border-top:1.5px solid var(--ink)}
+    .lab{grid-template-columns:1fr; gap:14px}
+    .lattice{grid-template-columns:1fr}
+    .claim{grid-template-columns:1fr}
+    .claim .does{border-right:none; border-bottom:1.5px solid var(--ink)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">An interactive closure instrument</p>
+  <h1>Lehmer's <em>Box</em></h1>
+  <p class="thesis">Two walls — a <b>golden floor</b> at&nbsp;φ and an <b>angle lattice</b> at the four cardinal directions — fence in everything the construction can emit. Compose seeds with the spectral operators and watch the result stay inside the box. Then throw a Salem number at it and watch it fall outside. <b>The mathematics is computed live</b>: roots, Mahler measures, and on-circle arguments, all from the integer polynomials themselves.</p>
+</header>
+
+<!-- ============ THE INSTRUMENT ============ -->
+<section id="instrument-sec">
+  <div class="sec-head"><span class="sec-num">01</span><h2>The instrument</h2></div>
+  <p class="lede">The <b>scope</b> plots every root of the current element in the complex plane. On the unit circle sit four glowing <span style="color:var(--wall)">posts</span> — the directions <code>0, π/2, π, 3π/2</code>. A root <em>on</em> the circle is the only kind the walls constrain: it must land on a post. The <b>gauge</b> below shows the Mahler measure against the floor φ. Membership in the box is <code>floor ∧ walls</code>.</p>
+
+  <div class="instrument anim" id="instrument">
+    <div class="scope-col">
+      <div class="scope-cap"><span class="lbl">Scope · complex plane</span><span class="lbl" id="scope-scale">radius 1 = unit circle</span></div>
+      <svg class="scope" id="scope" viewBox="0 0 420 420" role="img" aria-label="Complex-plane plot of polynomial roots"></svg>
+      <div class="gauge-wrap">
+        <div class="scope-cap" style="color:var(--ink-soft); margin-bottom:4px"><span>Height gauge · Mahler measure (log scale)</span></div>
+        <svg class="gauge" id="gauge" viewBox="0 0 760 86" role="img" aria-label="Mahler measure gauge"></svg>
+      </div>
+    </div>
+    <div class="readout" id="readout"><!-- filled by JS --></div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section id="catalog-sec">
+  <div class="sec-head"><span class="sec-num">02</span><h2>The catalog</h2></div>
+  <p class="lede">Seven seed companions generate the spectral algebra. Every one sits in the box: real seeds have no on-circle roots at all (the walls are satisfied vacuously), and the quartic <code>K = x⁴+5x²−5</code> places its imaginary pair off the circle. Click any seed to load it into the instrument.</p>
+  <div class="chips" id="catalog-chips"></div>
+  <div class="data-table">
+    <table id="catalog-table">
+      <thead><tr><th>seed</th><th>minimal polynomial</th><th>M</th><th>log M</th><th>roots</th><th>on-circle</th><th>box</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ CLOSURE LAB ============ -->
+<section id="lab-sec">
+  <div class="sec-head"><span class="sec-num">03</span><h2>The closure lab</h2></div>
+  <p class="lede">Pick two elements (seeds, or things you've already emitted) and an operator. <code>⊕</code> direct sum unions the spectra; <code>⊗</code> tensor multiplies eigenvalues pairwise; <code>(·)²</code> squares them. Each emission is analysed live, loaded into the scope, and added to the log. The point is the running tally: <b>compose as deeply as you like and nothing ever leaves the box.</b></p>
+  <div class="lab">
+    <div class="cell">
+      <label for="selA">Element A</label>
+      <select id="selA"></select>
+    </div>
+    <div class="cell" style="min-width:150px">
+      <label>Operator</label>
+      <div class="opwrap" id="opwrap">
+        <button data-op="sum" class="opsel">A ⊕ B</button>
+        <button data-op="tensor">A ⊗ B</button>
+        <button data-op="square">A²</button>
+      </div>
+    </div>
+    <div class="cell" id="cellB">
+      <label for="selB">Element B</label>
+      <select id="selB"></select>
+    </div>
+    <div class="cell" style="min-width:auto">
+      <label>&nbsp;</label>
+      <button class="emit-btn" id="emitBtn">Emit →</button>
+    </div>
+  </div>
+
+  <div class="log">
+    <div class="log-head"><span>Emission log</span><span><span class="count" id="emitCount">0</span> emitted · <span class="count" id="inboxCount">0</span> in box</span></div>
+    <div class="log-body">
+      <table id="log-table">
+        <thead><tr><th>#</th><th>element</th><th>M</th><th>polynomial / spectrum</th><th>verdict</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INTRUDERS ============ -->
+<section id="intruder-sec">
+  <div class="sec-head"><span class="sec-num">04</span><h2>The intruders</h2></div>
+  <p class="lede">These numbers are not in the catalog and cannot be emitted. Load one and watch the scope: a Salem number's on-circle conjugates scatter to <span style="color:var(--salem)">irrational angles</span>, missing every post. The instrument reports exactly which wall fails.</p>
+  <div class="chips" id="intruder-chips"></div>
+  <div class="intruder-note" id="intruder-note">
+    <b>The subtle case is β₄.</b> It is a genuine Salem number with measure <span class="mono">1.7220838</span>, which is <span class="hl">above the floor φ = 1.6180340</span> — it clears the height wall. Yet it is still outside the box, because its on-circle pair sits at the irrational angle <span class="mono">0.726π</span>, off every post. This is why the box excludes <b>all</b> Salem numbers, not merely the ones below φ: the lattice wall, not the floor, is what does the work.
+  </div>
+</section>
+
+<!-- ============ ANGLE LATTICE LAW ============ -->
+<section id="lattice-sec">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Why the walls hold: the angle law</h2></div>
+  <p class="lede">The operators move arguments by two rules only: <code>⊗</code> adds them, <code>(·)²</code> doubles them. The four posts <code>(π/2)ℤ</code> are closed under both — but <b>not under halving</b>. No operator halves an angle, so no operator can manufacture a new direction. Try it.</p>
+  <div class="lattice">
+    <div class="screen-mini">
+      <svg id="lat-scope" viewBox="0 0 280 280" role="img" aria-label="Angle lattice on the unit circle"></svg>
+    </div>
+    <div class="lat-controls">
+      <div class="lat-row">
+        <button data-lat="add">Add two posts &nbsp;<span class="mono" style="opacity:.6">π/2 + π</span></button>
+        <button data-lat="double">Double a post &nbsp;<span class="mono" style="opacity:.6">2·(π/2)</span></button>
+        <button data-lat="halve">Halve a post &nbsp;<span class="mono" style="opacity:.6">½·(π/2)</span></button>
+      </div>
+      <div class="lat-readout" id="lat-readout">
+        Pick an operation. The result lands on the lattice — or, for halving, between two posts at π/4, a direction no operator can reach.
+      </div>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin:0">A Salem number's on-circle conjugate carries exactly such an off-lattice angle (irrational, by irreducibility of its minimal polynomial). The emission walls keep every on-circle eigenvalue on a post, so a Salem conjugate can never appear — and the box omits every Salem number.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCOPE OF CLAIM ============ -->
+<section id="claim-sec" style="border-bottom:none">
+  <div class="sec-head"><span class="sec-num">06</span><h2>What this shows, and what it doesn't</h2></div>
+  <div class="claim">
+    <div class="does">
+      <h3>◆ What the instrument proves</h3>
+      <p>The seven seeds lie in the box, and the spectral operators preserve both walls, so the entire emission image is confined: every measure lands in <span class="mono">{1} ∪ [φ, ∞)</span>.</p>
+      <p>No Salem number can be emitted: its on-circle conjugates are off-lattice, so it fails the angle wall regardless of its measure. The whole band <span class="mono">(1, μ_S)</span> is therefore absent from the image, and the cost floor <span class="mono">λ·log φ &gt; 0</span> holds.</p>
+    </div>
+    <div class="doesnt">
+      <h3>◆ What it leaves untouched</h3>
+      <p>It says nothing about Salem numbers <em>as numbers</em>. Lehmer's number still exists and may, for all anyone has proved in ninety years, sit arbitrarily close to 1. It is excluded as an <b>emission</b>, never as a number.</p>
+      <p>So this is a sidestep, not a resolution. Lehmer's problem stays exactly where it was; the construction simply never goes to fetch the numbers that would threaten its floor.</p>
+    </div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--floor-glow)"></span> on-circle root on a post (in lattice)</span>
+    <span><span class="dot" style="background:var(--salem-glow)"></span> on-circle root off the posts (Salem)</span>
+    <span><span class="dot" style="background:var(--wall-glow)"></span> lattice post (π/2)ℤ</span>
+    <span><span class="dot" style="background:#7c8a90"></span> off-circle root (sets the measure)</span>
+  </div>
+  <footer>
+    Companion to <em>Lehmer's Box</em> and <em>The Emission–Gap Theorem</em>. Every figure here is computed in-browser by a Durand–Kerner root solver; Mahler measures match the closed-form catalog values to seven digits. The decision <span class="mono">β &lt; φ</span> is shown numerically here; in the paper it is decided exactly by the sign of an element of ℚ(√5).
+  </footer>
+</section>
+
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   VERIFIED MATH ENGINE  (matches the Node-checked prototype)
+   ============================================================ */
+const cx=(re,im=0)=>({re,im});
+const cadd=(a,b)=>cx(a.re+b.re,a.im+b.im);
+const csub=(a,b)=>cx(a.re-b.re,a.im-b.im);
+const cmul=(a,b)=>cx(a.re*b.re-a.im*b.im,a.re*b.im+a.im*b.re);
+const cdiv=(a,b)=>{const d=b.re*b.re+b.im*b.im;return cx((a.re*b.re+a.im*b.im)/d,(a.im*b.re-a.re*b.im)/d);};
+const cabs=a=>Math.hypot(a.re,a.im);
+const carg=a=>Math.atan2(a.im,a.re);
+const PHI=1.6180339887498949, MUS=1.3247179572447458, LOGPHI=Math.log(PHI);
+
+function pevalC(c,z){let acc=cx(0,0);for(let i=c.length-1;i>=0;i--)acc=cadd(cmul(acc,z),cx(c[i],0));return acc;}
+function solve(coeffsIn){
+  let c=coeffsIn.slice();
+  while(c.length>1&&Math.abs(c[c.length-1])<1e-14)c.pop();
+  const lead=c[c.length-1]; const m=c.map(v=>v/lead); const n=m.length-1;
+  if(n<=0)return []; if(n===1)return [cx(-m[0],0)];
+  let z=[]; const R=1+Math.max(...m.slice(0,n).map(Math.abs));
+  for(let k=0;k<n;k++){const a=2*Math.PI*(k+0.5)/n+0.4; z.push(cx(0.6*R*Math.cos(a),0.6*R*Math.sin(a)));}
+  for(let it=0;it<900;it++){let md=0;
+    const zn=z.map((zi,i)=>{let den=cx(1,0);for(let j=0;j<n;j++)if(j!==i)den=cmul(den,csub(zi,z[j]));
+      const corr=cdiv(pevalC(m,zi),den); md=Math.max(md,cabs(corr)); return csub(zi,corr);});
+    z=zn; if(md<1e-15)break;}
+  return z;
+}
+function polymul(a,b){const r=new Array(a.length+b.length-1).fill(0);
+  for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)r[i+j]+=a[i]*b[j];return r;}
+function polyFromRoots(rs){let c=[cx(1,0)];
+  for(const r of rs){const nc=new Array(c.length+1).fill(0).map(()=>cx(0,0));
+    for(let i=0;i<c.length;i++){nc[i]=cadd(nc[i],cmul(c[i],cx(-r.re,-r.im)));nc[i+1]=cadd(nc[i+1],c[i]);}c=nc;}
+  return c.map(z=>Math.round(z.re));
+}
+const POST_TOL=3e-3, CIRC_TOL=1e-4;
+function analyzeFromRoots(rs, coeffs){
+  let M=1; for(const r of rs)M*=Math.max(1,cabs(r));
+  const onC=rs.filter(r=>Math.abs(cabs(r)-1)<CIRC_TOL);
+  const args=onC.map(r=>{let a=carg(r); if(a<-1e-9)a+=2*Math.PI; return a;}).sort((x,y)=>x-y);
+  const atPost=a=>{const m=((a%(Math.PI/2))+Math.PI/2)%(Math.PI/2);return Math.min(m,Math.PI/2-m)<POST_TOL;};
+  const floorOK=(M<1+1e-6)||(M>=PHI-1e-6);
+  const wallsOK=args.every(atPost);
+  return {M, roots:rs, onCircle:onC, args, floorOK, wallsOK, inBox:floorOK&&wallsOK, coeffs};
+}
+function fromCoeffs(coeffs){const rs=solve(coeffs); const a=analyzeFromRoots(rs,coeffs.slice()); a.M = refineM(coeffs,a.M,rs); return a;}
+// snap M to integer when extremely close (cosmetic; e.g. sqrt2 -> 2)
+function refineM(coeffs,M,rs){ if(Math.abs(M-Math.round(M))<1e-7) return Math.round(M); return M; }
+
+/* ---- operators (carry roots; reconstruct integer poly when small) ---- */
+function opSum(A,B){const rs=A.roots.concat(B.roots);
+  const coeffs=(A.coeffs&&B.coeffs&&(A.coeffs.length-1)+(B.coeffs.length-1)<=24)?polymul(A.coeffs,B.coeffs):null;
+  const a=analyzeFromRoots(rs,coeffs); a.M=A.M*B.M; a.floorOK=(a.M<1+1e-6)||(a.M>=PHI-1e-6); a.inBox=a.floorOK&&a.wallsOK; return a;}
+function opSquare(A){const rs=A.roots.map(r=>cmul(r,r));
+  const coeffs=(A.coeffs&&(A.coeffs.length-1)*2<=24)?polyFromRoots(rs):null; return analyzeFromRoots(rs,coeffs);}
+function opTensor(A,B){const rs=[];for(const x of A.roots)for(const y of B.roots)rs.push(cmul(x,y));
+  const coeffs=(A.coeffs&&B.coeffs&&(A.coeffs.length-1)*(B.coeffs.length-1)<=16)?polyFromRoots(rs):null;
+  return analyzeFromRoots(rs,coeffs);}
+
+/* ---- formatting ---- */
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup=s=>String(s).split('').map(c=>SUP[c]||c).join('');
+function polyString(coeffs){
+  if(!coeffs) return null;
+  const d=coeffs.length-1; let out=[];
+  for(let i=d;i>=0;i--){const c=coeffs[i]; if(c===0)continue;
+    const ac=Math.abs(c); let term='';
+    if(i===0) term=String(ac);
+    else { const xp = i===1?'x':('x'+sup(i)); term=(ac===1?'':ac)+xp; }
+    out.push((c<0?'− ':(out.length?'+ ':''))+term);
+  }
+  return out.join(' ')||'0';
+}
+function fmtM(M){return (Math.abs(M-Math.round(M))<1e-7? String(Math.round(M)) : M.toFixed(7));}
+function argString(args){ if(!args.length) return '—';
+  return args.map(a=>{let f=a/Math.PI; return (Math.abs(f)<1e-6?'0':f.toFixed(4)+'π');}).join('  ');
+}
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const CATALOG=[
+  {key:'phi',  name:'φ',   sub:'golden',  coeffs:[-1,-1,1]},
+  {key:'tau',  name:'τ',   sub:'φ⁻¹',     coeffs:[-1,1,1]},
+  {key:'r2',   name:'√2',  sub:'',        coeffs:[-2,0,1]},
+  {key:'r3',   name:'√3',  sub:'',        coeffs:[-3,0,1]},
+  {key:'r5',   name:'√5',  sub:'',        coeffs:[-5,0,1]},
+  {key:'gap',  name:'gap', sub:'φ⁴',      coeffs:[1,-7,1]},
+  {key:'K',    name:'K',   sub:'5¼/φ',    coeffs:[-5,0,5,0,1]},
+];
+const INTRUDERS=[
+  {key:'L',    name:'Lehmer L', sub:'deg 10, M=1.176', coeffs:[1,1,0,-1,-1,-1,-1,-1,0,1,1]},
+  {key:'b4',   name:'β₄',       sub:'deg-4 Salem',     coeffs:[1,-1,-1,-1,1]},
+  {key:'mus',  name:'μ_S',      sub:'Smyth floor',     coeffs:[-1,-1,0,1]},
+];
+
+/* registry for the closure lab (catalog + emissions) */
+let registry=[]; let emitCount=0, inboxCount=0;
+function regAdd(label, el, kind){ const id='e'+(registry.length); registry.push({id,label,el,kind}); return id; }
+
+/* ============================================================
+   SCOPE RENDERING
+   ============================================================ */
+const SC=document.getElementById('scope');
+const CXm=210, CYm=210, UR=132; // center, unit radius (px in viewBox)
+function radialMap(absz){ // log-compress outside the unit circle, linear inside
+  if(absz<=1) return UR*absz;
+  return UR*(1 + 0.34*Math.log(absz));
+}
+function svgEl(tag,attrs){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs)e.setAttribute(k,attrs[k]); return e;}
+function renderScope(el){
+  SC.innerHTML='';
+  // grid + axes
+  const g=svgEl('g',{});
+  // faint concentric rings at |z| = 0.5, 1, 2, 4
+  [[0.5,''],[2,'2'],[4,'4']].forEach(([v,lab])=>{
+    const r=radialMap(v);
+    g.appendChild(svgEl('circle',{cx:CXm,cy:CYm,r,fill:'none',stroke:'var(--screen-grid)','stroke-width':1,'stroke-dasharray':'2 4'}));
+    if(lab){const t=svgEl('text',{x:CXm+r+3,y:CYm-3,fill:'var(--screen-grid)','font-size':9,'font-family':'IBM Plex Mono'});t.textContent='|z|='+lab;g.appendChild(t);}
+  });
+  // axes
+  g.appendChild(svgEl('line',{x1:CXm-radialMap(5),y1:CYm,x2:CXm+radialMap(5),y2:CYm,stroke:'var(--screen-grid)','stroke-width':1}));
+  g.appendChild(svgEl('line',{x1:CXm,y1:CYm-radialMap(5),x2:CXm,y2:CYm+radialMap(5),stroke:'var(--screen-grid)','stroke-width':1}));
+  // unit circle (the wall surface)
+  g.appendChild(svgEl('circle',{cx:CXm,cy:CYm,r:UR,fill:'none',stroke:'var(--screen-ink)','stroke-width':1.4,opacity:.55}));
+  const ut=svgEl('text',{x:CXm,y:CYm-UR-7,fill:'var(--screen-ink)','font-size':9.5,'text-anchor':'middle','font-family':'IBM Plex Mono',opacity:.7});
+  ut.textContent='unit circle |z| = 1'; g.appendChild(ut);
+  SC.appendChild(g);
+
+  // four posts
+  const postAng=[0,Math.PI/2,Math.PI,3*Math.PI/2];
+  postAng.forEach(a=>{
+    const px=CXm+UR*Math.cos(a), py=CYm-UR*Math.sin(a);
+    // glow
+    g.appendChild(svgEl('circle',{cx:px,cy:py,r:8,fill:'var(--wall-glow)',opacity:.16}));
+    g.appendChild(svgEl('circle',{cx:px,cy:py,r:4.2,fill:'none',stroke:'var(--wall-glow)','stroke-width':1.6}));
+  });
+
+  // roots
+  const frag=document.createDocumentFragment();
+  el.roots.forEach((r,idx)=>{
+    const ab=cabs(r), rr=radialMap(ab);
+    const x=CXm+rr*Math.cos(carg(r)), y=CYm-rr*Math.sin(carg(r));
+    const onC=Math.abs(ab-1)<CIRC_TOL;
+    let col='#7c8a90', glow=null, rad=4.2;
+    if(onC){
+      let a=carg(r); if(a<-1e-9)a+=2*Math.PI;
+      const m=((a%(Math.PI/2))+Math.PI/2)%(Math.PI/2);
+      const post=Math.min(m,Math.PI/2-m)<POST_TOL;
+      col=post?'var(--floor-glow)':'var(--salem-glow)'; glow=col; rad=5;
+    }
+    if(glow){const gl=svgEl('circle',{cx:x,cy:y,r:rad+5,fill:glow,opacity:.18,class:'pt'}); gl.style.animationDelay=(idx*22)+'ms'; frag.appendChild(gl);}
+    const dot=svgEl('circle',{cx:x,cy:y,r:rad,fill:col,class:'pt'});
+    dot.style.animationDelay=(idx*22)+'ms';
+    frag.appendChild(dot);
+  });
+  SC.appendChild(frag);
+  // re-trigger animation
+  const host=document.getElementById('instrument');
+  host.classList.remove('anim'); void host.offsetWidth; host.classList.add('anim');
+}
+
+/* ============================================================
+   GAUGE RENDERING  (log-scale Mahler axis)
+   ============================================================ */
+const GA=document.getElementById('gauge');
+const GX0=46, GX1=720, GY=46, GMAX=Math.log(100);
+function gx(M){ return GX0 + (GX1-GX0)*Math.min(1, Math.log(Math.max(1,M))/GMAX); }
+function renderGauge(el){
+  GA.innerHTML='';
+  const g=svgEl('g',{});
+  // forbidden strip (1, phi)
+  g.appendChild(svgEl('rect',{x:gx(1),y:GY-13,width:gx(PHI)-gx(1),height:26,fill:'var(--salem)',opacity:.14}));
+  // baseline
+  g.appendChild(svgEl('line',{x1:GX0,y1:GY,x2:GX1,y2:GY,stroke:'var(--ink)','stroke-width':1.4}));
+  // ticks
+  [[1,'1'],[MUS,'μ_S'],[PHI,'φ'],[2,'2'],[5,'5'],[10,'10'],[50,'50']].forEach(([v,lab])=>{
+    const x=gx(v); const major=(lab==='φ'||lab==='μ_S'||lab==='1');
+    const col= lab==='φ'?'var(--floor)' : (lab==='μ_S'?'var(--amber)':'var(--ink-soft)');
+    g.appendChild(svgEl('line',{x1:x,y1:GY-(major?13:7),x2:x,y2:GY+(major?13:7),stroke:col,'stroke-width':major?2:1}));
+    const t=svgEl('text',{x:x,y:GY+28,fill:col,'font-size':major?12:10,'text-anchor':'middle','font-family':'IBM Plex Mono','font-weight':major?600:400});
+    t.textContent=lab; g.appendChild(t);
+  });
+  // (floor + forbidden are conveyed by the red strip and the green-φ / amber-μ_S ticks below;
+  //  the top band is kept clear for the M-marker label only)
+  GA.appendChild(g);
+  // marker for current M
+  if(el.M>1+1e-9){
+    const x=gx(el.M); const inStrip=el.M<PHI-1e-9;
+    const col=inStrip?'var(--salem)':'var(--floor)';
+    const mk=svgEl('path',{d:`M ${x} ${GY-16} l 6 -10 l -12 0 z`,fill:col});
+    GA.appendChild(mk);
+    const anchor = x>640?'end':'middle'; const lx = x>640?GX1:x;
+    const lab=svgEl('text',{x:lx,y:GY-29,fill:col,'font-size':11,'text-anchor':anchor,'font-family':'IBM Plex Mono','font-weight':600});
+    lab.textContent='M='+fmtM(el.M); GA.appendChild(lab);
+  } else {
+    const x=gx(1); const lab=svgEl('text',{x:x+30,y:GY-18,fill:'var(--ink-soft)','font-size':10,'text-anchor':'middle','font-family':'IBM Plex Mono'});
+    lab.textContent='M=1 (cyclotomic)'; GA.appendChild(lab);
+  }
+}
+
+/* ============================================================
+   READOUT
+   ============================================================ */
+function renderReadout(label, el, kind){
+  const ro=document.getElementById('readout');
+  const poly=polyString(el.coeffs);
+  const polyLine = poly!==null ? poly : `degree ${el.roots.length} (integer companion; spectrum carried)`;
+  const reasons=[];
+  if(!el.floorOK) reasons.push(`<b>Floor fails:</b> M = ${fmtM(el.M)} lies in the forbidden strip (1, φ).`);
+  if(!el.wallsOK) reasons.push(`<b>Walls fail:</b> an on-circle root sits at ${argString(el.args)} — off the posts (π/2)ℤ.`);
+  if(el.inBox){
+    if(el.onCircle.length===0) reasons.push(`Floor cleared (M ≥ φ) and no on-circle roots, so the walls hold vacuously.`);
+    else reasons.push(`Floor cleared and every on-circle root sits on a post.`);
+  }
+  ro.innerHTML=`
+    <div>
+      <div class="ro-name">${label}</div>
+      <span class="ro-kind">${kind}</span>
+    </div>
+    <div class="field"><span class="k">Mahler measure M</span><span class="mbig" style="color:${el.inBox?'var(--floor)':'var(--salem)'}">${fmtM(el.M)}</span></div>
+    <div class="field"><span class="k">log M (entropy / nats)</span><span class="v">${el.M>1+1e-9?Math.log(el.M).toFixed(6):'0'}</span></div>
+    <div class="field"><span class="k">integer polynomial / spectrum</span><span class="v">${polyLine}</span></div>
+    <div class="field"><span class="k">on-circle arguments</span><span class="v">${argString(el.args)}</span></div>
+    <div class="verdict ${el.inBox?'in':'out'}">
+      <span class="tag"><span class="dot" style="background:${el.inBox?'var(--floor)':'var(--salem)'}"></span>${el.inBox?'IN BOX':'OUTSIDE BOX'}</span>
+      <div class="why">${reasons.join('<br>')}</div>
+    </div>`;
+}
+
+/* ---- load an element everywhere ---- */
+function loadElement(label, el, kind){
+  renderScope(el); renderGauge(el); renderReadout(label, el, kind);
+}
+
+/* ============================================================
+   BUILD CATALOG UI
+   ============================================================ */
+const catEls={};
+function buildCatalog(){
+  const chips=document.getElementById('catalog-chips');
+  const tbody=document.querySelector('#catalog-table tbody');
+  CATALOG.forEach(seed=>{
+    const el=fromCoeffs(seed.coeffs); catEls[seed.key]=el;
+    regAdd(`${seed.name}${seed.sub?' ('+seed.sub+')':''}`, el, 'seed');
+    // chip
+    const b=document.createElement('button'); b.className='chip';
+    b.innerHTML=`${seed.name}${seed.sub?` <span class="sub">${seed.sub}</span>`:''}`;
+    b.onclick=()=>{ setActiveChip(chips,b); loadElement(`Seed · ${seed.name}${seed.sub?' = '+seed.sub:''}`, el, 'catalog seed'); };
+    chips.appendChild(b);
+    // table row
+    const tr=document.createElement('tr'); tr.className='clickable '+(el.inBox?'row-in':'row-out');
+    tr.innerHTML=`<td>${seed.name}</td><td class="poly">${polyString(seed.coeffs)}</td>
+      <td>${fmtM(el.M)}</td><td>${Math.log(el.M).toFixed(5)}</td>
+      <td>${el.roots.length}</td><td>${el.onCircle.length}</td>
+      <td class="${el.inBox?'v-in':'v-out'}">${el.inBox?'IN':'OUT'}</td>`;
+    tr.onclick=()=>{ setActiveChip(chips,b); loadElement(`Seed · ${seed.name}${seed.sub?' = '+seed.sub:''}`, el, 'catalog seed'); };
+    tbody.appendChild(tr);
+  });
+}
+function setActiveChip(container,btn){
+  container.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+}
+
+/* ============================================================
+   BUILD INTRUDER UI
+   ============================================================ */
+function buildIntruders(){
+  const chips=document.getElementById('intruder-chips');
+  INTRUDERS.forEach(it=>{
+    const el=fromCoeffs(it.coeffs);
+    const b=document.createElement('button'); b.className='chip'; b.style.borderColor='var(--salem)';
+    b.innerHTML=`${it.name} <span class="sub">${it.sub}</span>`;
+    b.onmouseover=()=>{}; 
+    b.onclick=()=>{
+      chips.querySelectorAll('button').forEach(x=>{x.classList.remove('active'); x.style.background=''; x.style.color='';});
+      b.classList.add('active'); b.style.background='var(--salem)'; b.style.borderColor='var(--salem)'; b.style.color='#fff';
+      const kindTxt = it.key==='mus' ? 'intruder · Pisot (non-reciprocal)' : 'intruder · Salem number';
+      loadElement(`Intruder · ${it.name}`, el, kindTxt);
+    };
+    chips.appendChild(b);
+  });
+}
+
+/* ============================================================
+   CLOSURE LAB
+   ============================================================ */
+let currentOp='sum';
+function refreshSelectors(){
+  const selA=document.getElementById('selA'), selB=document.getElementById('selB');
+  const a0=selA.value, b0=selB.value;
+  selA.innerHTML=''; selB.innerHTML='';
+  registry.forEach(r=>{
+    const oA=document.createElement('option'); oA.value=r.id; oA.textContent=r.label; selA.appendChild(oA);
+    const oB=document.createElement('option'); oB.value=r.id; oB.textContent=r.label; selB.appendChild(oB);
+  });
+  if(a0)selA.value=a0; if(b0)selB.value=b0;
+}
+function getReg(id){return registry.find(r=>r.id===id);}
+function buildLab(){
+  const opwrap=document.getElementById('opwrap');
+  opwrap.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      currentOp=b.dataset.op;
+      opwrap.querySelectorAll('button').forEach(x=>x.classList.remove('opsel'));
+      b.classList.add('opsel');
+      document.getElementById('cellB').style.visibility = currentOp==='square'?'hidden':'visible';
+    };
+  });
+  document.getElementById('emitBtn').onclick=doEmit;
+  refreshSelectors();
+}
+function doEmit(){
+  const selA=document.getElementById('selA'), selB=document.getElementById('selB');
+  const A=getReg(selA.value).el, Alab=getReg(selA.value).label;
+  let result, label, sym;
+  if(currentOp==='square'){ result=opSquare(A); sym='( '+Alab+' )²'; }
+  else {
+    const B=getReg(selB.value).el, Blab=getReg(selB.value).label;
+    if(currentOp==='sum'){ result=opSum(A,B); sym=Alab+' ⊕ '+Blab; }
+    else { result=opTensor(A,B); sym=Alab+' ⊗ '+Blab; }
+  }
+  // degree guard
+  if(result.roots.length>40){ flashEmit('Result degree '+result.roots.length+' exceeds the demo cap (40). Pick smaller factors.'); return; }
+  emitCount++; if(result.inBox)inboxCount++;
+  const shortLab = '⟨'+emitCount+'⟩';
+  const id=regAdd(shortLab+' '+sym, result, 'emitted');
+  loadElement(shortLab+'  '+sym, result, 'emitted · spectral operator');
+  addLogRow(emitCount, sym, result);
+  document.getElementById('emitCount').textContent=emitCount;
+  document.getElementById('inboxCount').textContent=inboxCount;
+  refreshSelectors();
+  // auto-select the new emission as A for chaining
+  document.getElementById('selA').value=id;
+}
+function addLogRow(n, sym, el){
+  const tbody=document.querySelector('#log-table tbody');
+  const empty=tbody.querySelector('.empty-row'); if(empty)empty.remove();
+  const tr=document.createElement('tr'); tr.className='clickable '+(el.inBox?'row-in':'row-out');
+  const poly=polyString(el.coeffs); const spec = poly!==null?poly:('deg '+el.roots.length+' companion');
+  tr.innerHTML=`<td>${n}</td><td>${sym}</td><td>${fmtM(el.M)}</td><td class="poly">${spec}</td>
+    <td class="${el.inBox?'v-in':'v-out'}">${el.inBox?'IN ✓':'OUT'}</td>`;
+  tr.onclick=()=>loadElement(`⟨${n}⟩  ${sym}`, el, 'emitted · spectral operator');
+  tbody.prepend(tr);
+}
+function flashEmit(msg){
+  const ro=document.getElementById('readout');
+  const old=ro.innerHTML;
+  ro.innerHTML=`<div class="verdict out"><span class="tag">CAP REACHED</span><div class="why">${msg}</div></div>`;
+  setTimeout(()=>{ro.innerHTML=old;},2200);
+}
+
+/* ============================================================
+   ANGLE-LATTICE WIDGET
+   ============================================================ */
+const LAT=document.getElementById('lat-scope');
+const LCX=140, LCY=140, LR=92;
+function renderLattice(highlight){
+  LAT.innerHTML='';
+  const g=svgEl('g',{});
+  g.appendChild(svgEl('circle',{cx:LCX,cy:LCY,r:LR,fill:'none',stroke:'var(--screen-ink)','stroke-width':1.3,opacity:.5}));
+  g.appendChild(svgEl('line',{x1:LCX-LR-10,y1:LCY,x2:LCX+LR+10,y2:LCY,stroke:'var(--screen-grid)','stroke-width':1}));
+  g.appendChild(svgEl('line',{x1:LCX,y1:LCY-LR-10,x2:LCX,y2:LCY+LR+10,stroke:'var(--screen-grid)','stroke-width':1}));
+  // posts
+  const posts=[[0,'0'],[Math.PI/2,'π/2'],[Math.PI,'π'],[3*Math.PI/2,'3π/2']];
+  posts.forEach(([a,lab])=>{
+    const x=LCX+LR*Math.cos(a), y=LCY-LR*Math.sin(a);
+    g.appendChild(svgEl('circle',{cx:x,cy:y,r:5,fill:'var(--wall-glow)',opacity:.9}));
+    const t=svgEl('text',{x:LCX+(LR+16)*Math.cos(a),y:LCY-(LR+16)*Math.sin(a)+3,fill:'var(--screen-ink)','font-size':9,'text-anchor':'middle','font-family':'IBM Plex Mono'});
+    t.textContent=lab; g.appendChild(t);
+  });
+  LAT.appendChild(g);
+  if(highlight!=null){
+    const onLat = Math.abs(((highlight%(Math.PI/2))+Math.PI/2)%(Math.PI/2))<1e-6 ||
+                  Math.abs(((highlight%(Math.PI/2))+Math.PI/2)%(Math.PI/2)-Math.PI/2)<1e-6;
+    const col=onLat?'var(--floor-glow)':'var(--salem-glow)';
+    const x=LCX+LR*Math.cos(highlight), y=LCY-LR*Math.sin(highlight);
+    // arc from 0 to highlight
+    g.appendChild(svgEl('circle',{cx:x,cy:y,r:9,fill:col,opacity:.2}));
+    g.appendChild(svgEl('circle',{cx:x,cy:y,r:6,fill:col}));
+    g.appendChild(svgEl('line',{x1:LCX,y1:LCY,x2:x,y2:y,stroke:col,'stroke-width':1.6,'stroke-dasharray':'3 3'}));
+  }
+}
+function buildLatticeControls(){
+  const ro=document.getElementById('lat-readout');
+  document.querySelectorAll('[data-lat]').forEach(b=>{
+    b.onclick=()=>{
+      const op=b.dataset.lat;
+      if(op==='add'){ const a=Math.PI/2+Math.PI; renderLattice(a%(2*Math.PI));
+        ro.className='lat-readout ok'; ro.innerHTML=`<span class="res">π/2 + π = 3π/2</span> — a post. The lattice (π/2)ℤ is a subgroup of the circle, so it is closed under addition. <b>⊗ adds arguments; it cannot escape.</b>`; }
+      else if(op==='double'){ const a=2*(Math.PI/2); renderLattice(a%(2*Math.PI));
+        ro.className='lat-readout ok'; ro.innerHTML=`<span class="res">2 · (π/2) = π</span> — a post. Doubling maps (π/2)ℤ into itself. <b>(·)² doubles arguments; it cannot escape.</b>`; }
+      else { const a=Math.PI/4; renderLattice(a);
+        ro.className='lat-readout bad'; ro.innerHTML=`<span class="res">½ · (π/2) = π/4</span> — <b>between two posts.</b> Halving leaves the lattice. But no spectral operator halves an angle, so this direction is unreachable — which is exactly where a Salem conjugate would have to live.`; }
+    };
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildCatalog();
+buildIntruders();
+buildLab();
+buildLatticeControls();
+renderLattice(null);
+// boot with the golden seed
+(function boot(){
+  const el=catEls['phi'];
+  setActiveChip(document.getElementById('catalog-chips'), document.querySelector('#catalog-chips button'));
+  loadElement('Seed · φ = golden', el, 'catalog seed');
+})();
+</script>
+</body>
+</html>

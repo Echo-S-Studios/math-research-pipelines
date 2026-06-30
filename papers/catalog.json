@@ -9,6 +9,24 @@
     "description": "A golden floor and an angle lattice that confine spectral emission away from Salem numbers — without resolving Lehmer's problem. Companion to the Emission-Gap Theorem and λ = 2c."
   },
   {
+    "kind": "pdf",
+    "file": "salem_slot.pdf",
+    "title": "The Occupant of the Salem Slot",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "11 pp",
+    "tag": "PDF",
+    "description": "The positive content of the empty slot: the trace redirection t = θ + θ⁻¹, the grow channel, and the √5 limit at the floor — with its convergence rate. Companion to Lehmer's Box and the Emission-Gap Theorem."
+  },
+  {
+    "kind": "pdf",
+    "file": "generative_emptiness.pdf",
+    "title": "The Generative Content of a Conserved Emptiness",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "7 pp",
+    "tag": "PDF",
+    "description": "Kinematic voids as superselection generators: the Salem slot's ℤ/4ℤ charge and the five canonical objects it produces — the grading, the content polynomial x⁴−1, the floor φ, a graded normal form, and a conserved current."
+  },
+  {
     "kind": "doc",
     "file": "lehmersproblemanintroduction.md",
     "title": "Lehmer's Problem: An Introduction",
@@ -16,5 +34,23 @@
     "pages": "read",
     "tag": "DOC",
     "description": "A question first asked in 1933, still unresolved: the Mahler measure, Lehmer's number 1.17628…, Smyth & Dobrowolski, and why the reciprocal/Salem case is the open heart — explained from the ground up."
+  },
+  {
+    "kind": "tool",
+    "file": "lehmers_box_instrument.html",
+    "title": "Lehmer's Box — closure instrument",
+    "series": "interactive",
+    "pages": "live",
+    "tag": "TOOL",
+    "description": "Plot a polynomial's roots on the complex plane, compose seeds with the spectral operators, and watch every emission stay inside the box — then throw a Salem number at it and watch it fall outside. All math computed in-browser."
+  },
+  {
+    "kind": "tool",
+    "file": "emissionalgebracompendium.html",
+    "title": "The Emission Algebra — a machine-verified account",
+    "series": "interactive",
+    "pages": "read",
+    "tag": "TOOL",
+    "description": "A guided compendium of the whole stack: the confinement, the occupant, the generative emptiness, the generation rates, and the finitely generated Mahler-measure monoid — 175 exact checks, every displayed number re-derived."
   }
 ]

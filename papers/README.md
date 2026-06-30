@@ -1,11 +1,11 @@
 # `papers/` — drop-in PDFs for the Pages site
 
-Put any PDF **or Markdown document** you want published on the
+Put any PDF, **Markdown document**, or **self-contained HTML tool** you want published on the
 [GitHub Pages site](../site/index.html) **in this folder**, then add one entry to
 [`catalog.json`](catalog.json). On the next deploy the Pages workflow copies every
-`papers/*.pdf` onto the site, **renders every `papers/*.md` to a themed HTML page** (with
-LaTeX math), and shows an **"Additional papers"** card for each catalog entry — no HTML or
-workflow edits required.
+`papers/*.pdf` and `papers/*.html` onto the site, **renders every `papers/*.md` to a themed
+HTML page** (with LaTeX math), and shows a card for each catalog entry — `pdf`/`doc` cards in
+**"Additional papers"**, `tool` cards in **"Interactive"** — no HTML or workflow edits required.
 
 > This folder is for **extra / contributed PDFs**. It is separate from the two pipelines'
 > own paper sources (`lambda2c-emissiongap-verification/papers/*.tex`, compiled in CI, and
@@ -37,14 +37,18 @@ Fields:
 | `file` | ✅ | filename in this folder (no path) — a `.pdf`, or a `.md` when `kind` is `"doc"` |
 | `title` | ✅ | card heading |
 | `description` | ✅ | one–two sentence summary |
-| `kind` | optional | `"pdf"` (default) or `"doc"`. A `"doc"` is a Markdown file — rendered to a themed HTML page (LaTeX math included) at deploy; the card links to that page |
+| `kind` | optional | `"pdf"` (default), `"doc"`, or `"tool"`. A `"doc"` is a Markdown file — rendered to a themed HTML page (LaTeX math included) at deploy. A `"tool"` is a self-contained `.html` page — copied as-is and shown as an **Interactive** card. |
 | `series` | optional | small label above the title (defaults to "Contributed") |
-| `pages` | optional | e.g. `"24 pp"` (use `"read"` for docs) |
-| `tag` | optional | short badge text (defaults to `PDF`, or `DOC` for docs) |
+| `pages` | optional | e.g. `"24 pp"` (use `"read"` for docs, `"live"` for tools) |
+| `tag` | optional | short badge text (defaults to `PDF`, or `DOC` / `TOOL`) |
 
 For a Markdown write-up instead of a PDF, drop e.g. `notes.md` here and add
 `{ "kind": "doc", "file": "notes.md", "title": "…", "description": "…" }`. Math in
 `$…$` / `$$…$$` is typeset automatically.
+
+For a self-contained interactive page, drop e.g. `widget.html` here and add
+`{ "kind": "tool", "file": "widget.html", "title": "…", "description": "…" }`. It is served
+as-is (keep it dependency-light), and its card appears under **Interactive**.
 
 3. Commit both the PDF and the updated `catalog.json`, and deploy (push to the default
    branch, or run the **Deploy GitHub Pages** workflow manually). The card appears under
