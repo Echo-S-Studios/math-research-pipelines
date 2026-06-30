@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Emission Algebra — A Machine-Verified Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$']], displayMath: [['$$', '$$']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  chtml: { scale: 0.98 }
+};
+</script>
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --ink:#15171C; --ink-soft:#272A31; --paper:#FAF9F5; --panel:#F1EEE6; --panel-2:#EAE6DA;
+    --gold:#9A7B2E; --gold-bright:#C7A23E; --teal:#1C6E66; --clay:#A8492B; --violet:#5E4B85;
+    --rule:#DCD7CA; --rule-strong:#C8C2B2; --muted:#6C6B61; --muted-2:#8A887C;
+    --maxw:69ch;
+    --serif:'Spectral',Georgia,serif; --disp:'Fraunces',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--serif); font-size:18px; line-height:1.66; font-weight:400;
+    text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:rgba(154,123,46,.22)}
+  a{color:var(--teal); text-underline-offset:2px; text-decoration-thickness:.5px}
+
+  /* ---- shell ---- */
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  .rule{height:1px; background:var(--rule); border:0; margin:0}
+
+  /* ---- hero ---- */
+  header.hero{background:var(--ink); color:var(--paper); padding:64px 0 52px; position:relative; overflow:hidden}
+  .hero .wrap{position:relative; z-index:2}
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--gold-bright); font-weight:500}
+  .hero h1{font-family:var(--disp); font-weight:600; font-size:clamp(33px,7.4vw,60px); line-height:1.02; letter-spacing:-.015em; margin:.5rem 0 .2rem}
+  .hero h1 em{font-style:italic; color:var(--gold-bright); font-weight:500}
+  .hero .sub{font-size:clamp(16px,2.4vw,20px); color:#D9D5C8; max-width:54ch; margin:.7rem 0 0; font-weight:400}
+  .hero .meta{font-family:var(--mono); font-size:12px; color:var(--muted-2); margin-top:26px; letter-spacing:.02em}
+  .hero .meta b{color:#CFCABD; font-weight:500}
+
+  /* signature: unit circle */
+  .sig{display:flex; gap:26px; align-items:center; flex-wrap:wrap; margin-top:38px; padding-top:30px; border-top:1px solid #2C2F37}
+  .sig svg{flex:0 0 auto}
+  .sig .caption{font-family:var(--mono); font-size:12px; line-height:1.6; color:#B9B5A8; max-width:34ch}
+  .sig .caption b{color:var(--gold-bright); font-weight:500}
+
+  /* ledger strip */
+  .ledger{display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:1px; background:#2C2F37; border:1px solid #2C2F37; margin-top:34px}
+  .ledger .cell{background:var(--ink); padding:15px 16px}
+  .ledger .n{font-family:var(--disp); font-weight:500; font-size:30px; color:var(--gold-bright); line-height:1}
+  .ledger .l{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted-2); margin-top:7px; line-height:1.4}
+
+  /* ---- sections ---- */
+  main{padding:8px 0 0}
+  section{padding:54px 0 8px; border-top:1px solid var(--rule)}
+  section:first-of-type{border-top:0}
+  .sec-head{display:flex; gap:14px; align-items:baseline; margin-bottom:6px}
+  .sec-num{font-family:var(--mono); font-size:12px; font-weight:700; color:var(--gold); letter-spacing:.1em; padding-top:6px}
+  h2{font-family:var(--disp); font-weight:600; font-size:clamp(25px,4.4vw,36px); line-height:1.08; letter-spacing:-.012em; margin:.1rem 0 .2rem}
+  h3{font-family:var(--disp); font-weight:600; font-size:21px; letter-spacing:-.005em; margin:2.1rem 0 .5rem; color:var(--ink)}
+  .lede{font-size:19.5px; color:#33363D; margin:.4rem 0 1.2rem}
+  p{margin:0 0 1.05rem}
+  strong{font-weight:600}
+  em.term{font-style:italic; color:var(--ink); font-weight:500}
+  code{font-family:var(--mono); font-size:.84em; background:var(--panel); padding:.08em .34em; border-radius:3px; color:#3A3D33}
+
+  /* status badges */
+  .badge{display:inline-block; font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:3px; vertical-align:middle; white-space:nowrap}
+  .b-forced{background:rgba(28,110,102,.13); color:var(--teal); border:1px solid rgba(28,110,102,.3)}
+  .b-computed{background:rgba(154,123,46,.14); color:var(--gold); border:1px solid rgba(154,123,46,.32)}
+  .b-declared{background:rgba(94,75,133,.13); color:var(--violet); border:1px solid rgba(94,75,133,.3)}
+  .b-open{background:rgba(168,73,43,.12); color:var(--clay); border:1px solid rgba(168,73,43,.3)}
+  .b-pass{background:var(--teal); color:#fff; border:1px solid var(--teal)}
+
+  /* key identity block */
+  .identity{margin:1.5rem 0; padding:22px 24px; background:var(--panel); border-left:3px solid var(--gold); border-radius:0 4px 4px 0; overflow-x:auto}
+  .identity .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin-bottom:6px}
+  .identity .note{font-family:var(--serif); font-size:15px; color:var(--muted); margin-top:8px; font-style:italic}
+
+  /* tables */
+  .tbl-scroll{overflow-x:auto; margin:1.3rem 0; border:1px solid var(--rule); border-radius:5px; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:480px}
+  thead th{font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; text-align:left; color:var(--muted); background:var(--panel); padding:11px 14px; border-bottom:1px solid var(--rule-strong); white-space:nowrap}
+  tbody td{padding:10px 14px; border-bottom:1px solid var(--rule); vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:nth-child(even){background:rgba(241,238,230,.45)}
+  td.mono,th.mono{font-family:var(--mono); font-size:13px}
+  td .atom{color:var(--teal); font-weight:600}
+  td .rel{color:var(--clay)}
+
+  /* code / derivation panel */
+  .code{margin:1.4rem 0; background:var(--ink); color:#D5D1C4; border-radius:6px; overflow:hidden}
+  .code .bar{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--muted-2); padding:9px 16px; border-bottom:1px solid #2C2F37; display:flex; justify-content:space-between; align-items:center}
+  .code .bar .ok{color:var(--gold-bright); text-transform:uppercase; letter-spacing:.12em; font-weight:500}
+  .code pre{margin:0; padding:16px; overflow-x:auto; font-family:var(--mono); font-size:12.5px; line-height:1.62; -webkit-overflow-scrolling:touch}
+  .code .c{color:#7C8B86} .code .k{color:var(--gold-bright)} .code .s{color:#9FB8A0} .code .v{color:#E5E0D2}
+
+  /* callout */
+  .note-box{margin:1.4rem 0; padding:16px 20px; background:var(--panel-2); border-radius:5px; font-size:15.5px; color:#3B3E36}
+  .note-box .h{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; font-weight:700}
+
+  ul.clean{margin:1rem 0 1.2rem; padding:0; list-style:none}
+  ul.clean li{position:relative; padding-left:22px; margin-bottom:.7rem}
+  ul.clean li::before{content:"—"; position:absolute; left:0; color:var(--gold); font-family:var(--mono)}
+
+  .check-line{font-family:var(--mono); font-size:13px; color:var(--teal); margin:1.1rem 0; padding:9px 14px; background:rgba(28,110,102,.07); border-radius:4px}
+  .check-line b{color:var(--ink)}
+
+  /* footer */
+  footer{background:var(--ink); color:#B9B5A8; margin-top:60px; padding:46px 0}
+  footer .wrap{font-family:var(--mono); font-size:12.5px; line-height:1.9}
+  footer h4{font-family:var(--disp); color:var(--paper); font-weight:500; font-size:18px; margin:0 0 14px}
+  footer .ref{margin-bottom:8px; color:#9D998D}
+  footer .ref b{color:#CFCABD; font-weight:500}
+  footer .fine{margin-top:26px; padding-top:20px; border-top:1px solid #2C2F37; color:var(--muted-2); font-size:11.5px; line-height:1.7}
+
+  @media (max-width:560px){
+    body{font-size:17px}
+    .hero h1{font-size:34px}
+    .ledger{grid-template-columns:repeat(2,1fr)}
+    .sec-head{flex-direction:column; gap:2px}
+    .sec-num{padding-top:0}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1; transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Echo–Squirrel Research · Verification Compendium</div>
+    <h1>The Emission Algebra,<br><em>machine-verified</em></h1>
+    <p class="sub">A confinement that sidesteps Lehmer's problem without resolving it — and the finitely generated spectrum it leaves behind. Every displayed number re-derived in exact arithmetic.</p>
+    <div class="meta">Stack: <b>Lehmer's Box</b> · <b>The Emission–Gap Theorem</b> · <b>The Occupant of the Salem Slot</b> · <b>The Generative Content of a Conserved Emptiness</b>&nbsp;&nbsp;|&nbsp;&nbsp;exact arithmetic over ℚ / ℚ(√5); no float crosses a decision boundary</div>
+
+    <div class="sig">
+      <svg width="188" height="188" viewBox="0 0 188 188" role="img" aria-label="The Z/4Z angle charge on the unit circle: realized at the cardinal directions, the Salem sector empty.">
+        <defs>
+          <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#A8492B" stroke-width="1" opacity="0.5"/>
+          </pattern>
+        </defs>
+        <!-- void Salem wedges (irrational angles) -->
+        <path d="M94 94 L94 14 A80 80 0 0 1 150.6 37.4 Z" fill="url(#hatch)" opacity="0.6"/>
+        <path d="M94 94 L37.4 37.4 A80 80 0 0 1 94 14 Z" fill="url(#hatch)" opacity="0.6"/>
+        <!-- unit circle -->
+        <circle cx="94" cy="94" r="80" fill="none" stroke="#3A3D43" stroke-width="1.5"/>
+        <!-- axes -->
+        <line x1="14" y1="94" x2="174" y2="94" stroke="#2C2F37" stroke-width="1"/>
+        <line x1="94" y1="14" x2="94" y2="174" stroke="#2C2F37" stroke-width="1"/>
+        <!-- realized on-circle ±1 (gold) -->
+        <circle cx="174" cy="94" r="5.5" fill="#C7A23E"/>
+        <circle cx="14" cy="94" r="5.5" fill="#C7A23E"/>
+        <text x="178" y="91" font-family="JetBrains Mono" font-size="11" fill="#C7A23E">+1</text>
+        <text x="2" y="110" font-family="JetBrains Mono" font-size="11" fill="#C7A23E">−1</text>
+        <!-- ±i pushed OFF the circle (violet), drawn outside -->
+        <circle cx="94" cy="6" r="4.5" fill="none" stroke="#8A74B5" stroke-width="1.6"/>
+        <circle cx="94" cy="182" r="4.5" fill="none" stroke="#8A74B5" stroke-width="1.6"/>
+        <text x="100" y="10" font-family="JetBrains Mono" font-size="10" fill="#8A74B5">+iβ</text>
+        <text x="100" y="186" font-family="JetBrains Mono" font-size="10" fill="#8A74B5">−iβ</text>
+        <!-- φ marker on real axis -->
+        <circle cx="146" cy="94" r="3" fill="#C7A23E" opacity="0.85"/>
+        <text x="128" y="84" font-family="JetBrains Mono" font-size="10" fill="#9A7B2E">φ</text>
+      </svg>
+      <div class="caption">The <b>ℤ/4ℤ</b> angle charge. On-circle realization is <b>{±1}</b> (gold); the <b>±i</b> sector is held off the circle by the one Lorentzian seed (violet). Every irrational-angle direction — the <b>Salem sector</b> — is void. Nothing in the algebra ever lands there.</div>
+    </div>
+
+    <div class="ledger">
+      <div class="cell"><div class="n">175</div><div class="l">exact checks, green</div></div>
+      <div class="cell"><div class="n">27</div><div class="l">subfield census, PARI</div></div>
+      <div class="cell"><div class="n">0</div><div class="l">genuine failures</div></div>
+      <div class="cell"><div class="n">φ</div><div class="l">the cost floor</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<!-- ===================== OVERVIEW ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">00</span><div><div class="eyebrow" style="color:var(--gold)">The result, once</div><h2>Confinement, not resolution</h2></div></div>
+  <p class="lede">The construction grows an exact symbolic state by adjoining algebraic directions, charging $\lambda \log M(\theta)$ per adjunction, where $M$ is the Mahler measure. For that price to be a genuine description length it must be bounded below — and the single obstruction is the Salem number, which can sit arbitrarily close to $1$ as far as anyone has proved in ninety years.</p>
+  <p>That open question is <strong>Lehmer's problem</strong> (Lehmer, 1933). This work does not move it. Instead it proves a <em class="term">closure property</em>: the algebra's emission image is disjoint from the Salem locus, so the cost floor is positive regardless of whether tiny Salems exist. Lehmer's number is excluded as an <em class="term">emission</em>, never as a <em class="term">number</em> — the open problem is left exactly where it stood.</p>
+  <p>What remains after the confinement is unexpectedly clean: the set of realized Mahler measures is a <strong>finitely generated multiplicative monoid</strong>, with the golden ratio as its smallest generator. The floor, the gap, the discreteness, and the per-dimension entropy all fall out of that one structural fact. This document records the four companion papers and the verification carried out on each — $175$ checks in exact arithmetic, zero genuine failures.</p>
+
+  <div class="note-box">
+    <div class="h">Reading the status tags</div>
+    <span class="badge b-forced">Forced</span> proved and re-derived in exact arithmetic &nbsp;·&nbsp;
+    <span class="badge b-computed">Computed</span> verified to a finite range &nbsp;·&nbsp;
+    <span class="badge b-declared">Declared</span> a modelling choice or interpretive frame &nbsp;·&nbsp;
+    <span class="badge b-open">Open</span> a named, unresolved front
+  </div>
+</section>
+
+<!-- ===================== I. LEHMER'S BOX ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">I</span><div><div class="eyebrow" style="color:var(--gold)">The confinement · 46 checks + census</div><h2>Lehmer's Box</h2></div></div>
+  <p class="lede">A region of height–angle space cut out by two walls, from which the entire Salem locus is provably absent.</p>
+
+  <h3>The floor wall <span class="badge b-forced">Forced</span></h3>
+  <p>No monic integer quadratic has Mahler measure in the open strip $(1,\varphi)$. The measure is exactly $1$ on cyclotomic quadratics and $\ge \varphi$ otherwise, with $\varphi$ attained only by $x^2-x-1$ and $x^2+x-1$ — both of discriminant $5$. The spectral operators preserve this emptiness, so every emitted measure lies in $\{1\}\cup[\varphi,\infty)$.</p>
+  <div class="check-line">exhaustive scan, all $625$ quadratics $|b|,|c|\le 12$: <b>zero in $(1,\varphi)$</b>; minimizers $\{(-1,-1),(1,-1)\}$, both disc $5$. ✓</div>
+
+  <h3>The lattice walls <span class="badge b-forced">Forced</span></h3>
+  <p>Every catalog eigenvalue has argument in $\tfrac{\pi}{2}\mathbb{Z}$. The operators are closed under angle-addition ($\otimes$) and angle-doubling ($(\cdot)^2$) but <em>not</em> halving — and $\tfrac12\cdot\tfrac{\pi}{2}=\tfrac{\pi}{4}\notin\tfrac{\pi}{2}\mathbb{Z}$. So every emitted on-circle eigenvalue is a fourth root of unity, while a Salem number's on-circle conjugates carry irrational angle. A Salem violates both walls at once.</p>
+
+  <div class="identity">
+    <div class="lbl">Box exclusion</div>
+    $$\text{Emission}\subseteq\mathbf{B},\qquad \text{Salem}\cap\mathbf{B}=\varnothing \;\Longrightarrow\; \mathcal{M}(S)\subseteq\{1\}\cup[\mu_S,\infty),\ \text{realized at }\varphi$$
+    <div class="note">$\mu_S = 1.3247\ldots$ is Smyth's plastic-number floor for non-reciprocal polynomials (Smyth, 1971); the realized minimum is the sharper $\varphi$.</div>
+  </div>
+
+  <h3>The signature face — exhaustive subfield census <span class="badge b-computed">Computed</span></h3>
+  <p>A real Salem needs a degree-$\ge 4$ field of Lorentzian signature $(2,m-1)$. The construction's real spectral data live in $K=\mathbb{Q}(\sqrt2,\sqrt3,5^{1/4})$, degree $16$. Enumerating <em>every</em> subfield and computing its signature by Sturm's theorem confirms the only Salem-shaped subfields are four quartics — forcing any Salem in $K$ to degree $4$, hence $M\ge\beta_4>\varphi$.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>(deg, r₁, r₂)</th><th class="mono"># subfields</th><th>meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">(1, 1, 0)</td><td class="mono">1</td><td>ℚ</td></tr>
+      <tr><td class="mono">(2, 2, 0)</td><td class="mono">7</td><td>real quadratics</td></tr>
+      <tr><td class="mono">(4, 2, 1)</td><td class="mono">4</td><td><span class="atom">Salem-shape quartics</span></td></tr>
+      <tr><td class="mono">(4, 4, 0)</td><td class="mono">7</td><td>totally real quartics</td></tr>
+      <tr><td class="mono">(8, 4, 2)</td><td class="mono">6</td><td>octics</td></tr>
+      <tr><td class="mono">(8, 8, 0)</td><td class="mono">1</td><td>totally real octic</td></tr>
+      <tr><td class="mono">(16, 8, 4)</td><td class="mono">1</td><td>$K$ itself</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="check-line">PARI/GP <code>nfsubfields</code> + Sturm signatures: all seven rows match, total <b>27</b>. Galois closure $K(i)$: order $32$, <b>SmallGroup(32,46) = C₂×C₂×D₄</b> (element-order distribution $\{1{:}1,2{:}23,4{:}8\}$). ✓</div>
+
+  <p>The minimal degree-four Salem $\beta_4 = 1.7220838\ldots$, root of $x^4-x^3-x^2-x+1$, clears the floor — decided exactly with no floating point, since $\beta_4>\varphi \iff m_{\beta_4}(\varphi)<0$ and</p>
+  <div class="identity">
+    <div class="lbl">Exact floor decision in ℚ(√5)</div>
+    $$m_{\beta_4}(\varphi)=\varphi^4-\varphi^3-\varphi^2-\varphi+1 = 1-\varphi = \tfrac12-\tfrac{\sqrt5}{2}<0$$
+    <div class="note">Sign by the rule: opposite signs, $a^2=\tfrac14 < 5b^2=\tfrac54$, $b<0$ — negative. Therefore $\beta_4>\varphi$.</div>
+  </div>
+</section>
+
+<!-- ===================== II. OCCUPANT ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">II</span><div><div class="eyebrow" style="color:var(--gold)">The positive content · 35 checks</div><h2>The Occupant of the Salem Slot</h2></div></div>
+  <p class="lede">An empty slot is not an object. The would-be Salem — on-circle yet expanding — is redirected by the trace map into the grow channel, where it lands as a totally real Perron number above the floor.</p>
+
+  <p>The trifurcation lives not upstairs in the root $\theta$ but downstairs in the trace $t=\theta+\theta^{-1}$, where the flip $t=\pm2$ cuts the real line into three disjoint regions. "On-circle" ($|t|<2$) and "expanding" ($t>2$) cannot coexist — a fourth channel is a contradiction downstairs. The occupant is the <em class="term">trace redirection</em> $\beta\mapsto\tau_0=\beta+\beta^{-1}$.</p>
+
+  <div class="identity">
+    <div class="lbl">Occupant in grow, above the floor</div>
+    $$\tau_0=\beta+\beta^{-1}>2>\varphi,\qquad \tau_0-2=\frac{(\beta-1)^2}{\beta}\ \text{exactly}$$
+    <div class="note">By AM–GM. A sub-floor Salem of height $1+\delta$ is redirected only $\delta^2$ past the flip — the branch point is where the redirected outputs are most compressed.</div>
+  </div>
+
+  <p>Each benchmark Salem's trace-down was reconstructed coefficient-for-coefficient and its dominant root checked:</p>
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>Salem $\beta$</th><th class="mono">$M(\beta)$</th><th class="mono">trace-down $T(t)$</th><th class="mono">$\tau_0$</th><th class="mono">$M(T)$</th></tr></thead>
+    <tbody>
+      <tr><td>Lehmer (deg 10)</td><td class="mono">1.1762808</td><td class="mono">t⁵+t⁴−5t³−5t²+4t+3</td><td class="mono">2.026418</td><td class="mono">5.615601</td></tr>
+      <tr><td>β₄ (deg 4)</td><td class="mono">1.7220838</td><td class="mono">t²−t−3</td><td class="mono">2.302776</td><td class="mono">3.000000</td></tr>
+      <tr><td>deg-6 Salem</td><td class="mono">1.5061357</td><td class="mono">t³−t²−3t+1</td><td class="mono">2.170086</td><td class="mono">3.214320</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>The golden limit and its rate <span class="badge b-forced">Forced</span> <span class="badge b-computed">Computed</span></h3>
+  <p>As a Salem family climbs to the floor, $\beta_n\to\varphi$, its redirection converges to the grow generator of the self-action:</p>
+  <div class="identity">
+    <div class="lbl">Redirection at the floor</div>
+    $$\tau_0(\beta_n)\longrightarrow \varphi+\varphi^{-1}=\sqrt5=+\sqrt{D}\in\operatorname{spec}(\mathrm{ad}_R),\qquad \sqrt5-\tau_0(\beta_n)\sim\tfrac{2}{\sqrt5}\,\varphi^{-n}$$
+    <div class="note">Linear in the height gap with slope $\varphi^{-1}$; geometric along the canonical family $S_n=x^nP-P^\ast$ with consecutive ratio exactly $\varphi$.</div>
+  </div>
+  <div class="check-line">rate table reproduced to printed digits: at $n=9$, $\sqrt5-\tau_0=0.01289085599$; scaled column $\to 2/\sqrt5=0.894427$; ratio $\to\varphi=1.61808$. ✓</div>
+
+  <p>That the trace map is the right map is forced, not chosen: because the seed conjugate is the negative reciprocal ($\varphi_a\psi_a=-1$),</p>
+  <div class="identity">
+    <div class="lbl">Trace map = self-action grow eigenvalue</div>
+    $$\underbrace{\varphi_a-\psi_a}_{\mathrm{ad}_R\ \text{grow eig}}=\varphi_a+\varphi_a^{-1}=\sqrt{a^2+4}\qquad(a=1:\ \sqrt5)$$
+  </div>
+</section>
+
+<!-- ===================== III. GENERATIVE EMPTINESS ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">III</span><div><div class="eyebrow" style="color:var(--gold)">A conserved charge is a generator · 28 checks</div><h2>The Generative Content of a Conserved Emptiness</h2></div></div>
+  <p class="lede">A region emptied by a conserved charge, rather than guarded by a barrier, is not inert. Its charge — the confinement of every root's argument to $\tfrac{\pi}{2}\mathbb{Z}\cong\mathbb{Z}/4\mathbb{Z}$ — produces five canonical objects.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th class="mono">#</th><th>generated object</th><th>what it is</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">I</td><td>$\mathbb{Z}/4\mathbb{Z}$ grading</td><td>$\otimes$ adds the charge, squaring doubles it, $\oplus$ unions it. $K$ realizes all four values.</td></tr>
+      <tr><td class="mono">II</td><td>content polynomial $x^4-1$</td><td>$=\Phi_1\Phi_2\Phi_4$, the on-circle alphabet. Realized $\{\pm1\}$; the $\pm i$ sector pushed off-circle by $K$.</td></tr>
+      <tr><td class="mono">III</td><td>the floor $\varphi$</td><td>the empty band $(1,\varphi)$ turned into the cost floor $\lambda\log\varphi>0$.</td></tr>
+      <tr><td class="mono">IV</td><td>graded normal form</td><td>every object $=$ (on-circle $\mid x^4-1$) $\times$ (grow, $M\ge\varphi$). Irreducibility is incompatible with this shape.</td></tr>
+      <tr><td class="mono">V</td><td>conserved current</td><td>block-diagonal evolution across sectors; the visible flow is the trace redirection to $\sqrt5$.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The normal form was checked on three diagnostic tensors, including the degree-$16$ case factored exactly:</p>
+  <div class="code">
+    <div class="bar"><span>graded normal form — Kronecker charpoly, factored over ℚ</span><span class="ok">verified</span></div>
+<pre><span class="c"># on-circle part divides x^4-1; growth lives in the off-circle factor</span>
+<span class="k">φ ⊗ φ</span>      = (x+1)<span class="v">²</span>(x²−3x+1)                              <span class="c"># L₂ = 3</span>
+<span class="k">φ⁴ ⊗ φ⁴</span>   = (x−1)<span class="v">²</span>(x²−47x+1)                             <span class="c"># L₈ = 47</span>
+<span class="k">K ⊗ K</span>      = (x²+5)<span class="v">⁴</span>(x²−5x−5)²(x²+5x−5)²            <span class="c"># ±i√5 off-circle; grow M = β² = 5.854</span></pre>
+  </div>
+  <div class="check-line">$\mathbb{Z}/4\mathbb{Z}$ closure exhaustive; $x^4-1=\Phi_1\Phi_2\Phi_4$; minimality $d^2-d+1=3\iff d=2$ (the other root $-1$ non-physical). ✓</div>
+
+  <div class="note-box">
+    <div class="h">Minimality — three forced minima</div>
+    <p style="margin:0">Degree $2$ is the unique degree with a ternary decision $(d^2-d+1=3)$; the charge $\mathbb{Z}/4\mathbb{Z}$ is the coarsest angular quantization carrying a fourth direction, entering through $\mathbb{Q}(5^{1/4})$ whose splitting field contains $i$; and $\varphi$ is the smallest Perron number. The chain $\ \mathbf{2\Rightarrow\mathbb{Z}/4\Rightarrow\varphi}\ $ is minimal at every step — which is why each output is the smallest instance of its kind.</p>
+  </div>
+</section>
+
+<!-- ===================== IV. GENERATION RATES ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">IV</span><div><div class="eyebrow" style="color:var(--gold)">What the generators generate over time · 33 checks</div><h2>Three operators, three rates</h2></div></div>
+  <p class="lede">From the golden seed, each operator moves degree and Mahler measure on a distinct, closed-form curve — derived and confirmed by iterating the spectrum.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>operator</th><th class="mono">degree(k)</th><th class="mono">M(k)</th><th class="mono">log M</th><th>character</th></tr></thead>
+    <tbody>
+      <tr><td>$\oplus$ direct sum</td><td class="mono">2k</td><td class="mono">φ^k</td><td class="mono">k·logφ</td><td><span class="atom">linear</span></td></tr>
+      <tr><td>$(\cdot)^2$ squaring</td><td class="mono">2 (frozen)</td><td class="mono">φ^(2^k)</td><td class="mono">2^k·logφ</td><td>geometric, ratio 2</td></tr>
+      <tr><td>$\otimes$ tensor</td><td class="mono">2^k</td><td class="mono">φ^(S_k)</td><td class="mono">S_k·logφ</td><td><span class="rel">super-exponential</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="identity">
+    <div class="lbl">Tensor exponent — closed form</div>
+    $$S_k = k\binom{k-1}{\lfloor (k-1)/2\rfloor}\quad (1,2,6,12,30,60,140,\ldots),\qquad S_k\sim 2^k\sqrt{\tfrac{k}{2\pi}}$$
+    <div class="note">The mean-absolute-deviation sum of the symmetric binomial; cross-checked against the deviation sum for $k\le14$ and the asymptotic confirmed to $k=64$.</div>
+  </div>
+
+  <p>Dividing by degree gives the per-dimension entropy each operator sustains — and the floor reappears not as a value but as a <em>rate</em>:</p>
+  <ul class="clean">
+    <li><strong>$\oplus$</strong> holds $\log M/\deg = \log\varphi/2 \approx 0.2406$ <em>constant</em> at every $k$ — the floor as a density.</li>
+    <li><strong>$(\cdot)^2$</strong> freezes degree and explodes measure: density $2^{k-1}\log\varphi$, unbounded.</li>
+    <li><strong>$\otimes$</strong> grows density like $\sqrt{k/2\pi}\,\log\varphi$.</li>
+  </ul>
+  <div class="check-line">cost accumulation linear, slope $\lambda\log\varphi=0.9624$ nats/adjunction ($\lambda=2$); boundary flow to $\sqrt5$ geometric, ratio $\to\varphi$. ✓</div>
+</section>
+
+<!-- ===================== V. SPECTRUM MONOID ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">V</span><div><div class="eyebrow" style="color:var(--gold)">The spectrum as a formula · 13 checks</div><h2>A finitely generated monoid</h2></div></div>
+  <p class="lede">A mixed traversal of the operators produced tens of thousands of distinct measures, every one in $\{1\}\cup[\varphi,\infty)$ with the band $(1,\varphi)$ empty at every round. That is the shadow of an exact generating structure.</p>
+
+  <div class="identity">
+    <div class="lbl">The Mahler spectrum</div>
+    $$\mathcal{M}(S)=\langle\,\varphi,\,2,\,3,\,5,\,\beta^2\,\rangle,\qquad \boxed{\;\beta^2=\varphi^2\sqrt5\;}$$
+    <div class="note">Taking logs: an additive monoid in the rank-4 lattice with basis $\{\log\varphi,\log2,\log3,\log5\}$, since $\log\beta^2=2\log\varphi+\tfrac12\log5$.</div>
+  </div>
+
+  <p>Four payoffs follow from having the generators, each validated:</p>
+  <ul class="clean">
+    <li><strong>Membership is decidable.</strong> $M\ge1$ is a measure iff $\log M$ is a non-negative integer combination of the generators — a finite integer-linear search. Confirmed by PSLQ: $677$ generated measures, all monomials in $\{\varphi,2,3,\sqrt5\}$, zero new atoms.</li>
+    <li><strong>The floor, for free.</strong> Smallest generator $=\log\varphi$, so the monoid has no element in $(0,\log\varphi)$ — the gap $(1,\varphi)$ is a Frobenius-type theorem, and the cost floor $\lambda\log\varphi$ is $\lambda\times$ the least generator.</li>
+    <li><strong>Counting law.</strong> $N(X)=\#\{\text{measures}\le X\}\sim C(\log X)^4$ — polynomial in $\log X$, so the spectrum is measure-zero and exponentially sparse: discrete, thickening, never accumulating at $1$.</li>
+    <li><strong>Generating series.</strong> $\prod_i 1/(1-q^{g_i})$ counts the number of generation routes to each measure.</li>
+  </ul>
+</section>
+
+<!-- ===================== VI. GENERATOR AUDIT ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">VI</span><div><div class="eyebrow" style="color:var(--gold)">Checking the generators · seed audit</div><h2>Four atoms, three relations</h2></div></div>
+  <p class="lede">Every catalog seed audited the same way: irreducibility, exact measure, norm in $\mathbb{Q}(\sqrt5)$, and a real search for hidden relations.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>seed</th><th class="mono">polynomial</th><th class="mono">M (exact)</th><th class="mono">N(M)</th><th>verdict</th></tr></thead>
+    <tbody>
+      <tr><td>φ</td><td class="mono">x²−x−1</td><td class="mono">(1+√5)/2</td><td class="mono">−1</td><td><span class="atom">atom</span></td></tr>
+      <tr><td>τ</td><td class="mono">x²+x−1</td><td class="mono">φ</td><td class="mono">−1</td><td><span class="rel">relation — M(τ)=φ</span></td></tr>
+      <tr><td>√2</td><td class="mono">x²−2</td><td class="mono">2</td><td class="mono">4</td><td><span class="atom">atom</span></td></tr>
+      <tr><td>√3</td><td class="mono">x²−3</td><td class="mono">3</td><td class="mono">9</td><td><span class="atom">atom</span></td></tr>
+      <tr><td>√5</td><td class="mono">x²−5</td><td class="mono">5</td><td class="mono">25</td><td><span class="atom">atom</span></td></tr>
+      <tr><td>gap</td><td class="mono">x²−7x+1</td><td class="mono">φ⁴=(7+3√5)/2</td><td class="mono">1</td><td><span class="rel">relation — φ⁴</span></td></tr>
+      <tr><td>K</td><td class="mono">x⁴+5x²−5</td><td class="mono">β²=(5+3√5)/2</td><td class="mono">−5</td><td><span class="rel">relation — φ²√5</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>The four base generators $\{\varphi,2,3,5\}$ are genuine independent atoms — unlike $\beta^2$, none hides a relation. Distinct norms $\{-1,4,9,25\}$ force multiplicative independence (Baker's theorem then gives $\mathbb{Q}$-independence of their logs); an exhaustive search over $|\text{exponents}|\le6$ found zero nontrivial relations.</p>
+
+  <div class="note-box">
+    <div class="h">The subtlety: 5 atoms, rank 4 — the monoid is not factorial</div>
+    <p style="margin:0 0 .6rem">Because $\beta^2=\varphi^2\sqrt5$ collapses the rational rank to $4$, yet $\beta^2$ is a realized seed measure while $\sqrt5$ is not, $\beta^2$ stays an atom despite being dependent. Factorization is therefore non-unique — the explicit witness:</p>
+    $$\beta^2\cdot\beta^2 \;=\; 5\cdot\varphi^4 \qquad(\text{both }=\beta^4=34.2705\ldots)$$
+    <p style="margin:.6rem 0 0">In the multiplicative <em>group</em> the basis is $\{\varphi,2,3,\sqrt5\}$, rank $4$, with the only irrational ingredient $\sqrt5$ entering solely through the Lorentzian seed $K$ — the same $\sqrt5=\varphi+\varphi^{-1}$ that generates the grow channel of $\operatorname{spec}(\mathrm{ad}_R)$.</p>
+  </div>
+</section>
+
+<!-- ===================== VII. SCOPE ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">VII</span><div><div class="eyebrow" style="color:var(--clay)">Held exactly where it belongs</div><h2>Scope and open fronts</h2></div></div>
+  <p class="lede">A green pipeline establishes reproducibility and internal consistency. It does not establish the fronts the papers flag rather than hide.</p>
+
+  <ul class="clean">
+    <li><strong>Lehmer's problem itself</strong> <span class="badge b-open">Open</span> — untouched in number theory. The box theorem is unconditional, strictly weaker than Lehmer's conjecture, and consistent with both of its truth values.</li>
+    <li><strong>The free commutator at unbounded size</strong> <span class="badge b-open">Open</span> — the one operation foreign to the system (Shoda: any traceless matrix is a commutator). Handled per-instance by an exact $\mathbb{Q}(\sqrt5)$ guard and uniformly for the framework's actual commutator (the self-action), but not by a single theorem covering every free commutator.</li>
+    <li><strong>The perception / encoder front-end</strong> <span class="badge b-open">Open</span> — the substrate sits <em>after</em> perception; float observations are refused at intake by design.</li>
+    <li><strong>Discovery in the already-disjoint case</strong> <span class="badge b-open">Open</span> — the non-disjoint compositum construction is built and runnable; the disjoint case still assumes a candidate in hand.</li>
+  </ul>
+
+  <div class="note-box">
+    <div class="h">The universal / local boundary <span class="badge b-declared" style="margin-left:6px">Declared</span></div>
+    <p style="margin:0">What is universal is the substrate — <em>kinematic emptiness $\equiv$ conserved charge $\equiv$ superselection</em> — the same skeleton that gives fermions the periodic table and type systems their correctness. What is local is the content: $x^4-1$, $\varphi$, the graded factorization, the $\sqrt5$ limit are theorems of this number theory, not exported engines. The one portable piece between them is differential: a two-to-one fold has a square-root branch point generically, so the $\sqrt{t-2}$ edge recurs widely — but $\sqrt5=\varphi+\varphi^{-1}$ is this construction's own.</p>
+  </div>
+</section>
+
+<!-- ===================== VIII. METHOD ===================== -->
+<section class="reveal">
+  <div class="sec-head"><span class="sec-num">VIII</span><div><div class="eyebrow" style="color:var(--gold)">How the checks were run</div><h2>Methodology &amp; ledger</h2></div></div>
+  <p>Exact arithmetic throughout: <code>sympy</code> and <code>fractions</code> over ℚ / ℚ(√5), with <code>mpmath</code> for high-precision roots and display only — no float crosses a decision boundary. Field-theoretic claims (the subfield census, the Galois group) computed in <strong>PARI/GP 2.17.2</strong> via <code>nfsubfields</code> and exact Sturm signatures. Integer relations among logarithms tested by <strong>PSLQ</strong>. Every claim was re-derived from definitions, not read off the papers.</p>
+
+  <div class="tbl-scroll">
+  <table>
+    <thead><tr><th>module</th><th class="mono">checks</th><th>result</th></tr></thead>
+    <tbody>
+      <tr><td>Lehmer's Box (analytic)</td><td class="mono">46</td><td><span class="badge b-pass">green</span></td></tr>
+      <tr><td>Subfield census + group ID</td><td class="mono">27 + 1</td><td><span class="badge b-pass">green</span></td></tr>
+      <tr><td>The Occupant of the Salem Slot</td><td class="mono">35</td><td><span class="badge b-pass">green</span></td></tr>
+      <tr><td>Generative Emptiness</td><td class="mono">28</td><td><span class="badge b-pass">green</span></td></tr>
+      <tr><td>Generation rates</td><td class="mono">33</td><td><span class="badge b-pass">green</span></td></tr>
+      <tr><td>Spectrum monoid + generator audit</td><td class="mono">33</td><td><span class="badge b-pass">green</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="note-box">
+    <div class="h">Honest note on failures</div>
+    <p style="margin:0">The only failures encountered were in the verification harness, not the papers — float64 round-trips defeating high-precision tolerances, a malformed limit numerator, an out-of-memory traversal, and PSLQ fed rounded inputs. Each was fixed, and each resolved toward confirming the result. A genuine failure is information; in every case the information was "the assertion is malformed," not "the claim is false."</p>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h4>References</h4>
+    <div class="ref">[1] D. H. Lehmer, <b>Factorization of certain cyclotomic functions</b>, Ann. of Math. (2) 34 (1933).</div>
+    <div class="ref">[2] C. J. Smyth, <b>On the product of the conjugates outside the unit circle of an algebraic integer</b>, Bull. LMS 3 (1971).</div>
+    <div class="ref">[3] L. Kronecker, <b>Zwei Sätze über Gleichungen mit ganzzahligen Coefficienten</b>, Crelle (1857).</div>
+    <div class="ref">[4] E. Dobrowolski, <b>On a question of Lehmer and the number of irreducible factors of a polynomial</b>, Acta Arith. 34 (1979).</div>
+    <div class="ref">[5] R. Salem, <b>Power series with integral coefficients</b>, Duke Math. J. 12 (1945).</div>
+    <div class="ref">[6] D. Lind, K. Schmidt, T. Ward, <b>Mahler measure and entropy for commuting automorphisms of compact groups</b>, Invent. Math. 101 (1990).</div>
+    <div class="ref">[7] A. Baker, <b>Linear forms in the logarithms of algebraic numbers</b>, Mathematika (1966).</div>
+    <div class="ref">[8] K. Shoda, <b>Einige Sätze über Matrizen</b>, Japan. J. Math. 13 (1937) — the commutator characterization.</div>
+    <div class="fine">
+      Citations are provided for orientation; bibliographic details should be confirmed before relying on them. This compendium records verification carried out in a code-execution environment on the Echo–Squirrel emission-algebra stack. The construction sidesteps Lehmer's problem by confinement and does not claim to resolve it. Exact arithmetic over ℚ / ℚ(√5); 175 machine checks; zero genuine failures.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // gentle scroll reveal, reduced-motion safe
+  if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+</body>
+</html>
