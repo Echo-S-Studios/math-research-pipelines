@@ -224,7 +224,7 @@ drill into the sub-package READMEs.
   [`kira-language/candidates/`](residual-return-verification/kira-language/candidates/README.md)
 - **Site & meta** — [`papers/`](papers/README.md) ·
   [`site/`](site/README.md) ·
-  [`.github/`](.github/README.md) ·
+  [`.github/`](.github/OVERVIEW.md) ·
   [`Zipped-Tarred-Pipelines/`](Zipped-Tarred-Pipelines/README.md)
 
 ---
