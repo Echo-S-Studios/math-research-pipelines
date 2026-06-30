@@ -27,6 +27,15 @@
     "description": "Kinematic voids as superselection generators: the Salem slot's ℤ/4ℤ charge and the five canonical objects it produces — the grading, the content polynomial x⁴−1, the floor φ, a graded normal form, and a conserved current."
   },
   {
+    "kind": "pdf",
+    "file": "operatoralgebrawhitepaper.pdf",
+    "title": "The Operator Algebra of the Emission Semiring",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "6 pp",
+    "tag": "PDF",
+    "description": "The spectral operators ⊕, ⊗, and (·)² treated in relation: they form a λ-ring. (⊕,⊗) is a commutative semiring, squaring is the Adams operation ψ², and the Mahler measure and the ℤ/4ℤ angle charge are its two characters."
+  },
+  {
     "kind": "doc",
     "file": "lehmersproblemanintroduction.md",
     "title": "Lehmer's Problem: An Introduction",
@@ -34,6 +43,15 @@
     "pages": "read",
     "tag": "DOC",
     "description": "A question first asked in 1933, still unresolved: the Mahler measure, Lehmer's number 1.17628…, Smyth & Dobrowolski, and why the reciprocal/Salem case is the open heart — explained from the ground up."
+  },
+  {
+    "kind": "doc",
+    "file": "EMISSIONALGEBRASPEC.md",
+    "title": "Building on the Emission Algebra — a build spec",
+    "series": "Spec · for builders",
+    "pages": "read",
+    "tag": "DOC",
+    "description": "A build specification over the emission-algebra substrate: the verified facts (S1–S10), the operator API, the guardrails, and use-case bases — each as basis → affordance → degrees of freedom → verification bar. Every fact is mapped to the file in this repo that checks it."
   },
   {
     "kind": "tool",
