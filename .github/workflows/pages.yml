@@ -53,14 +53,18 @@ jobs:
             emission_gap_paper.tex
 
       - name: Compile contributed papers (papers/*.tex -> PDF)
-        # Any companion paper dropped into papers/ as a .tex is compiled here (latexmk,
+        # Companion papers dropped into papers/ as .tex are compiled here (latexmk,
         # multi-pass). The resulting papers/*.pdf are picked up by the assemble step's
         # `papers/*.pdf` copy, and referenced by a `kind: pdf` catalog entry.
+        # NOTE: this action's root_file does not glob — list each .tex explicitly.
+        # When adding a new companion .tex, add its filename to this list too.
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: papers
-          glob_root_file: true
-          root_file: "*.tex"
+          root_file: |
+            charge_measure_coupling.tex
+            z5_no_salem_dichotomy.tex
+            lehmers_box.tex
 
       - name: Compile the residual-return papers (.tex -> PDF)
         # Compiled from source (not served from the committed PDF) so the site always
