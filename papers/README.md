@@ -72,7 +72,7 @@ the exact metadata):
 
 | File | Card |
 |---|---|
-| `lehmers_box.pdf` | Lehmer's Box (14 pp) |
+| `lehmers_box.tex` → `.pdf` | Lehmer's Box (14 pp, compiled in CI) |
 | `salem_slot.pdf` | The Occupant of the Salem Slot (11 pp) |
 | `generative_emptiness.pdf` | The Generative Content of a Conserved Emptiness (7 pp) |
 | `operatoralgebrawhitepaper.pdf` | The Operator Algebra of the Emission Semiring (6 pp) |
