@@ -36,6 +36,24 @@
     "description": "The spectral operators ⊕, ⊗, and (·)² treated in relation: they form a λ-ring. (⊕,⊗) is a commutative semiring, squaring is the Adams operation ψ², and the Mahler measure and the ℤ/4ℤ angle charge are its two characters."
   },
   {
+    "kind": "pdf",
+    "file": "charge_measure_coupling.pdf",
+    "title": "The Charge–Measure Coupling",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "13 pp",
+    "tag": "PDF",
+    "description": "The spectral semiring carries two orthogonal characters — the Mahler measure and a conjugate-angle charge valued in a finite cyclic group. Their composition law, a parity-graded floor (odd charge forced to the plastic number μ_S = 1.3247…, φ only plausible), and the one non-semiring operation — the matrix commutator — as the proven exit through which the whole Salem spectrum re-enters."
+  },
+  {
+    "kind": "pdf",
+    "file": "z5_no_salem_dichotomy.pdf",
+    "title": "The ℤ/5ℤ Case of the No-Salem Dichotomy",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "9 pp",
+    "tag": "PDF",
+    "description": "The pentagon sector worked as the first instance where the elementary ℤ/3ℤ argument breaks (2cos72° is irrational): four forced results sharpen the general floor to μ_S = 1.3247 and pin the degree-four gap at φ⁴, while the full claim μ(5) = 2 stays computed — the reciprocal/Salem core of Lehmer's problem specialized to the pentagon lattice."
+  },
+  {
     "kind": "doc",
     "file": "lehmersproblemanintroduction.md",
     "title": "Lehmer's Problem: An Introduction",

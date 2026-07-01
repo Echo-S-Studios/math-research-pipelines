@@ -1,5 +1,39 @@
 # CHANGES — post-pin repackaging ledger
 
+## Corpus FIX-INSTRUCTIONS, Part A — epistemic-tag scoping (this revision)
+
+Source-only edits to both papers. **No proven result changed and no tag was promoted**
+(`[open]`/`[declared]` never became `[forced]`); the asymmetry rule was respected throughout.
+
+- **`vector_substrate.tex` (A3/A4/C3).** Reciprocal-seed floor: **scope split** — kept `[open]` for
+  *arbitrary* seeds (this is exactly Lehmer's problem, no uniform positive floor proven), and added a
+  *within-the-emission-algebra* `[forced]` cross-reference (no Salem number is emitted). Canonical model
+  `Conj:model`: resolved into a **`[declared]`** modelling choice for `c`, bracketed by two genuinely
+  `[forced]` facts — the *impossibility* (Čencov: no invariance fixes the scale) and the framework-native
+  *value* `√5/2` (the `λ = 2c` gate). The choice of `c` stays `[declared]`, not forced. Added a provenance
+  caveat on the bibliography.
+- **`residual_return_learning.tex` (A3/A4/C3).** O2 reciprocal-floor scope split — kept `[open]` for
+  arbitrary seeds, noted the shipped-seed verdicts are invariant `∀c∈[1,n]` (no fabricated "no-Salem"
+  cross-reference, which this paper does not contain). O4/`c`: strengthened the `[declared]` framing —
+  the impossibility is `[forced]` (Čencov), the exchange rate is `[forced]` by `λ = 2c`, but **`c` itself
+  is declared, not forced**. Added a provenance caveat.
+- **PDF snapshots.** The two committed audit PDFs (`vector_substrate.pdf`, `residual_return_learning.pdf`)
+  now **lag their sources** — they were last recompiled at `8ad67ef`, before these edits, and no LaTeX
+  toolchain was available in this environment to refresh them. The **live Pages site is not affected**:
+  `.github/workflows/pages.yml` now **compiles both papers from `.tex` in CI** (rather than serving the
+  committed PDF), so the published PDFs always track the source. Refresh the bundled snapshots on the next
+  local LaTeX build.
+- **Seals.** `SHA256SUMS` regenerated — the two edited `.tex`, plus four entries left stale by the prior
+  Part-B commit (`README.md`, `L00M/training/README.md`, `kira-language/KL_DTA.py`,
+  `kira-language/candidates/README.md`: the `90 → 95` count bumps and the `KL_DTA` speculative-caveat
+  banner). `sha256sum -c SHA256SUMS` → all OK.
+- **Re-verification.** `python3 verify.py` → ALL GREEN (probes; walkthrough 55/55; training 137,
+  kira-language 121). No code or test logic changed in Part A.
+- **Still OPEN** (unchanged): the reciprocal-seed floor (the unsolved core of Lehmer's problem) and the
+  perception/encoder front-end.
+
+---
+
 ## lambda = 2c closure (this revision)
 
 This revision DERIVES the information exchange rate and inscribes it across the engine, the probes, and

@@ -1,5 +1,25 @@
 # Changes — lambda2c-emissiongap-verification
 
+## 2026-07-01 — emission-gap paper: free-commutator scope (FIX Part A, A2/C3)
+
+Source-only edit to `papers/emission_gap_paper.tex`. **No proven result changed and no tag was
+promoted.** The paper is compiled from `.tex` in CI (no committed PDF), so no snapshot lags.
+
+- **A2 — free-commutator caveat, `[open]` resolved *negatively* (not promoted).** The old text tagged
+  "no commutator at unbounded size can straddle the flip" as `\openq{}`. That framing was mistaken: a
+  *single uniform theorem over all free commutators* is **unsatisfiable**, refuted by construction — by
+  Shoda (with Albert–Muckenhoupt, Laffey–Reams) every trace-zero integer matrix **is** a commutator, so
+  the trace-zero companion carrying Lehmer's number is a commutator sitting below `φ`. The underlying
+  Shoda fact is tagged `\forced` (a cited theorem, not a finite check promoted). The closure is therefore
+  **operation-relative** (holds on the abelian spectral semiring, not the ambient matrix algebra), matching
+  *The Charge–Measure Coupling* Prop. 9.1. The `[open]` tag is **preserved** on what genuinely remains
+  open — an *achievable residue*: that `validate_closure` is a sound/complete/terminating classifier over
+  *all* integer matrices (decidable per-instance today via `emission_closure_guard.validate_closure`,
+  `test_p2_08`). Three honesty-ledger rows added.
+- **C3 — provenance.** Added `Shoda` / `AlbertMuckenhoupt` / `LaffeyReams` bibitems and a provenance
+  caveat noting the bibliographic details are unverified.
+- **Re-verification.** `pytest` → 95 passed (unchanged; Part A touches no code).
+
 ## 2026-07-01 — closure-guard exactness fix + regression coverage (90 → 95 claims)
 
 Corpus-wide FIX-INSTRUCTIONS, Part B (the one genuine code bug + its regression coverage).
