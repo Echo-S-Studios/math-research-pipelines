@@ -13,7 +13,7 @@ pipeline's CI (with pip caching). Status badges for the first three appear at th
 | Workflow | Trigger | What it runs |
 |---|---|---|
 | [`matrix-plates.yml`](workflows/matrix-plates.yml) | push / PR touching `matrix-plates/**` | `pip install -e ".[dev]"`, then `make test` (139 tests) + `make verify` (10/10), on Python 3.9 and 3.12. |
-| [`lambda2c.yml`](workflows/lambda2c.yml) | push / PR touching `lambda2c-emissiongap-verification/**` | `pip install -r requirements.txt`, then `pytest -v` (90 claims) on Python 3.12; uploads `output/results.json` as an artifact. |
+| [`lambda2c.yml`](workflows/lambda2c.yml) | push / PR touching `lambda2c-emissiongap-verification/**` | `pip install -r requirements.txt`, then `pytest -v` (95 claims) on Python 3.12; uploads `output/results.json` as an artifact. |
 | [`residual-return.yml`](workflows/residual-return.yml) | push / PR touching `residual-return-verification/**` | `quick` job: `verify.py --quick` (the always-on probe gate). `full` job: the complete `verify.py` (training + kira-language) on a weekly schedule + manual dispatch. |
 | [`pages.yml`](workflows/pages.yml) | push to `main` touching `site/`, `papers/`, the pipeline papers, or the tool; or manual | Builds the Pages site: compiles the λ=2c papers from `.tex` (`xu-cheng/latex-action`), renders `papers/*.md` via [`site/render_docs.py`](../site/README.md), assembles `_site/`, and deploys with `upload-pages-artifact` → `deploy-pages`. **The sole Pages deployer** — see [`site/README.md`](../site/README.md). |
 

@@ -58,22 +58,22 @@ def flip_straddle(T):
                           at_pm2=at2+atm2)
 
 def sign_in_Qsqrt5(expr):
-    """Exact sign of an element a+b*sqrt5 (a,b rational). No float."""
+    """Exact sign of an element a+b*sqrt5 (a,b rational). No float.
+
+    Signs are taken with sp.sign (-1/0/+1), never via `a > 0` (which is a
+    sympy BooleanAtom), so a pure-rational R(phi) -- the b == 0 case, e.g. the
+    deg-6 Salem x^6-x^5-x^3-x+1 has R(phi)=2 -- is decided instead of raising
+    `BooleanAtom not allowed`.  (B1 regression; covered by test_p2_08.)
+    """
     e = sp.expand(expr)
     a = sp.nsimplify(e.subs(sp.sqrt(5), 0))
     b = sp.nsimplify((e - a)/sp.sqrt(5))
-    a, b = sp.Rational(a), sp.Rational(b)
-    if b == 0: return (a > 0) - (a < 0)
-    if a == 0: return (b > 0) - (b < 0)
-    # a + b sqrt5 > 0 ?
-    if a > 0 and b > 0: return 1
-    if a < 0 and b < 0: return -1
-    # opposite signs: compare a^2 vs 5 b^2 with sign bookkeeping
-    lhs, rhs = a*a, 5*b*b
-    if a > 0:   # b<0 : positive iff a^2 > 5 b^2
-        return 1 if lhs > rhs else (-1 if lhs < rhs else 0)
-    else:       # a<0, b>0 : positive iff 5 b^2 > a^2
-        return 1 if rhs > lhs else (-1 if rhs < lhs else 0)
+    sa, sb = int(sp.sign(a)), int(sp.sign(b))      # -1/0/+1, never a BooleanAtom
+    if sb == 0: return sa
+    if sa == 0: return sb
+    if sa == sb: return sa                          # same sign: trivial
+    c = a*a - 5*b*b                                 # opposite signs: a^2 vs 5 b^2, exact
+    return sa if c > 0 else (sb if c < 0 else 0)
 
 def beta_below_phi(R):
     """Exact: is the Salem root beta (>1) of reciprocal R strictly below phi?

@@ -67,7 +67,7 @@ The landing page has three sections; here is every card it links, with the file 
 
 | Pipeline | What it verifies | Approach | Tests | Run command |
 |---|---|---|---|---|
-| [**lambda2c-emissiongap-verification**](lambda2c-emissiongap-verification/README.md) | Every `[FORCED]` (and the few `[COMPUTED]`) claim of *The Exchange Rate λ = 2c* and *The Emission-Gap Theorem* — the identity λ = 2c, the three-gate ladder `{1/4, 1/2, 1} → {2, 3, 5}`, the Mahler floor `M ∈ {1} ∪ [φ, ∞)`, and the no-Salem closure | `sympy` + `fractions`, Sturm root-counting, Faddeev–LeVerrier; closure-not-enumeration plus an exhaustive 27-subfield check; `mpmath`/floats only for displayed magnitudes | **90 FORCED claims, all pass** (lambda_2c 41 · emission_gap 40 · 9 catalog constants; 0 failed) | `cd lambda2c-emissiongap-verification && pip install -r requirements.txt && pytest` |
+| [**lambda2c-emissiongap-verification**](lambda2c-emissiongap-verification/README.md) | Every `[FORCED]` (and the few `[COMPUTED]`) claim of *The Exchange Rate λ = 2c* and *The Emission-Gap Theorem* — the identity λ = 2c, the three-gate ladder `{1/4, 1/2, 1} → {2, 3, 5}`, the Mahler floor `M ∈ {1} ∪ [φ, ∞)`, and the no-Salem closure | `sympy` + `fractions`, Sturm root-counting, Faddeev–LeVerrier; closure-not-enumeration plus an exhaustive 27-subfield check; `mpmath`/floats only for displayed magnitudes | **95 FORCED claims, all pass** (lambda_2c 41 · emission_gap 45 · 9 catalog constants; 0 failed) | `cd lambda2c-emissiongap-verification && pip install -r requirements.txt && pytest` |
 | [**matrix-plates**](matrix-plates/README.md) | Exact integer-matrix invariants graded by Mahler measure, the `companion ∘ charpoly` closure, and the `φ ⊕ φ` derogatory / non-similar similarity witness | Stdlib-only exact ℤ/ℚ engine: Faddeev–LeVerrier char-poly, rational Krylov minimal polynomial, Smith normal form over `ℚ[x]` for invariant factors; cross-checked against committed JS, sympy, and determinantal-divisor oracles | **139 tests pass** (133 core + hypothesis property tests when the optional `hypothesis` package is installed) **plus a build-spec checklist 10/10** | `cd matrix-plates && pip install -e ".[dev]" && make test && make verify` |
 | [**residual-return-verification**](residual-return-verification/README.md) | Every load-bearing claim of *The Vector Substrate* and *Residual Return* — Gram matrices, residual norms, minimal polynomials, Fisher matrices, floors, certified-interval enclosures, kernels, projectors, and hash digests — against three independent witnesses and the real engines | Exact-core `fractions` (no float in any decision), driven through `pytest`; a data-driven claim map pins each theorem/equation to a test node and a commit hash; `numpy` only for quarantined float readings | **`verify.py` ALL GREEN** — Part A probes 13 + 20 + a third witness 56/57 (the 1 flag is an intentional, documented "shorthand" note, not a failure); Part B walkthrough 55/55; Part C engines training 137 + kira-language 121 | `cd residual-return-verification && pip install -r requirements.txt && python3 verify.py` |
 
@@ -108,7 +108,7 @@ The three pipelines were built independently, but they share one discipline:
 
 Each pipeline is self-contained; run them independently.
 
-**lambda2c-emissiongap-verification** — Python 3.12; 90 FORCED claims, ~59 s under pytest.
+**lambda2c-emissiongap-verification** — Python 3.12; 95 FORCED claims, ~62 s under pytest.
 
 ```bash
 cd lambda2c-emissiongap-verification
@@ -181,7 +181,7 @@ is auditable:
 ```
 math-research-pipelines/
 ├── README.md  LICENSE  CITATION.cff  .gitignore        # repo root: this file + governance
-├── lambda2c-emissiongap-verification/   # λ = 2c & Emission-Gap: 90 FORCED claims under pytest
+├── lambda2c-emissiongap-verification/   # λ = 2c & Emission-Gap: 95 FORCED claims under pytest
 ├── matrix-plates/                       # Mahler-measure plates + companion closure + browser tool
 ├── residual-return-verification/        # exact learning substrate: verify.py drives Parts A–C
 ├── papers/                              # Pages drop-zone: contributed PDFs / docs / HTML tools + catalog.json

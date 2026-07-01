@@ -75,3 +75,22 @@ def test_square_squares_mahler():
            "M(A^2)=M(A)^2 (here phi^2)",
            "M(A^2) = M(A)^2",
            detail={"M_squared": M2})
+
+
+def test_tensor_mahler_is_tropical_not_multiplicative():
+    # On-circle guard for the tensor-Mahler law. The other tensor case here is OFF-circle
+    # (sqrt2 (x) sqrt3), exactly where the wrong multiplicative formula M(A)^degB M(B)^degA
+    # and the correct tropical (max,+) law coincide -- which is why an off-circle-only suite
+    # could miss the error. phi (x) phi crosses the unit circle: eigenvalues
+    # {phi^2, -1, -1, psi^2}, so M = phi^2 (tropical), NOT phi^4.
+    Cphi = companion([1, -1, -1])
+    M = float(mahler_mp(_charpoly_int_coeffs(kron(Cphi, Cphi))))
+    phi = float((1 + sp.sqrt(5)) / 2)
+    assert abs(M - phi**2) < 1e-9          # tropical / actual value
+    assert abs(M - phi**4) > 1.0           # explicitly NOT the multiplicative formula
+    record("P2-ALG-05", PAPER, "Def 2.3 ((x) is tropical on M)",
+           "M(A (x) B) is the tropical (max,+) sum over eigenvalue products, not "
+           "M(A)^degB M(B)^degA: phi (x) phi gives phi^2 -- an on-circle case the off-circle "
+           "examples mask -- guarding the corrected tensor-Mahler law",
+           "M(phi (x) phi) = phi^2 (tropical), not phi^4",
+           detail={"M": M, "phi_squared": phi**2})

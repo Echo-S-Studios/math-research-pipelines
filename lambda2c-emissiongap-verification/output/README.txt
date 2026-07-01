@@ -14,7 +14,7 @@ WHAT LANDS HERE
       empty (an empty "results" list, null timestamps, empty meta) and is filled
       in on each run. A complete, finalized run holds:
 
-          90 claims, all FORCED, 0 failed
+          95 claims, all FORCED, 0 failed
           by_paper: lambda_2c 41, emission_gap 40  (+ 9 catalog "shared" constants)
 
       Lifecycle (see ../harness/results.py):
@@ -88,7 +88,7 @@ TROUBLESHOOTING
       install TeX Live (provides pdflatex; lmodern optional). build_pdfs.py
       exits 0 by design when pdflatex is missing -- this is not a test failure.
 
-  - total_claims != 90 / "failed" > 0:
+  - total_claims != 95 / "failed" > 0:
       a real failure is information (see ../README.md). Re-run a single file,
       e.g. `pytest -v ../tests/test_p2_02_angle.py`, and read its assertions.
 

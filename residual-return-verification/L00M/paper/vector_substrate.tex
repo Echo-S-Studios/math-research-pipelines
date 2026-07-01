@@ -1237,6 +1237,14 @@ costs at least $\lambda\log\mu_S$'' is theorem--backed only for non--reciprocal 
 this paper---$\varphi$ ($x^2-x-1$), $2\sqrt6$ ($x^2-24$), $\sqrt7$ ($x^2-7$)---are all non--reciprocal (their
 root sets are not closed under $\alpha\mapsto\alpha\inv$), so their floors are unconditional; only the
 \emph{general} positive--floor claim carries the caveat.
+
+\emph{Scope split.} The reciprocal--seed floor must be read at two scopes, and they are not in tension.
+For \emph{arbitrary} reciprocal seeds the floor is \emph{open}---this is exactly Lehmer's problem, and no
+uniform positive floor is proven. \emph{Within the emission algebra}, however, it is \emph{forced}: the
+companion paper's Emission--Gap theorem shows the catalog--generated image (Table~\ref{tab:catalog})
+contains no Salem number, so on the emitted seeds the floor is $\lambda\log\varphi>0$ (with the golden gate
+$\lambda=2c$, $c=\sqrt5/2$; see Conjecture~\ref{conj:model} and the companion). The two readings differ only
+in \emph{scope}---all reciprocal integers versus the algebra actually generated here---not in content.
 \end{remark}
 
 \begin{conjecture}[Lehmer]\label{conj:lehmer}
@@ -1505,13 +1513,18 @@ not mathematics, and is out of scope for the present paper.
 \section{Open problems}\label{sec:open}
 
 \begin{enumerate}[label=(O\arabic*),leftmargin=*]
-  \item \textbf{The canonical model (Conjecture~\ref{conj:model}; partially answered in the companion).}
-        Is there a principled reason to prefer $c=1$ (Gaussian) or $c=n$ (max--entropy on conjugates)? The
-        companion paper supplies a third, framework--native reading---the scale of the self--action eigenframe
-        at a critical point of the ladder $x^2+x=C$, namely $c=\sqrt{1+4C}/(2C)$ (golden gate $c=\sqrt5/2$)---and
-        shows the exchange rate is then the identity $\lambda=2c$. By Conjecture~\ref{conj:model} (\v{C}encov)
-        this remains a principled \emph{choice} of scale, not a derivation: it names a preferred $c$ without
-        removing the irreducible freedom the conjecture identifies.
+  \item \textbf{The canonical model (Conjecture~\ref{conj:model}; resolved into a \emph{declared} modelling
+        choice).} This is no longer an open problem but a \emph{declared} choice bracketed by two \emph{forced}
+        facts. First, the \emph{impossibility} is \emph{forced}: by \v{C}encov's theorem no invariance fixes
+        the scale (the Fisher metric is unique only up to scale \cite{Cencov}), so no principled reason can
+        \emph{prefer} $c=1$ (Gaussian) over $c=n$ (max--entropy on conjugates) by invariance alone. Second, the
+        framework--native \emph{value} is \emph{forced}: the companion paper's self--action eigenframe at a
+        critical point of the ladder $x^2+x=C$ gives $c=\sqrt{1+4C}/(2C)$, and at the golden gate
+        $c=\sqrt5/2$ ($\lambda=\sqrt5$), the exchange rate being then the identity $\lambda=2c$ (companion,
+        $\lambda=2c$ gate theorem). What \emph{remains} is a \emph{declared} modelling choice among
+        $c\in\{1,\,n,\,\sqrt5/2\}$: \v{C}encov forbids fixing it by invariance, the construction forces the
+        value $\sqrt5/2$ when one adopts the framework--native scale, and selecting among the three is a
+        modelling declaration, not an open question.
   \item \textbf{Complex embeddings (partially resolved, \S\ref{subsec:complex}).} The Hermitian form
         $G_2=M^{*}M$ treats $r_2>0$ in principle, and the Fisher identities transfer to it
         (Remark~\ref{rem:fishercaveats}). What remains is an exact, probe--level verification on a field with
@@ -1532,8 +1545,11 @@ We restate the boundary of what is claimed. The exact layer---membership, the re
 coordinates--to--minimal--polynomial bridge, and admissibility---is decided over $\Q$ and $\Z$ and is proved
 or machine--verified. The \emph{thresholding} layer is not exact: $\log\Mah(\theta)$ is transcendental, the
 exchange rate $\lambda$ is posited rather than derived, and---crucially---the cost floor is provably positive
-only for \emph{non--reciprocal} seeds (Smyth); for reciprocal seeds, such as Salem numbers and units, no
-uniform positive floor is known (Remark~\ref{rem:reciprocal}; Lehmer's conjecture). The information--geometry
+only for \emph{non--reciprocal} seeds (Smyth); for \emph{arbitrary} reciprocal seeds, such as Salem numbers
+and units, no uniform positive floor is known and the question is \emph{open} (Remark~\ref{rem:reciprocal};
+Lehmer's conjecture)---though \emph{within the emission algebra} the floor is \emph{forced}, the
+catalog--generated image containing no Salem number (Emission--Gap theorem, companion; Remark~\ref{rem:reciprocal}).
+The information--geometry
 reading is conformal with a model--dependent constant ($c=1$ or $c=n$), not a unique identity, and requires
 $1\in\col(\BB)$. The compositum construction is proved only in the linearly disjoint case. Finally, the
 framework yields \emph{finiteness} of the admissible seed set (Northcott, Proposition~\ref{prop:cap}) but no
@@ -1594,11 +1610,11 @@ $\lVert\rr\rVert_{\GG}^2=n\,\Fish(\rr)$ on the residual subspace ($c=n$) & This 
 $\Mah(\theta)=\prod_{|\lambda|>1}|\lambda|$ (spectral) & Classical (cited) $+$ probe & Rem~\ref{rem:mahlerspectral} \\
 $\log\Mah=$ toral topological entropy & Classical (cited) & Prop~\ref{prop:lsw} \\
 Smyth floor $\mu_S=1.3247$ (\emph{non--reciprocal only}) & Cited (theorem) & Thm~\ref{thm:smythfloor} \\
-Reciprocal--seed floor (Salem numbers, units) & Open (no uniform floor) & Rem~\ref{rem:reciprocal} \\
+Reciprocal--seed floor (Salem numbers, units) & Open for arbitrary seeds (Lehmer); \emph{forced} within the emission algebra (no emitted Salem number) & Rem~\ref{rem:reciprocal} \\
 Certified \textsc{grow} ($\sqrt7$, $2\sqrt6$) via interval $\log\Mah$ & Verified (interval) & Ex~\ref{ex:certified} \\
 Compositum $\GG=\GG_\K\otimes\GG_L$ (disjoint) & This work (proved) & Prop~\ref{prop:kron} \\
 Bridge $m_\alpha=$ largest invariant factor of $xI-\rho(\alpha)$ & This work (proved) & Thm~\ref{thm:bridge} \\
-Canonical statistical model ($c$; \v{C}encov: free up to scale) & Conjectural; named $c\in\{1,n,\sqrt{1+4C}/(2C)\}$ & Conj~\ref{conj:model} \\
+Canonical statistical model ($c$; \v{C}encov: free up to scale) & Resolved: \emph{declared} choice among $c\in\{1,n,\sqrt5/2\}$; impossibility \emph{forced} (\v{C}encov: no invariance fixes the scale), value $\sqrt5/2$ \emph{forced} by the construction ($\lambda=2c$) & Conj~\ref{conj:model} \\
 Exchange rate $\lambda=2c$ (identity; see companion) & Model--dependent through $c$ only & Rem~\ref{rem:exchange} \\
 Lehmer floor $\mu_L=1.176$ & Conjectural & Conj~\ref{conj:lehmer} \\
 Non--disjoint compositum Gram & Open & Rem~\ref{rem:nondisjoint} \\
@@ -1624,6 +1640,9 @@ the fields catalog---are reproduced by the additive probe \texttt{test\_paper\_c
 All numerical values displayed here match those probes.
 
 \begin{thebibliography}{99}
+\bibitem[$\ast$]{provenance} \emph{Provenance caveat.} The references below are standard attributions
+  recorded from memory; the volume, page, and year details have not been machine--verified. Consult the
+  primary sources before relying on these bibliographic details externally.
 \bibitem{Northcott} D.~G.~Northcott, \emph{An inequality in the theory of arithmetic on algebraic
   varieties}, Proc. Cambridge Philos. Soc. \textbf{45} (1949), 502--509.
 \bibitem{Lehmer} D.~H.~Lehmer, \emph{Factorization of certain cyclotomic functions}, Ann. of Math.

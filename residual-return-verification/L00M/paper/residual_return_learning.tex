@@ -1405,7 +1405,7 @@ Non-disjoint compositum (bounded), $m_\theta=x^4{-}22x^2{+}25$ & This work (exac
 Northcott gate exact; Landau certificate & Cited (proved) $+$ probe & \cite{VectorSubstrate}, Ex~\ref{ex:gate} \\
 $\GG=n\,\Fish_{\mathrm{exp}}$ on trace-zero ($1\in\col\BB$) & Cited (this work in \cite{VectorSubstrate}) $+$ probe & \cite{VectorSubstrate}, Ex~\ref{ex:fisher} \\
 Smyth floor $\mu_S$ (non-reciprocal only) & Cited (theorem) & Rem~\ref{rem:threshold} \\
-Reciprocal-seed floor (Salem, units) & Open (no uniform floor) & Rem~\ref{rem:threshold} \\
+Reciprocal-seed floor (Salem, units): scope split---\emph{open} for arbitrary seeds (Lehmer), immaterial for the shipped seeds & \emph{Open} (arbitrary seeds $=$ Lehmer); shipped verdicts invariant $\forall c\in[1,n]$ & Rem~\ref{rem:threshold}, \ref{rem:lambdaclose} \\
 Automatic loop returns residual to $0$ & This work (design) $+$ probe & Thm~\ref{thm:loop} \\
 Concrete variance calibration (Welford-$M2$ gate; default permissive) & This work (design) $+$ probe & Rem~\ref{rem:calibration} \\
 Re-home projector-invariance; $1\in\col\BB$ kept & This work (proved) $+$ probe & Lem~\ref{lem:rehome}, Rem~\ref{rem:oneinB} \\
@@ -1438,17 +1438,30 @@ is reproduced by a machine-checked computation (\S\ref{sec:proven}, \S\ref{sec:a
         degree--aware floor its $c=n$ instance (Remark~\ref{rem:floorsunify}). This collapses (O1) into (O4): the
         exchange rate and the conformal constant are a single degree of freedom, related by $\lambda=2c$, so
         ``derive $\lambda$'' becomes ``declare $c$,'' addressed next.
-  \item \textbf{The reciprocal-seed floor.} A uniform positive Mahler floor is a theorem only for
-        non-reciprocal seeds (Smyth); the reciprocal case---Salem numbers and units, which arise naturally as
-        seeds---is the unsolved core of Lehmer's problem, and the gate is honest that it has no proven floor
-        there.
+  \item \textbf{The reciprocal-seed floor \emph{(a scope split, not a flat gap).}} A uniform positive Mahler
+        floor is a theorem only for non-reciprocal seeds (Smyth). For \emph{arbitrary} reciprocal seeds---Salem
+        numbers and units---this remains genuinely \emph{open}: it is the unsolved core of Lehmer's problem, and
+        the gate is honest that it has no proven uniform floor there (Remark~\ref{rem:threshold}). This openness
+        is a statement about arbitrary seeds, however, not a defect of the shipped substrate: for the shipped
+        seeds the \textsc{grow}/\textsc{stop} verdicts are \emph{invariant} across every named conformal model
+        $c\in[1,n]$ (their gains $96,56$ dominate every floor; Remark~\ref{rem:lambdaclose}), so the two are not
+        in tension---they differ in scope. What is unproven is the arbitrary-seed floor; what is settled is the
+        behaviour on the seeds the substrate actually admits.
   \item \textbf{The non-disjoint compositum beyond the bound.} The construction of \S\ref{subsec:nondisjoint}
         is exact up to the Kronecker degree cap; a Zassenhaus/$p$-adic factorisation over number fields would
         remove the bound (Remark~\ref{rem:nondisjoint-scope}).
   \item \textbf{The conformal constant $c$ \emph{(reframed: a declared scale with a critical--point--native
-        canonicalization).}} With $\lambda=2c$ the only residual freedom is $c$, and by \v{C}encov's theorem it is
-        irreducible \emph{within} information geometry---no invariance argument fixes the scale~\cite{Cencov}
-        (Remark~\ref{rem:cencov}). Three readings of the field's own structure name three values
+        canonicalization).}} This item is now resolved into three parts of distinct epistemic force, all pinned
+        to $\lambda=2c$ (Theorem~\ref{thm:lambda2c}). \emph{(i)} That the scale cannot be fixed by invariance is
+        \emph{forced}: by \v{C}encov's theorem the Fisher metric is unique only up to a positive scale, so no
+        invariance argument can pin $c$~\cite{Cencov} (Remark~\ref{rem:cencov}). \emph{(ii)} Given the identity
+        $\lambda=2c$, the exchange rate is likewise \emph{forced}---it is no longer a free scalar
+        (Theorem~\ref{thm:lambda2c}, Remark~\ref{rem:lambdaclose}), and at the golden gate the
+        construction's own eigenframe scale reads $c=\sqrt5/2$, $\lambda=\sqrt5$ (Definition~\ref{def:frameshift}).
+        \emph{(iii)} What remains is a \emph{declared} choice---not the \emph{value} of $\lambda$ but which
+        conformal model $c\in\{1,\,n,\,\sqrt5/2\}$ an application adopts (Table~\ref{tab:canon}); per \v{C}encov
+        this is a principled choice, not a derivation, so $c$ itself is declared rather than forced. Three
+        readings of the field's own structure name three values
         (Table~\ref{tab:canon}): $c=1$ (Jeffreys information volume $\sqrt{|d_\K|}$), $c=n$ (degree--invariant
         per--conjugate significance), and the critical--point value $c=\sqrt{1+4C}/(2C)$ selected by the
         self--action eigenframe at a gate (Definition~\ref{def:frameshift}; golden gate $c=\sqrt5/2$,
@@ -1544,6 +1557,9 @@ readiness tag \texttt{b1-ready} (\texttt{a5892c7}, HEAD \texttt{44829ff}). All d
 probes.
 
 \begin{thebibliography}{99}
+\footnotesize\emph{Provenance caveat.} The references below are standard attributions recorded from memory;
+the specific volume, page, and year details have not been machine-verified against the primary sources. Consult
+the primary sources directly before relying on these entries in external work.\normalsize
 \bibitem{VectorSubstrate} L00M Vector Substrate Project, \emph{The Vector Substrate: Number Fields as Exact
   Learning Geometry}, companion manuscript, 2026.
 \bibitem{Smyth} C.~J.~Smyth, \emph{On the product of the conjugates outside the unit circle of an algebraic

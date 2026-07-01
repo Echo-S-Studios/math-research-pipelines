@@ -2,7 +2,9 @@ name: Deploy GitHub Pages
 
 # Publishes the landing page (site/index.html) with interactive cards linking to:
 #   - the two lambda2c papers, compiled from .tex here (they are not committed)
-#   - the two residual-return PDFs (committed)
+#   - the two residual-return papers, compiled from .tex here so the served PDF
+#     always tracks the source (a committed PDF would go stale on source edits)
+#   - any contributed papers/*.tex, also compiled here
 #   - the interactive Matrix Plates tool
 # Static deploy via the official GitHub Actions Pages pipeline (no Jekyll).
 # NOTE: this is the SOLE GitHub Pages deployer. The Static-HTML starter workflow
@@ -16,6 +18,7 @@ on:
       - 'site/**'
       - 'papers/**'
       - 'lambda2c-emissiongap-verification/papers/**'
+      - 'residual-return-verification/L00M/paper/*.tex'
       - 'residual-return-verification/L00M/paper/*.pdf'
       - 'matrix-plates/web/matrix_plates.html'
       - '.github/workflows/pages.yml'
@@ -48,6 +51,27 @@ jobs:
           root_file: |
             lambda_2c_paper.tex
             emission_gap_paper.tex
+
+      - name: Compile contributed papers (papers/*.tex -> PDF)
+        # Any companion paper dropped into papers/ as a .tex is compiled here (latexmk,
+        # multi-pass). The resulting papers/*.pdf are picked up by the assemble step's
+        # `papers/*.pdf` copy, and referenced by a `kind: pdf` catalog entry.
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: papers
+          glob_root_file: true
+          root_file: "*.tex"
+
+      - name: Compile the residual-return papers (.tex -> PDF)
+        # Compiled from source (not served from the committed PDF) so the site always
+        # tracks the .tex. Manual thebibliography (no bibtex); tikz/pgfplots/algorithm2e/
+        # listings are all in the action's TeXLive image. latexmk runs the passes needed.
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: residual-return-verification/L00M/paper
+          root_file: |
+            vector_substrate.tex
+            residual_return_learning.tex
 
       - name: Set up Python (for Markdown doc rendering)
         uses: actions/setup-python@v5
