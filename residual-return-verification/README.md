@@ -208,7 +208,7 @@ included so the papers themselves are auditable. Per-file SHA-256 digests are in
 - **The other two pipelines in this repo** share the exact-arithmetic discipline:
   [`lambda2c-emissiongap-verification`](../lambda2c-emissiongap-verification/README.md) (the λ = 2c
   exchange-rate and Emission-Gap papers — the same `λ = 2c` closure this package derives, proven there
-  as 90 FORCED claims) and [`matrix-plates`](../matrix-plates/README.md) (exact integer-matrix
+  as 95 FORCED claims) and [`matrix-plates`](../matrix-plates/README.md) (exact integer-matrix
   invariants graded by Mahler measure, the `companion ∘ charpoly` closure, and a self-contained
   browser tool — the same `loom`-style kernel).
 - **The repo root:** [`../README.md`](../README.md) — what makes all three rigorous, and the

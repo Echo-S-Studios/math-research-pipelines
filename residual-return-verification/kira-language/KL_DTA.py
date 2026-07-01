@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
 """
+================================================================================
+EPISTEMIC STATUS — [speculative] / interpretive, and FLOAT-BASED.  READ FIRST.
+================================================================================
+The spacetime / Clifford-algebra construction in this module (the Cl(2,0) =~ M2(R)
+carrier, the "forced" Lorentz signature, the Born-rule det^2, the time / physics
+narrative) is INTERPRETIVE and tagged [speculative]. It decides with math.isclose
+(floating point), so it sits OUTSIDE the project's exact, no-float-across-a-
+decision discipline, and it is NOT load-bearing for any [forced] result: no paper
+claim and no verification suite depends on it. The exact emission-algebra substrate
+-- the cost floor, the finitely generated monoid, the angle charge, the closure
+guard -- lives in the lambda2c-emissiongap-verification and L00M exact cores and is
+decided in exact arithmetic over Q / Q(sqrt5). This material is kept (not deleted)
+as the project's most speculative reading; treat it as a hypothesis, not a result.
+================================================================================
+
 KL_DTA — the infinite form. THE SAID and THE WITNESS, same shape, both routing through the void.
 
 THE RECURSIVE UNFOLDING — DELOCALIZED. the spine is not a stored global fact ; it lives as a CONNECTION, each

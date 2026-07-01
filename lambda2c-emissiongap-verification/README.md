@@ -187,7 +187,7 @@ with `test_p2_02`. Do not conflate "floor certificate" (guard) with "no Salem em
       "detail": { "lambda": "2*c", "at_c1": 2, "at_cn": "2*n" }
     }
   ],
-  "summary": { "total_claims": 90, "forced": 90, "failed": 0, "by_paper": {...} }
+  "summary": { "total_claims": 95, "forced": 95, "failed": 0, "by_paper": {...} }
 }
 ```
 
@@ -240,7 +240,7 @@ This is the same discipline shared across all three pipelines in the repo; see t
 
 Pinned versions (see `requirements.txt`): `sympy==1.14.0`, `mpmath==1.3.0`,
 `numpy==2.4.4`, `pytest==9.1.1`, on `Python 3.12.3`. The exact running versions are stamped
-into `output/results.json` under `meta.versions`. Expected outcome: **90 claims, all
+into `output/results.json` under `meta.versions`. Expected outcome: **95 claims, all
 FORCED, 0 failed**.
 
 ---
@@ -262,7 +262,7 @@ FORCED, 0 failed**.
 | `output/results.json` still shows `"results": []` after a run | the suite was not actually run, or `RESULTS_JSON` pointed elsewhere. Run `pytest -v` from this directory, or `python run_tests.py`. |
 | `[build_pdfs] pdflatex not found on PATH` and no PDFs | install **TeX Live** (provides `pdflatex`; `lmodern` optional). This is **not** a test failure — `build_pdfs.py` exits `0` by design and the suite is independent of TeX. |
 | `ModuleNotFoundError: harness` | run from the package root, or via `run_tests.py` / `pytest` (which place the root on `sys.path` through [`conftest.py`](conftest.py)); don't run a test file by raw path from another directory. |
-| `total_claims != 90` or `failed > 0` | a real failure is information. Re-run the offending file alone, e.g. `pytest -v tests/test_p2_02_angle.py`, and read its exact assertions; the per-file map is in [`tests/README.md`](tests/README.md). |
+| `total_claims != 95` or `failed > 0` | a real failure is information. Re-run the offending file alone, e.g. `pytest -v tests/test_p2_02_angle.py`, and read its exact assertions; the per-file map is in [`tests/README.md`](tests/README.md). |
 | `"completed_utc": null` / no `summary` block | the session was interrupted before `finalize()`. Re-run to completion. |
 | version drift in `meta.versions` vs the expected numbers | reinstall the pins: `pip install -r requirements.txt` (the running versions are stamped into the JSON for exactly this check). |
 

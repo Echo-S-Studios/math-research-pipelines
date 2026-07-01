@@ -23,7 +23,7 @@ Core equation:
 """
 import sympy as sp
 from emission_closure_guard import (validate_closure, companion, op_kron, op_dsum,
-                                     op_square, op_selfaction)
+                                     op_square, op_selfaction, sign_in_Qsqrt5)
 from harness.results import record
 
 PAPER = "emission_gap"
@@ -122,6 +122,26 @@ def test_cyclotomic_forced():
            "read FORCED, confirming the guard does not false-positive on on-circle spectra",
            "verdict(cyclotomic reciprocal) = FORCED",
            detail={"controls": ["x^6+1", "x^4+1", "x^4+x^2+1"]})
+
+
+def test_sign_in_qsqrt5_pure_rational_branch():
+    # B1 regression: sign_in_Qsqrt5 must decide a PURE-RATIONAL R(phi) (the b == 0 case)
+    # by exact sign, not via `a > 0` (a BooleanAtom). The deg-6 Salem x^6-x^5-x^3-x+1 has
+    # R(phi)=2, which previously crashed the guard with 'BooleanAtom not allowed'.
+    assert sign_in_Qsqrt5(sp.Integer(2)) == 1
+    assert sign_in_Qsqrt5(-sp.Integer(3)) == -1
+    assert sign_in_Qsqrt5(3 - 2 * sp.sqrt(5)) == -1        # 3 < 2*sqrt5
+    assert sign_in_Qsqrt5(1 + sp.sqrt(5)) == 1
+    carrier = sp.diag(companion([1, -1, 0, -1, 0, -1, 1]), sp.Matrix([[-1]]))  # traceless
+    assert carrier.trace() == 0
+    assert validate_closure(carrier)["verdict"] == "INVALID_CLOSURE"           # was: crash
+    assert validate_closure(companion([1, -1, -1, -1, 1]))["verdict"] == "FORCED_ABOVE_FLOOR"
+    record("P2-GUARD-06", PAPER, "Sec 8 (exact Q(sqrt5) sign; B1 regression)",
+           "sign_in_Qsqrt5 decides a pure-rational R(phi) (b=0) by exact sign, never a "
+           "BooleanAtom: the deg-6 Salem x^6-x^5-x^3-x+1 (R(phi)=2) now reads INVALID_CLOSURE "
+           "instead of crashing, and beta4 stays FORCED_ABOVE_FLOOR",
+           "sign_in_Qsqrt5(a+b*sqrt5) exact when b=0; deg-6 carrier -> INVALID_CLOSURE",
+           detail={"R_phi": 2, "deg6_below_phi": True, "beta4_unchanged": True})
 
 
 if __name__ == "__main__":
