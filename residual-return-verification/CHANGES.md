@@ -17,14 +17,17 @@ Source-only edits to both papers. **No proven result changed and no tag was prom
   cross-reference, which this paper does not contain). O4/`c`: strengthened the `[declared]` framing —
   the impossibility is `[forced]` (Čencov), the exchange rate is `[forced]` by `λ = 2c`, but **`c` itself
   is declared, not forced**. Added a provenance caveat.
-- **PDF snapshots.** The two committed audit PDFs (`vector_substrate.pdf`, `residual_return_learning.pdf`)
-  now **lag their sources** — they were last recompiled at `8ad67ef`, before these edits, and no LaTeX
-  toolchain was available in this environment to refresh them. The **live Pages site is not affected**:
-  `.github/workflows/pages.yml` now **compiles both papers from `.tex` in CI** (rather than serving the
-  committed PDF), so the published PDFs always track the source. Refresh the bundled snapshots on the next
-  local LaTeX build.
-- **Seals.** `SHA256SUMS` regenerated — the two edited `.tex`, plus four entries left stale by the prior
-  Part-B commit (`README.md`, `L00M/training/README.md`, `kira-language/KL_DTA.py`,
+- **Build fix (`residual_return_learning.tex`).** The C3 provenance caveat was first placed *inside*
+  `\begin{thebibliography}` before the first `\bibitem`, which is illegal in a list environment and made
+  `latexmk` abort (`Something's wrong--perhaps a missing \item`). Moved the caveat to just before
+  `\begin{thebibliography}`. Both papers now compile end-to-end (`latexmk`, exit 0), verified locally.
+- **PDF snapshots refreshed.** The two committed audit PDFs (`vector_substrate.pdf`,
+  `residual_return_learning.pdf`) were **recompiled from the corrected sources** (`latexmk`, TeX Live),
+  so the bundled snapshots match the `.tex` again (previously last built at `8ad67ef`, before the tag
+  edits). The live Pages site is independently covered: `.github/workflows/pages.yml` compiles both
+  papers from `.tex` in CI.
+- **Seals.** `SHA256SUMS` regenerated — the two edited `.tex`, the two refreshed PDFs, plus four entries
+  left stale by the prior Part-B commit (`README.md`, `L00M/training/README.md`, `kira-language/KL_DTA.py`,
   `kira-language/candidates/README.md`: the `90 → 95` count bumps and the `KL_DTA` speculative-caveat
   banner). `sha256sum -c SHA256SUMS` → all OK.
 - **Re-verification.** `python3 verify.py` → ALL GREEN (probes; walkthrough 55/55; training 137,
