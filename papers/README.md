@@ -2,16 +2,20 @@
 
 Put any PDF, **LaTeX source** (`.tex`), **Markdown document**, or **self-contained HTML tool** you
 want published on the [GitHub Pages site](../site/index.html) **in this folder**, then add one entry to
-[`catalog.json`](catalog.json). On the next deploy the Pages workflow **compiles every `papers/*.tex`
-to a PDF** (`latexmk`, multi-pass, no bibtex), copies every `papers/*.pdf` and `papers/*.html` onto the
-site, **renders every `papers/*.md` to a themed HTML page** (with LaTeX math), and shows a card for each
-catalog entry — `pdf`/`doc` cards in **"Additional papers"**, `tool` cards in **"Interactive"** — no
-HTML or workflow edits required.
+[`catalog.json`](catalog.json). On the next deploy the Pages workflow **compiles the contributed
+`papers/*.tex` to PDF** (`latexmk`, multi-pass, no bibtex), copies every `papers/*.pdf` and
+`papers/*.html` onto the site, **renders every `papers/*.md` to a themed HTML page** (with LaTeX math),
+and shows a card for each catalog entry — `pdf`/`doc` cards in **"Additional papers"**, `tool` cards in
+**"Interactive"**. Adding a `.pdf`, `.md`, or `.html` needs **no workflow edit** — only a `.tex` does
+(one line, see below).
 
 > **`.tex` sources.** Drop a self-contained `.tex` here and it is compiled in CI exactly like the two
 > λ=2c pipeline papers; the catalog entry then points at the **compiled** filename (`my_paper.pdf`, not
 > `my_paper.tex`). Keep the source standalone (no `\input` of files outside `papers/`) so the CI
-> `working_directory: papers` compile finds everything it needs.
+> `working_directory: papers` compile finds everything it needs. **One workflow edit is required:** add
+> the filename to the `root_file` list of the *Compile contributed papers* step in
+> [`pages.yml`](../.github/workflows/pages.yml) — this version of `latex-action` does not glob, so each
+> `.tex` is listed explicitly.
 
 > This folder is for **extra / contributed PDFs**. It is separate from the two pipelines'
 > own paper sources (`lambda2c-emissiongap-verification/papers/*.tex`, compiled in CI, and
