@@ -65,6 +65,7 @@ jobs:
             charge_measure_coupling.tex
             z5_no_salem_dichotomy.tex
             lehmers_box.tex
+            relational_charge_paper.tex
 
       - name: Compile the residual-return papers (.tex -> PDF)
         # Compiled from source (not served from the committed PDF) so the site always

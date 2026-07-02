@@ -82,6 +82,7 @@ the exact metadata):
 | `operatoralgebrawhitepaper.pdf` | The Operator Algebra of the Emission Semiring (6 pp) |
 | `charge_measure_coupling.tex` → `.pdf` | The Charge–Measure Coupling (13 pp, compiled in CI) |
 | `z5_no_salem_dichotomy.tex` → `.pdf` | The ℤ/5ℤ Case of the No-Salem Dichotomy (9 pp, compiled in CI) |
+| `relational_charge_paper.tex` → `.pdf` | Relational Charge on the Spectral Semiring (21 pp, compiled in CI) |
 | `lehmersproblemanintroduction.md` → `.html` | Lehmer's Problem: An Introduction (primer) |
 | `EMISSIONALGEBRASPEC.md` → `.html` | Building on the Emission Algebra — a build spec |
 
