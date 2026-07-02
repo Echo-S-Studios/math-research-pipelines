@@ -1,0 +1,414 @@
+{"c": [-2, -2, -2, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -2, -2, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -2, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -2, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -1, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -1, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -1, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, -1, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, 0, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -2, 0, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -2, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -2, -2, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -2, -1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -2, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, 1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, -1, 1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, -2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 0, 2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 1, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 1, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, -1, 1, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, -2, 0, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, -1, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, -1, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 0, -2, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 0, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 0, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 0, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 0, 2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 1, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 1, -1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 1, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["SC", "SCneg"]}
+{"c": [-2, 0, 1, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 1, 2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 2, 1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-2, 0, 2, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [-1, -2, -2, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -2, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -2, -2, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -1, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -2, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, -2, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, -2, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, 0, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, -1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, 0, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, 0, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, 0, 1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -2, 0, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -2, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -2, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -2, 0, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -2, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -2, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, -1, -1, 0], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, 0, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 0, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, -1, 1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -2, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -2, -2, 0], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, 0, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 0, 2, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, -1, 0, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 0, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 2, 0, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 1, 2, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, -1, 2, 2, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -2, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -1, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, 0, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, 0, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -2, 1, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, 0, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -2, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -2, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, -1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, -1, 0, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 0, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, -2, 1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, -1, 2, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -2, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -2, 1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, 0, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, -1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -2, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 0, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 0, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -1, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 1, 2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 2, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 0, 2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, -1, 1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, 0, -1, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 0, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, -1, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, 0, -2, -1], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 1, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 2, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 1, 2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 2, 1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 0, 2, 2, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -2, 1, -2, 1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, -2, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, -1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, -1, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, -1, 1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 0, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 0, -1, 1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 0, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 1, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 1, -1, 1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, -1, 2, -2, 1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -2, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -2, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -2, 1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -2, 2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, 1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, -1, 2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 0, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 0, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 0, 0, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 0, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 1, -2, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 1, -1, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 0, 2, -2, 0, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, -1, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, -1, 1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 0, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 0, 0, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 0, 0, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 0, 1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 1, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 1, -1, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 1, -1, -1, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 1, 2, -2, -2, -2], "real_roots": 1, "pairs": 3, "pattern": "1r3p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 2, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [-1, 1, 2, 1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -2, -2, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -2, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -2, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -2, 1, 1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -2, 2, 2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": "adjudicated"}
+{"c": [1, -1, -1, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -1, 0, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, -1, 1, 1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, 0, -1, -2, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, 0, -1, -1, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, 0, 0, -1, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, 0, 0, 0, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, -1, 1, -1, -1, 1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -2, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -2, -1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -2, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -2, 0, 1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -2, 1, 2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -2, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -1, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, -1, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, -1, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, 0, -1, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 0, 1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 1, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, -1, 1, 1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, -1, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 0, -2, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 0, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 0, -1, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 0, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 0, 1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 1, -1, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 1, -1, -1, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 1, 0, -2, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 1, 0, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 0, 1, 1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -2, 0, 2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, -1, -1, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, -1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, 0, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, -1, 0, 1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -2, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, -2, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, -1, 0, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -2, 0, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -1, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 0, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, -1, -1, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, 0, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, 0, -2, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, 0, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 1, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 1, 2, 0, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, -1, -1, 1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, -1, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, 0, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, 0, -2, -1, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 0, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 1, -1, -2, -2, -1], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 1, -1, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [1, 2, 1, 0, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg"]}
+{"c": [2, 1, -1, 0, 0, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [2, 1, 0, -1, -2, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
+{"c": [2, 1, 0, 0, -1, -2, -2], "real_roots": 3, "pairs": 2, "pattern": "3r2p", "certs": ["RH", "RHneg", "SC", "SCneg"]}
