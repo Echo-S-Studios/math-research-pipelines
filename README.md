@@ -10,6 +10,7 @@ yourself rather than trust a rendered PDF.
 [![lambda2c CI](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/lambda2c.yml/badge.svg)](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/lambda2c.yml)
 [![residual-return CI](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml/badge.svg)](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+<!-- DOI-BADGE: replaced with the Zenodo DOI badge once the first GitHub release is archived (see .zenodo.json + tools/apply_doi_patch.py) -->
 
 **🌐 Live site — [echo-s-studios.github.io/math-research-pipelines](https://echo-s-studios.github.io/math-research-pipelines/)** ·
 read every paper, open the interactive tools, and browse the build spec. Each card is described in
