@@ -45,8 +45,8 @@ Gauge Rigidity, Coherence Types, and a Reference-Free Parity Floor}
 Which part of an algebraic integer's phase structure belongs to the number
 itself, and which only to a chosen reference ray? We refactor the emission
 algebra's charge into a purely relational invariant --- the pair charge
-$t_{\mathrm{rel}}(\alpha,\beta)=\frac{1}{2\pi}(\Arg\alpha-\Arg\beta)
-\in\Q/\Z$, defined when rational --- and determine exactly how much
+$t_{\mathrm{rel}}(\alpha,\beta)=t(\alpha)-t(\beta)\in\Q/\Z$, with
+$t(\alpha)=\frac{1}{2\pi}\Arg\alpha$, defined when rational --- and determine exactly how much
 survives. The relational data is a groupoid cocycle whose trivializations
 are the absolute charges; the reference ray is a gauge choice. Rigidity:
 conjugation-closed spectra force every internally rational object to be
@@ -117,8 +117,11 @@ questions organize the study:
   trivialization; the reference ray is the gauge; a global rotation
   $\alpha\mapsto e^{2\pi ic}\alpha$ shifts every absolute phase by $c$ and fixes
   every relative one. What the language buys is the exact content of
-  \S\ref{sec:rigidity}: rigidity says the algebraic category admits
-  essentially one section --- integrality fixes the gauge. \F
+  \S\ref{sec:rigidity}: rigidity says the gauge is not free on the
+  algebraic category --- an object's phases are pinned to rational values
+  outright, the only structural slack being the anchor dichotomy
+  $n\in\{m,2m\}$, itself absorbed object-by-object by the sign twist
+  (Lemma~\ref{lem:twist}). \F
 \item \textbf{Rigidity} (\S\ref{sec:rigidity}). Integrality fixes the gauge: for a
   conjugation-closed spectrum, all pairwise differences rational forces all phases
   rational. Relational admissibility therefore coincides with absolute
@@ -172,9 +175,10 @@ sharper, reference-free form; the new content lives (a) in the gauge/rigidity
 analysis, which explains \emph{why} the absolute theory loses nothing on its own
 domain, and (b) on the inadmissible sector, where the absolute theory is silent by
 construction and the relational theory supports nontrivial, decidable invariants.
-Notation follows~\cite{CMC} throughout. Because~\cite{CMC} is a technical
-note of the same project rather than an archived publication, this note is
-organized so that its verification burden is explicit. The unconditional
+Notation follows~\cite{CMC} throughout. Because~\cite{CMC} is a technical note of the same project ---
+DOI-archived but not peer-reviewed --- this note is organized so that its
+verification burden is explicit, and the conditional content it supports is
+confined to exactly two numerical values (Remark~\ref{rem:robust}). The unconditional
 results (\S\S\ref{sec:relational}--\ref{sec:descent} and
 \S\S\ref{sec:inert}--\ref{sec:locking}) are fully auditable within this
 document. The conditional results (the floor \emph{values} in
@@ -190,7 +194,9 @@ Appendix~\ref{app:quadEG} requires~\cite{CMC}, archived at DOI \url{10.5281/zeno
 difference between conjugates is, equivalently, a torsion multiplicative
 relation $\alpha_i=\zeta\,\alpha_j$ between conjugates. Multiplicative
 relations connecting conjugate algebraic numbers are a classical subject
-(Smyth~\cite{Smyth1986} and the literature following it); the present note
+(Smyth~\cite{Smyth1986} and the literature following it, notably the
+torsion-quotient program of Dubickas~\cite{Dub2012, Dub2017, Dub2021};
+Remark~\ref{rem:degen} records the attribution); the present note
 can be read as isolating their torsion part, packaging it as a
 groupoid-valued invariant, and supplying a shell-complete exact decision
 procedure for it. On the Salem question specifically, the shell-torsion
@@ -380,7 +386,9 @@ relational theory plus this gauge choice. The terminology is structural, not
 physical: the circle acts as a structure group on phase assignments,
 Proposition~\ref{prop:gauge}(iii) exhibits the trivializations as a torsor
 under it, and integrality (\S\ref{sec:rigidity}) provides the canonical
-section; no connection to physical gauge theory is implied. The cocycle
+section; no connection to physical gauge theory is implied. A reader
+uncomfortable with the vocabulary may substitute ``differences of
+normalized arguments'' throughout without loss. The cocycle
 language earns its keep twice over: it is the functorial carrier for the
 descent analysis of \S\ref{sec:descent}, and it reduces the proof of
 Theorem~\ref{thm:rigidity} to a single coset computation. The next section
@@ -897,7 +905,11 @@ The $\{-1,0,1\}$ family was chosen for exhaustive tractability, not
 representativeness; with Corollary~\ref{cor:allinert} below in hand the
 census is corroboration rather than evidence. Five further degree-$12$
 Salem instances with a coefficient outside $\{-1,0,1\}$ were spot-checked
-and are likewise inert (ledger entry~V).
+and are likewise inert (ledger entry~V). Each of the $341$ non-Salem
+twist-classes carries an exact rejection certificate: $39$ vanish at
+$x=\pm1$, $257$ fail the trace-polynomial Sturm pattern $(1,0,5)$, and $45$
+are reducible (none fail only trace-polynomial irreducibility); the tally
+sums to $378$ (ledger entry~W).
 \end{remark}
 
 \begin{corollary}[Sharpened exclusion]\label{cor:sharpexcl}
@@ -990,6 +1002,25 @@ Corollary~\ref{cor:allinert}: coherence with a real conjugate would make
 $t(\lambda)$ rational and $\lambda/\overline{\lambda}$ a torsion ratio.
 \end{proof}
 
+\begin{example}[A Pisot instance, and the $\nu$-criterion executed]
+\label{ex:pisotnu}
+(i)~The smallest Pisot number, the plastic number $\theta_0$ (the real root
+of $x^3-x-1$), is relationally inert: its shells are $\{\theta_0\}$ and the
+conjugate pair at modulus $\theta_0^{-1/2}$ (the root product is $-p(0)=1$),
+pinning applies, and the complete contact scan returns $\{\Phi_1^{\,3}\}$
+(ledger entry~W); for a cubic there is no cross-shell residue, so
+Corollary~\ref{cor:pisot} closes the full type. (ii)~The $\nu$-criterion of
+Remark~\ref{rem:scope}, executed symbolically on the group-drop quartic
+$x^4+5x^2+5$: the cross-shell pair $(ia,\,ib)$ has $\mu=a/b\in\R_{>0}$, so
+$\nu=\mu/\overline{\mu}=1$ exactly --- torsion of order $1$, hence coherent
+with $t_{\mathrm{rel}}=0$, merging the two shells into the single class of
+Example~\ref{ex:firsttype}. (iii)~On $\beta_4$'s cross-shell pair
+$(\tau,\lambda)$: $\nu=\overline{\lambda}/\lambda=\lambda^{-2}$ is itself a
+root of $\Rat_{\beta_4}$, so its torsion status is decided by the very scan
+of ledger entry~G --- no contact, so the pair is incoherent, as pinning
+independently forces. \F
+\end{example}
+
 \begin{example}[Sharpness, and an irreducible non-inert witness]
 \label{ex:twistshell}
 The pinning hypothesis is necessary: $x^4-2$, with all four roots on one
@@ -1008,19 +1039,37 @@ with $k\ge2$ would duplicate the maximal modulus --- pinning and the
 twisted-shell mechanism exclude each other. \F
 \end{example}
 
-\begin{remark}[Degeneracy, and the literature]\label{rem:degen}
+\begin{remark}[Degeneracy, the Dubickas program, and attribution]
+\label{rem:degen}
 In the language of linear recurrence sequences, distinct characteristic
 roots with a root-of-unity ratio are precisely the \emph{degenerate} case
-(see~\cite{EPSW}); Theorem~\ref{thm:pinning} says that irreducible
-polynomials with a pinned modulus --- in particular all Salem and Pisot
-polynomials --- are non-degenerate. The argument is elementary and may well
-be classical in that literature; we have not located a statement covering
-the mixed two-polynomial case or the coherence-type packaging, and we
-record the proof self-containedly. What the relational framework adds
-beyond non-degeneracy is the rest of the type: offsets, mirrored classes,
-the real and mixed bookkeeping, the descent laws, and the shell-complete
-decision procedure that corroborated the theorem on forty-six instances
-before it was proved.
+(see~\cite{EPSW}). A targeted registry search conducted for this revision
+(Crossref and the arXiv API, 2~July~2026; terms: \emph{quotients of
+conjugate algebraic numbers root of unity}; \emph{roots of unity as
+quotients of two roots of a polynomial}; \emph{multiplicative relations
+conjugates Salem}; \emph{degenerate recurrence dominant root}; MathSciNet
+and zbMATH were not available to us) shows the torsion-quotient question to
+be an established program of Dubickas: quantitative bounds on the least $T$
+such that no quotient of two distinct $T$-th powers of roots of an
+arbitrary $f\in K[x]$ is a root of unity~\cite{Dub2012} --- a framing that
+encompasses pairs across irreducible factors and is motivated there by the
+(non)degeneracy of recurrences --- together with~\cite{Dub2017, Dub2021} on
+quotients of two conjugates. Only titles, registry metadata, and abstracts
+(where the registry carries them) were consulted, per the project's
+provenance discipline; to the extent the pinned-modulus criterion of
+Theorem~\ref{thm:pinning} appears in those works, priority is theirs and
+the theorem should be read as a self-contained account. What this note
+claims as its own is the packaging: the pinned-modulus formulation as used
+here with its mixed two-polynomial form, the coherence-type invariant and
+its shell-complete decision procedure, the census infrastructure, and the
+Salem/Pisot corollaries in relational form --- corroborated on forty-six
+instances before the general argument was written down. The multiplicative
+rigidity of Corollary~\ref{cor:allinert} also sits in instructive contrast
+with the \emph{additive} theory: Dubickas--Jankauskas~\cite{DJ2020} show
+nontrivial linear relations among Salem conjugates do exist (from
+degree~$8$, descending to relations among conjugates of $\tau+1/\tau$ ---
+the same trace substitution that certifies our instances), whereas torsion
+multiplicative relations never do.
 \end{remark}
 
 \section{Cross-object locking}\label{sec:locking}
@@ -1138,22 +1187,29 @@ and the corrected expectation ($\Phi_2^{\,4}$) is ledger entry~D.
 
 \textbf{Limits of self-verification.} The cross-engine run was performed by
 the same operator as the primary computation; the stacks are disjoint, the
-operator is not. Independent replication by external researchers is welcomed:
+operator is not. The polynomial inputs are generated programmatically from
+coefficient vectors, confining operator-dependent transcription to the
+enumeration logic --- itself validated by the Burnside count of
+Theorem~\ref{thm:census} matching the enumeration ($378$ twist-classes).
+Independent replication by external researchers is welcomed:
 the scripts, inputs, expected signatures, and digests are provided for
 exactly this purpose (\texttt{relational\_charge\_probe.py},
 \texttt{supplement\_for\_paper.py}, \texttt{supplement\_round3.py},
 \texttt{census\_deg12.py}, \texttt{supplement\_round6.py},
-\texttt{cross\_check.gp}, \texttt{cross\_round6.gp},
-\texttt{SHA256SUMS}); the project repository is DOI-archived at
+\texttt{supplement\_round7.py}, \texttt{cross\_check.gp},
+\texttt{cross\_round6.gp}, \texttt{SHA256SUMS}); the project repository is DOI-archived at
 \url{10.5281/zenodo.21121863}; the scripts above now ship in that deposit
-(added in v1.0.1, in the \texttt{relational-charge-verification/} package
-alongside this manuscript), enabling verification by a distinct operator. Concretely (expected
+(added in v1.0.1, version DOI \url{10.5281/zenodo.21122410}, in the
+\texttt{relational-charge-verification/} package alongside this
+manuscript), enabling verification by a distinct operator. Concretely (expected
 outputs are the signatures of Appendix~A; any deviation is a finding):
 \begin{itemize}
 \item \texttt{python3 relational\_charge\_probe.py} --- entries A--H under
 assertions (e.g.\ $\{\Phi_1^{\,10}\}$ for Lehmer; about one second);
 \item \texttt{python3 supplement\_round3.py} --- entries O--S;
 \item \texttt{python3 supplement\_round6.py} --- entries U--V;
+\item \texttt{python3 supplement\_round7.py} --- entry W (plastic number;
+census rejection tally; symbolic $\nu$-criterion);
 \item \texttt{python3 census\_deg12.py} --- the census of
 Theorem~\ref{thm:census} (about two minutes);
 \item \texttt{gp -q cross\_check.gp} and \texttt{gp -q cross\_round6.gp}
@@ -1208,7 +1264,8 @@ modulus forbids torsion (Theorem~\ref{thm:pinning}); twisted shells
 $q(x^k)$ suffice (Example~\ref{ex:twistshell}); and composite objects
 manufacture coherence freely (Example~\ref{ex:tensorsq}). In recurrence
 language: characterize degenerate irreducibles beyond the
-pinned/twisted-shell dichotomy (cf.~\cite{EPSW}), and, beyond torsion,
+pinned/twisted-shell dichotomy (cf.~\cite{EPSW}; the quantitative side of
+exactly this question is developed in~\cite{Dub2012}), and, beyond torsion,
 classify the cross-shell mirrored classes the $\nu$-criterion governs. \Op
 \item[(P2)] \textbf{Cross-Salem locking --- resolved in the negative.}
 Corollary~\ref{cor:nolock}: the circle angles of distinct Salem numbers,
@@ -1319,7 +1376,12 @@ $\Mah=2$ --- non-inert (Example~\ref{ex:twistshell}).\\[2pt]
 V & larger-coefficient spot checks & first five degree-$12$ Salem
 twist-classes with a coefficient outside $\{-1,0,1\}$ (lexicographic in
 $\{-2,\dots,2\}^6$): all five scans return $\{\Phi_1^{\,12}\}$
-(Remark~\ref{rem:censusscope}).\\
+(Remark~\ref{rem:censusscope}).\\[2pt]
+W & plastic number; tally & $x^3-x-1$: irreducible, one real root $>1$
+(Sturm), pair modulus $\theta_0^{-1/2}$; contacts $\{\Phi_1^{\,3}\}$ ---
+inert (Example~\ref{ex:pisotnu}). Census rejection tally re-derived:
+$39/257/45/0/37$, sum $378$. Single-engine
+(\texttt{supplement\_round7.py}).\\
 \hline
 \end{tabular}
 \end{center}
@@ -1521,6 +1583,19 @@ Mahler measure}, Math.~Comp.\ 67 (1998), 1697--1705.
 T.~Ward, \emph{Recurrence Sequences}, Math.\ Surveys Monogr.\ 104,
 Amer.\ Math.\ Soc., 2003.
 
+\bibitem{Dub2012} A.~Dubickas, \emph{Roots of unity as quotients of two
+roots of a polynomial}, J.~Aust.\ Math.\ Soc.\ 92 (2012), 137--144.
+
+\bibitem{Dub2017} A.~Dubickas, \emph{Roots of unity as quotients of two
+conjugate algebraic numbers}, Glas.\ Mat.\ 52 (2017), 235--240.
+
+\bibitem{Dub2021} A.~Dubickas, \emph{Cyclotomic quotients of two
+conjugates of an algebraic number}, Sib.\ Math.\ J.\ 62 (2021), 409--412.
+
+\bibitem{DJ2020} A.~Dubickas and J.~Jankauskas, \emph{Linear relations
+with conjugates of a Salem number}, J.~Th\'eor.\ Nombres Bordeaux 32
+(2020), 179--191.
+
 \end{thebibliography}
 
 \medskip
@@ -1547,6 +1622,13 @@ page field, so the range 153--172 stands as supplied. References
 \cite{Salem}, carries no page field, so 315--328 stands as supplied),
 \url{10.4064/aa-34-4-391-401}, \url{10.1016/0022-314x(86)90094-6}, and
 \url{10.1090/s0025-5718-98-01006-0}. Reference~\cite{EPSW} was
-machine-checked at DOI \url{10.1090/surv/104}.
+machine-checked at DOI \url{10.1090/surv/104}. References \cite{Dub2012},
+\cite{Dub2017}, \cite{Dub2021}, and \cite{DJ2020}, added at this revision
+following the novelty search of Remark~\ref{rem:degen}, were machine-checked
+at DOIs \url{10.1017/s1446788712000183}, \url{10.3336/gm.52.2.03} (this
+record's registry author field is partially malformed; the resolvable
+author is retained), \url{10.1134/s0037446621030034}, and
+\url{10.5802/jtnb.1116}; abstracts, where present in the registry, were
+consulted; full texts were not.
 
 \end{document}
