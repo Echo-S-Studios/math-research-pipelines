@@ -1,0 +1,5 @@
+P2: 313/313 clean C2 scans in [-3,3]^5 -> 0 mirrored classes
+P5: Burnside 7875 (in-run assert, pinned log); Salem classes found: 589
+P6: 589/589 Salem classes inert {Phi1^12}
+P7: 3 reducible-Rat0 instances: [([-1, -1, 2, 2, -2, -2], [12, 18], 12, True), ([-1, 0, -2, -2, -1, -2], [12, 18], 12, True), ([-1, 1, 2, 0, -2, -2], [6, 24], 24, True)]
+P1 evidence base (pre-[-4,4]^5): [('[-3,3]^5', 313, 313), ('[-2,2]^5', 67, 67), ('[-2,2]^6', 159, 159), ('[-2,2]^7', 414, 414)] -> 953/953 clean
