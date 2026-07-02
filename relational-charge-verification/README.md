@@ -2,8 +2,8 @@
 
 Companion artifacts for *Relational Charge on the Spectral Semiring*
 (`relational_charge_paper.tex` / `.pdf`). Repository deposit context:
-DOI 10.5281/zenodo.21121863 (v1.0.0); this bundle is intended for the
-deposit's next version (paper, section 9).
+DOI 10.5281/zenodo.21121863 (v1.0.0); this bundle ships in the repository
+deposit from v1.0.1 onward (paper, section 9).
 
 ## Integrity
 
