@@ -1,6 +1,7 @@
-deg 2 box [-3,3]: {"candidates": 49, "c0_zero": 7, "chain_target": 12, "chain_reject": 16, "empty": 14, "empty_reciprocal": 8, "empty_reducible": 6, "empty_interior": 0, "empty_pisot": 0, "sturm_reject": 6, "reducible": 0, "pisot": 6}
-deg 2 box [-3,3]: 6 Pisot, patterns {'2r0p': 6}  0.0s
-  deg 2: 6 totally real of 6 Pisot
+*** ADJUDICATED PISOT (degenerate chain): (1, -3) ***
+deg 2 box [-3,3]: {"candidates": 49, "c0_zero": 7, "chain_target": 12, "chain_reject": 16, "empty": 14, "empty_reciprocal": 0, "empty_reducible": 9, "empty_interior": 4, "empty_pisot": 1, "sturm_reject": 6, "reducible": 0, "pisot": 7}
+deg 2 box [-3,3]: 7 Pisot, patterns {'2r0p': 7}  0.0s
+  deg 2: 7 totally real of 7 Pisot
 deg 3 box [-3,3]: {"candidates": 343, "c0_zero": 49, "chain_target": 74, "chain_reject": 156, "empty": 64, "empty_reciprocal": 14, "empty_reducible": 50, "empty_interior": 0, "empty_pisot": 0, "sturm_reject": 37, "reducible": 0, "pisot": 37}
 deg 3 box [-3,3]: 37 Pisot, patterns {'1r1p': 32, '3r0p': 5}  0.1s
   deg 3: 5 totally real of 37 Pisot
@@ -13,13 +14,14 @@ deg 4 box [-3,3]: 103 Pisot, patterns {'2r1p': 102, '4r0p': 1}  0.7s
   deg 6 (n4_pisot6.jsonl): totally real = 0
   deg 7 (n4_pisot7.jsonl): totally real = 0
 
-P4 population: 12 totally-real Pisot instances across degrees 2-7 boxes
+P4 population: 13 totally-real Pisot instances across degrees 2-7 boxes
   deg 2 c=(-3, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 2 c=(-2, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 2 c=(-2, -2): theta > phi certified (P(phi) < 0 exactly)
   deg 2 c=(-1, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 2 c=(-1, -2): theta > phi certified (P(phi) < 0 exactly)
   deg 2 c=(-1, -1): theta == phi (the equality case x^2-x-1)
+  deg 2 c=(1, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 3 c=(1, -2, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 3 c=(1, -1, -3): theta > phi certified (P(phi) < 0 exactly)
   deg 3 c=(1, -1, -2): theta > phi certified (P(phi) < 0 exactly)
@@ -28,4 +30,3 @@ P4 population: 12 totally-real Pisot instances across degrees 2-7 boxes
   deg 4 c=(1, 2, -2, -3): theta > phi certified (P(phi) < 0 exactly)
 
 P4 VERDICT: theta >= phi on every totally-real Pisot found; equality exactly once, at x^2-x-1. Zero falsifiers.
-EXIT=0

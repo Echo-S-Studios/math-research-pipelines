@@ -1,0 +1,9 @@
+deg 2: 7/7 Rat scans exactly {Phi1^2}
+deg 3: 37/37 Rat scans exactly {Phi1^3}
+deg 4: 103/103 Rat scans exactly {Phi1^4}
+deg 5 (n4_scan5.jsonl): 83/83 Rat scans exactly {Phi1^5}
+deg 5 (n2_c2_scan.jsonl): 313 archived Rat verdicts {Phi1^5} (pinned upstream, 313/313)
+deg 6 (n4_scan6.jsonl): 160/160 Rat scans exactly {Phi1^6}
+deg 7 (n4_scan7.jsonl): 414/414 Rat scans exactly {Phi1^7}
+
+P3 AGGREGATE: 1117/1117 certified Pisots with Rat scan exactly {Phi1^deg} (excludes the [-4,4]^5 run, reported by P8)
