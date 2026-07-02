@@ -3,11 +3,11 @@
 Companion artifacts for *Relational Charge on the Spectral Semiring*
 (`relational_charge_paper.tex` / `.pdf`). Repository deposit context:
 DOI 10.5281/zenodo.21121863 (v1.0.0); this bundle ships in the repository
-deposit from v1.0.1 onward (paper, section 9).
+deposit, complete as of v1.0.2 (version DOI 10.5281/zenodo.21123586; paper, section 9).
 
 ## Integrity
 
-    sha256sum -c SHA256SUMS        # 11 artifacts, all must report OK
+    sha256sum -c SHA256SUMS        # 13 artifacts, all must report OK
 
 ## Replication (paper section 9; expected outputs = Appendix A signatures)
 
@@ -15,9 +15,11 @@ deposit from v1.0.1 onward (paper, section 9).
     python3 supplement_round3.py          # entries O-S
     python3 supplement_round6.py          # entries U-V
     python3 supplement_round7.py          # entry W + census rejection tally (378) + nu-criterion
+    python3 supplement_round8.py          # entry X: x^4-x+1 cross-shell inertness (S6^2 factorization)
     python3 census_deg12.py               # Theorem 7.10 census, ~2 min (37/37 inert)
     gp -q cross_check.gp  < /dev/null     # cross-engine rows A-I, P, Q
     gp -q cross_round6.gp < /dev/null     # cross-engine rows U, V
+    gp -q cross_round8.gp < /dev/null     # cross-engine round-8 (S6^2 divides the Kronecker square)
 
 Any deviation from Appendix A is a finding.
 
