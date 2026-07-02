@@ -46,7 +46,8 @@ Which part of an algebraic integer's phase structure belongs to the number
 itself, and which only to a chosen reference ray? We refactor the emission
 algebra's charge into a purely relational invariant --- the pair charge
 $t_{\mathrm{rel}}(\alpha,\beta)=t(\alpha)-t(\beta)\in\Q/\Z$, with
-$t(\alpha)=\frac{1}{2\pi}\Arg\alpha$, defined when rational --- and determine exactly how much
+$t(\alpha)=\frac{1}{2\pi}\Arg\alpha$, defined whenever the difference is
+rational --- and determine exactly how much
 survives. The relational data is a groupoid cocycle whose trivializations
 are the absolute charges; the reference ray is a gauge choice. Rigidity:
 conjugation-closed spectra force every internally rational object to be
@@ -743,6 +744,12 @@ The \emph{shells} of $O$ are the equivalence classes of conjugates under equal
 modulus. A ratio $\alpha/\beta$ is unimodular iff $\alpha,\beta$ share a shell.
 \end{definition}
 
+\medskip
+\noindent\textbf{Standing assumption (this section): every $p$ considered
+is squarefree --- here each is irreducible.} Lemma~\ref{lem:diag} uses this;
+the degree computation in Definition~\ref{def:rat} below does not (it needs
+only monic and $p(0)\neq0$).
+
 \begin{definition}[Ratio object]\label{def:rat}
 For monic $p\in\Z[x]$ of degree $n$ with $p(0)\neq0$, the \emph{ratio
 polynomial} is the primitive part of
@@ -762,9 +769,7 @@ $\det\bigl(xI-C_p\otimes C_p^{-1}\bigr)$ (an integer matrix) has the same root
 multiset and serves as an independent second route (ledger entry~G).
 \end{definition}
 
-\medskip
-\noindent\textbf{Standing assumption (this section): every $p$ considered
-is squarefree --- here each is irreducible.} Lemma~\ref{lem:diag} uses this.
+
 
 \begin{lemma}[Contact criterion]\label{lem:contact}
 Let $\alpha,\beta$ lie in a common shell. Then
@@ -908,8 +913,9 @@ Salem instances with a coefficient outside $\{-1,0,1\}$ were spot-checked
 and are likewise inert (ledger entry~V). Each of the $341$ non-Salem
 twist-classes carries an exact rejection certificate: $39$ vanish at
 $x=\pm1$, $257$ fail the trace-polynomial Sturm pattern $(1,0,5)$, and $45$
-are reducible (none fail only trace-polynomial irreducibility); the tally
-sums to $378$ (ledger entry~W).
+are reducible (none fail only trace-polynomial irreducibility); together
+with the $37$ Salem classes, $39+257+45+37=378$ accounts for every
+twist-class (ledger entry~W).
 \end{remark}
 
 \begin{corollary}[Sharpened exclusion]\label{cor:sharpexcl}
@@ -1021,6 +1027,40 @@ of ledger entry~G --- no contact, so the pair is incoherent, as pinning
 independently forces. \F
 \end{example}
 
+\begin{example}[The $\nu$-criterion with a nontrivial verdict: $x^4-x+1$]
+\label{ex:x4quartic}
+Let $p=x^4-x+1$: irreducible, no real roots, non-reciprocal --- hence two
+conjugate-pair shells at radii $r\neq1/r$, and \emph{no} modulus of $p$ is
+uniquely attained, so Theorem~\ref{thm:pinning} is silent. Three exact
+routes settle the full type (ledger entry~X). \emph{Structure:} the
+Kronecker square factors as
+$\operatorname{charpoly}(C_p\otimes C_p)=S_6(x)^2\,(x^4+2x^2-x+1)$, with
+$S_6$ the certified Salem sextic of Theorem~\ref{thm:inertmore} and the
+second factor the $\psi^2$-image, irreducible since
+$\alpha=(\alpha^2)^2+1$. So the pair products are
+$\{\alpha\overline\alpha,\,\beta\overline\beta\}
+=\{\tau_{S_6},\,1/\tau_{S_6}\}$ and the four cross products
+$\alpha\overline\beta,\dots$ are $S_6$'s unit-circle conjugates; a
+cross-shell pair of $p$ is coherent iff its unimodular product is a root of
+unity --- impossible for a circle conjugate of a Salem polynomial.
+Cross-shell incoherence is therefore forced \emph{through $S_6$'s own
+rigidity}. \emph{Shell scan:} $\Rat_p$ has contacts $\{\Phi_1^{\,4}\}$,
+complete --- no within-shell torsion, no rational angles. \emph{The
+criterion verbatim:} $\Rat_{\Rat_p}$ has degree $256$; its complete contact
+scan (bound $131072$) returns exactly $\{\Phi_1^{\,28}\}$ --- the
+multiplicity $16+4+8=28$ predicted from the coincidence-free structure
+\emph{before} the scan ran. Verdict: $p$ is fully relationally inert \F{}
+--- the first complete type where neither pinning nor the shell scan alone
+suffices, decided by rigidity imported across $\otimes$, the converse
+motion of Example~\ref{ex:tensorsq}. Two by-products.
+$\Mah(x^4-x+1)=\tau_{S_6}$: the smallest degree-$6$ Salem number \emph{is}
+this quartic's Mahler measure --- a value in $(\theta_0,\varphi)$ attained
+at irrational angles, consistent with \textup{(EG)}; which numbers arise as
+Mahler measures is Boyd's program~\cite{Boyd}, and the identity may well be
+recorded in the small-measure tables. And $\mathrm{Gal}(p)=S_4$: a fully
+generic quartic with a completely rigid relational type.
+\end{example}
+
 \begin{example}[Sharpness, and an irreducible non-inert witness]
 \label{ex:twistshell}
 The pinning hypothesis is necessary: $x^4-2$, with all four roots on one
@@ -1054,11 +1094,20 @@ such that no quotient of two distinct $T$-th powers of roots of an
 arbitrary $f\in K[x]$ is a root of unity~\cite{Dub2012} --- a framing that
 encompasses pairs across irreducible factors and is motivated there by the
 (non)degeneracy of recurrences --- together with~\cite{Dub2017, Dub2021} on
-quotients of two conjugates. Only titles, registry metadata, and abstracts
-(where the registry carries them) were consulted, per the project's
-provenance discipline; to the extent the pinned-modulus criterion of
-Theorem~\ref{thm:pinning} appears in those works, priority is theirs and
-the theorem should be read as a self-contained account. What this note
+quotients of two conjugates. Following review, the full text
+of~\cite{Dub2017} (open access) was read: its theorem is the quantitative
+totient bound $\phi(n_1\cdots n_r)\le d$ on the coprime part of the
+degenerate set, sharpening the prime count of Dobrowolski's
+Lemma~3~\cite{Dobrowolski} (a textbook treatment is Masser~\cite{Masser});
+the degenerate-recurrence equivalence is stated there explicitly, and its
+proof shares the Galois-transport step with ours --- torsion quotients
+moved by chosen automorphisms --- which we take as evidence the mechanism
+is standard in that program. The pinned-modulus sufficient condition and
+the mixed two-polynomial form do not appear in~\cite{Dub2017};
+\cite{Dub2012} and~\cite{Dub2021} remain consulted at title and abstract
+level only (paywalled), as do the works cited therein --- to the extent the
+criterion appears in any of them, priority is theirs and
+Theorem~\ref{thm:pinning} should be read as a self-contained account. What this note
 claims as its own is the packaging: the pinned-modulus formulation as used
 here with its mixed two-polynomial form, the coherence-type invariant and
 its shell-complete decision procedure, the census infrastructure, and the
@@ -1166,10 +1215,13 @@ digests of the deliverables (source, PDF, scripts) accompany the artifacts
 in \texttt{SHA256SUMS}.
 
 \textbf{Second engine.} Following review, the complete contact signatures
-of ledger entries A--I, together with rows P, Q, U, and V, were
+of ledger entries A--I, together with rows P, Q, U, V, and the round-eight
+rows of entry~X, were
 recomputed independently in PARI/GP~2.15.4 via
 \texttt{polresultant}, integer factorization, and \texttt{poliscyclo}; all
-twenty-three signatures agree with the \texttt{sympy} computations (ledger
+twenty-six items agree with the \texttt{sympy} computations ---
+twenty-four contact signatures plus the Kronecker-square factorization and
+divisibility checks of entry~X (ledger
 entry~M). The two stacks share no computer-algebra code: \texttt{sympy}'s
 resultants and factorizations are pure Python, PARI's are its own C library.
 
@@ -1196,7 +1248,8 @@ the scripts, inputs, expected signatures, and digests are provided for
 exactly this purpose (\texttt{relational\_charge\_probe.py},
 \texttt{supplement\_for\_paper.py}, \texttt{supplement\_round3.py},
 \texttt{census\_deg12.py}, \texttt{supplement\_round6.py},
-\texttt{supplement\_round7.py}, \texttt{cross\_check.gp},
+\texttt{supplement\_round7.py}, \texttt{supplement\_round8.py},
+\texttt{cross\_check.gp}, \texttt{cross\_round8.gp},
 \texttt{cross\_round6.gp}, \texttt{SHA256SUMS}); the project repository is DOI-archived at
 \url{10.5281/zenodo.21121863}; the scripts above now ship in that deposit
 (the complete artifact set as of v1.0.2, version DOI
@@ -1212,7 +1265,10 @@ assertions (e.g.\ $\{\Phi_1^{\,10}\}$ for Lehmer; about one second);
 census rejection tally; symbolic $\nu$-criterion);
 \item \texttt{python3 census\_deg12.py} --- the census of
 Theorem~\ref{thm:census} (about two minutes);
-\item \texttt{gp -q cross\_check.gp} and \texttt{gp -q cross\_round6.gp}
+\item \texttt{python3 supplement\_round8.py} --- entry X (the quartic
+$x^4-x+1$: Kronecker-square factorization and the complete $\nu$-scan);
+\item \texttt{gp -q cross\_check.gp}, \texttt{gp -q cross\_round6.gp}, and
+\texttt{gp -q cross\_round8.gp}
 --- the twenty-three cross-engine signatures.
 \end{itemize}
 
@@ -1289,7 +1345,13 @@ gauge-fixed presentation of a relational invariant; integrality is what fixes
 the gauge; the parity coupling survives the deletion of the reference ray
 unchanged; and on the sector the absolute theory discards, the relational
 theory is nontrivial, finite, decidable --- and, at the two keystones of the gap
-$(\varphi,2)$, maximally empty.
+$(\varphi,2)$, maximally empty. Beyond classification, the types earn their
+keep three ways: rigidity transports across $\otimes$
+(Example~\ref{ex:x4quartic} decides a generic-Galois quartic through a
+Salem factor of its tensor square); the contact machinery doubles as an
+exact nondegeneracy certifier for integer linear recurrences
+(Remark~\ref{rem:degen}); and type computations surface measure identities
+such as $\Mah(x^4-x+1)=\tau_{S_6}$.
 
 \appendix
 
@@ -1340,10 +1402,10 @@ behind Lemma~\ref{lem:qk}, all $k$.\\[2pt]
 L & coset arithmetic & $e$ odd, $m$ odd $\Rightarrow(e+m)/2m\in\frac1m\Z/\Z$;
 engine corroboration of Lemma~\ref{lem:twist}'s one-line step,
 $m\in\{3,5,7,9\}$, all odd $e<2m$.\\[2pt]
-M & cross-engine replication & contact signatures of entries A--I, P, Q, U,
-and V recomputed in PARI/GP~2.15.4 (\texttt{polresultant} $+$
-\texttt{poliscyclo}); all twenty-three identical to the \texttt{sympy}
-signatures.\\[2pt]
+M & cross-engine replication & entries A--I, P, Q, U, V, and the round-8
+rows of entry~X recomputed in PARI/GP~2.15.4 (\texttt{polresultant} $+$
+\texttt{poliscyclo}); all twenty-six items identical to the \texttt{sympy}
+results (twenty-four signatures, two factorization checks).\\[2pt]
 N & totient bound & $2\,\phi(M)^2\ge M$ verified by exact integer sieve for
 all $1\le M\le2\cdot10^{5}$; unique tight case $M=2$
 (Lemma~\ref{lem:complete}).\\[2pt]
@@ -1381,7 +1443,13 @@ W & plastic number; tally & $x^3-x-1$: irreducible, one real root $>1$
 (Sturm), pair modulus $\theta_0^{-1/2}$; contacts $\{\Phi_1^{\,3}\}$ ---
 inert (Example~\ref{ex:pisotnu}). Census rejection tally re-derived:
 $39/257/45/0/37$, sum $378$. Single-engine
-(\texttt{supplement\_round7.py}).\\
+(\texttt{supplement\_round7.py}).\\[2pt]
+X & $x^4-x+1$ ($\nu$ executed) & irreducible, $0$ real roots (Sturm),
+non-reciprocal; $\operatorname{charpoly}(C\otimes C)
+=S_6^{\,2}\cdot(x^4+2x^2-x+1)$, both engines; $\Rat_p$ contacts
+$\{\Phi_1^{\,4}\}$; $\Rat_{\Rat_p}$ (deg $256$, bound $131072$) contacts
+$\{\Phi_1^{\,28}\}$, matching the structural prediction;
+$\mathrm{Gal}=S_4$; $\Mah=\tau_{S_6}$ (Example~\ref{ex:x4quartic}).\\
 \hline
 \end{tabular}
 \end{center}
@@ -1596,6 +1664,9 @@ conjugates of an algebraic number}, Sib.\ Math.\ J.\ 62 (2021), 409--412.
 with conjugates of a Salem number}, J.~Th\'eor.\ Nombres Bordeaux 32
 (2020), 179--191.
 
+\bibitem{Masser} D.~Masser, \emph{Auxiliary Polynomials in Number Theory},
+Cambridge Univ.\ Press, 2016.
+
 \end{thebibliography}
 
 \medskip
@@ -1629,6 +1700,9 @@ at DOIs \url{10.1017/s1446788712000183}, \url{10.3336/gm.52.2.03} (this
 record's registry author field is partially malformed; the resolvable
 author is retained), \url{10.1134/s0037446621030034}, and
 \url{10.5802/jtnb.1116}; abstracts, where present in the registry, were
-consulted; full texts were not.
+consulted. The full text of \cite{Dub2017} was subsequently read from the
+journal's open-access copy (Remark~\ref{rem:degen}); \cite{Masser}, located
+through it, was machine-checked at the book DOI
+\url{10.1017/cbo9781107448018}.
 
 \end{document}
