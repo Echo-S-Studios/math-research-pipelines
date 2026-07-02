@@ -43,54 +43,36 @@ Gauge Rigidity, Coherence Types, and a Reference-Free Parity Floor}
 
 \begin{abstract}
 Which part of an algebraic integer's phase structure belongs to the number
-itself, and which part only to a chosen reference ray? We answer by
-refactoring the emission algebra's charge into a purely relational invariant
-and determining exactly how much survives.
-The companion note on the charge--measure coupling attaches to each object of the
-emission algebra --- a finite, conjugation-closed multiset of nonzero algebraic
-integers --- an \emph{absolute} phase character: a charge group $\Z/n\Z$ and a charge
-per conjugate, both read against the fixed reference ray $\Arg=0$. Here we refactor
-the character so that charge attaches not to the object but to the \emph{relation
-between oscillators}: the pair invariant $t_{\mathrm{rel}}(\alpha,\beta)=
-\frac{1}{2\pi}\bigl(\Arg\alpha-\Arg\beta\bigr)\in\tors$, defined exactly when the
-difference is rational. The relational data forms a $\tors$-valued groupoid cocycle
-of which the absolute charge is a trivialization: the reference ray is a
-gauge choice. The principal structural result is a rigidity theorem: because
-integer polynomials have conjugation-closed spectra, an object all of whose
-pairwise phase differences are rational already has all phases rational --- the
-relational theory admits no new objects, and the absolute charge group is pinned to
-one of two anchors $n\in\{m,2m\}$ over the relational group $\Z/m\Z$. The
-composition laws ($\lcm$, CRT/Adams, safe $\Leftrightarrow$ coprime) descend
-verbatim to the relational level. Where the
-relational theory is genuinely larger is the sector the absolute theory discards:
-charge-inadmissible objects carry a finite \emph{coherence type} (a partition of
-the conjugates into rational-difference classes with cyclic relative-charge
-groups), and we give a float-free decision procedure for it --- complete at the
-level of equal-modulus shells, hence a complete decision of the full type for
-Salem numbers --- via ratio resultants and cyclotomic contact. Executing it on
-four exactly certified Salem numbers of degrees $4$, $6$, $8$, $10$ (including
-$\beta_4$ and Lehmer's number), then exhaustively on the degree-$12$ family of
-all $729$ monic reciprocal polynomials with coefficients in $\{-1,0,1\}$
-($37$ certified Salem numbers up to sign twist): every certified instance is
-\emph{relationally inert} --- no nontrivial rational phase relation exists
-among its conjugates off the real axis --- and no two of the canonical four
-are circle-locked (circle-locked: a rational
-phase difference links unit-circle conjugates \emph{across} the two objects);
-each verdict is a complete per-instance decision, not a general theorem, and
-whether \emph{any} Salem number carries nontrivial coherence remains open
-(problem~P1). Last --- and conditionally on the companion note's emission
-gap, the one hypothesis this note does not prove beyond degree two --- the
-parity-graded Mahler floor is evaluated and becomes reference-free: the
-parity bit is the order-$2$ element
-$t_{\mathrm{rel}}(\varphi,\varphi')=\tfrac12$ carried internally by the
-golden pair, not the ray $\pi$, and a sign-twist involution absorbs the new
-anchor sector, so the relational floor equals the absolute one; that
-identity, and the attainments, are unconditional --- only the floor's
-numerical values rest on the gap. All
-computational claims are verified in exact integer arithmetic and cross-checked
-in a second computer-algebra stack; throughout, unconditional proofs, results
-conditional on the emission gap, and per-instance computations are tagged
-apart.
+itself, and which only to a chosen reference ray? We refactor the emission
+algebra's charge into a purely relational invariant --- the pair charge
+$t_{\mathrm{rel}}(\alpha,\beta)=\frac{1}{2\pi}(\Arg\alpha-\Arg\beta)
+\in\Q/\Z$, defined when rational --- and determine exactly how much
+survives. The relational data is a groupoid cocycle whose trivializations
+are the absolute charges; the reference ray is a gauge choice. Rigidity:
+conjugation-closed spectra force every internally rational object to be
+absolutely admissible, with anchor $n\in\{m,2m\}$ over the relational group
+$\Z/m\Z$ --- the absolute theory is the canonical section --- and the
+composition laws descend verbatim. On the inadmissible sector the theory is
+genuinely finer: objects carry a computable coherence type, and a
+\emph{modulus-pinning theorem} --- an irreducible polynomial with a
+uniquely attained root modulus admits no root-of-unity ratio between
+distinct roots --- proves every Salem number relationally inert and no two
+Salem numbers circle-locked, while irreducible non-inert inadmissible
+objects do exist (twisted shells $q(x^k)$).
+
+All of this is executed exactly: a shell-complete, float-free contact
+procedure corroborates the pinning theorem on forty-six certified
+instances, including an exhaustive degree-$12$ small-coefficient census
+($37/37$ inert), cross-checked in a second computer-algebra stack. Last ---
+and conditionally on the companion note's emission gap, the one hypothesis
+not proved here beyond degree two --- the parity-graded Mahler floor is
+evaluated reference-free: the parity bit is the golden pair's internal
+order-$2$ relation $t_{\mathrm{rel}}(\varphi,\varphi')=\tfrac12$, a sign
+twist absorbs the second anchor sector, and
+$\mu_{\mathrm{rel}}=\mu$; that identity and the attainments are
+unconditional, only the numerical floor values rest on the gap.
+Unconditional proofs, gap-conditional results, and per-instance
+computations are tagged apart throughout.
 \end{abstract}
 
 \section{Introduction}
@@ -166,20 +148,20 @@ questions organize the study:
 \item \textbf{Coherence types of inadmissible objects} (\S\ref{sec:inert}). On the
   sector the absolute theory discards, the relational theory is genuinely finer:
   every object carries a finite coherence type, computable exactly on
-  equal-modulus shells by a ratio-resultant / cyclotomic-contact procedure with a
-  provable completeness bound. Executing it on four Salem numbers of degrees
-  $4,6,8,10$ (including $\beta_4=x^4-x^3-x^2-x+1$ and Lehmer's polynomial),
-  each certified Salem exactly by Sturm counts on its trace polynomial: all
-  four are relationally inert --- the only rational phase relations are the
-  tautological diagonal and the positivity-forced real pair $(\tau,1/\tau)$;
-  an exhaustive degree-$12$ small-coefficient census adds $37$ further
-  certified, uniformly inert instances --- a base, not a class (open
-  problem~P1). \F{} per instance
+  equal-modulus shells by a ratio-resultant / cyclotomic-contact procedure
+  with a provable completeness bound; and a \emph{modulus-pinning theorem}
+  --- irreducibility plus a uniquely attained root modulus forbids torsion
+  ratios between distinct roots --- proves \emph{every} Salem number
+  relationally inert \F, corroborated on forty-six certified instances
+  (degrees $4$--$10$ including $\beta_4$ and Lehmer's polynomial, an
+  exhaustive degree-$12$ small-coefficient census of $37$, and five
+  larger-coefficient spot checks). Irreducible non-inert inadmissible
+  objects exist: twisted shells $q(x^k)$, witness $x^4+x^2+2$.
 \item \textbf{Cross-object locking} (\S\ref{sec:locking}). Two objects can be
   phase-locked while each is internally inert; the notion is decidable on circle
-  shells by a mixed ratio resultant. All six pairs among the four certified
-  instances are \emph{not} circle-locked. \F{} per instance; the existence
-  question for the Salem spectrum at large is the principal open problem. \Op
+  shells by a mixed ratio resultant. The pinning theorem's mixed form proves
+  no two distinct Salem numbers circle-lock \F; the six pairwise scans among
+  the canonical instances stand as its exact corroboration.
 \end{itemize}
 
 \subsection{Relation to the companion note}
@@ -200,9 +182,8 @@ Theorem~\ref{thm:parityrel}) are auditable here in the sense that their
 dependence on the named hypothesis \textup{(EG)} is explicit and traceable
 (Remark~\ref{rem:gapstatus}, Appendix~\ref{app:inherited}); verifying
 \textup{(EG)} itself beyond the quadratic case reproduced in
-Appendix~\ref{app:quadEG} requires~\cite{CMC}, which is distributed with
-this manuscript --- a DOI-archived deposit of the project repository is the
-intended permanent access path.
+Appendix~\ref{app:quadEG} requires~\cite{CMC}, archived at DOI \url{10.5281/zenodo.21121863}
+(within the project repository deposit, v1.0.0).
 
 \medskip
 \noindent\textbf{Relation to the wider literature.} A rational phase
@@ -212,7 +193,11 @@ relations connecting conjugate algebraic numbers are a classical subject
 (Smyth~\cite{Smyth1986} and the literature following it); the present note
 can be read as isolating their torsion part, packaging it as a
 groupoid-valued invariant, and supplying a shell-complete exact decision
-procedure for it. The census infrastructure connects to the small-Salem
+procedure for it. On the Salem question specifically, the shell-torsion
+half of inertness is exactly \emph{non-degeneracy} in the sense of linear
+recurrence sequences~\cite{EPSW}; Remark~\ref{rem:degen} records the
+bridge, the modulus-pinning proof, and what the coherence type adds beyond
+it. The census infrastructure connects to the small-Salem
 tables originating with Boyd~\cite{Boyd1977} and extended by
 Mossinghoff~\cite{Mossinghoff}; the unconditional floor landscape below the
 gap is Dobrowolski's bound~\cite{Dobrowolski}. We are not aware of a prior
@@ -227,7 +212,10 @@ Every numerical assertion below was verified in exact arithmetic
 rational polynomial arithmetic --- no floating-point number appears anywhere, in
 decisions or in display. Each result carries an epistemic tag: \F{} (proved),
 \C{} (verified exhaustively over a stated finite range), \Pl{} (strongly
-evidenced, not proved in full generality), \Op{} (open). Statements inheriting a
+evidenced, not proved in full generality)\footnote{That is, \Pl{} marks a
+conjecture with a specified evidence level: supported by exhaustive
+computation over stated ranges and by structural argument, but not proved.
+The tag system is project-internal; this footnote fixes its dictionary.}, \Op{} (open). Statements inheriting a
 caveated status from~\cite{CMC} say so explicitly, and
 Appendix~\ref{app:inherited} lists every statement inherited
 from~\cite{CMC} with the status tagged there and the place it enters this
@@ -392,7 +380,10 @@ relational theory plus this gauge choice. The terminology is structural, not
 physical: the circle acts as a structure group on phase assignments,
 Proposition~\ref{prop:gauge}(iii) exhibits the trivializations as a torsor
 under it, and integrality (\S\ref{sec:rigidity}) provides the canonical
-section; no connection to physical gauge theory is implied. The next section
+section; no connection to physical gauge theory is implied. The cocycle
+language earns its keep twice over: it is the functorial carrier for the
+descent analysis of \S\ref{sec:descent}, and it reduces the proof of
+Theorem~\ref{thm:rigidity} to a single coset computation. The next section
 shows that on the
 algebra's own objects the choice is almost costless: integrality fixes the gauge.
 
@@ -440,6 +431,9 @@ Rigidity is thus a feature, not a limitation: it is the uniqueness half of a
 gauge-fixing statement --- the absolute theory of~\cite{CMC} is the canonical
 section --- and it locates the relational theory's genuine domain, the
 inadmissible sector of \S\ref{sec:inert}, where there is no section to fix.
+Equivalently, rigidity is a \emph{completeness guarantee}: no information is
+lost in the relational reformulation --- the prerequisite for trusting it on
+the sector where it extends reach.
 
 \begin{theorem}[Structure of partial coherence]\label{thm:structure}
 Negation $t\mapsto -t$ permutes the coherence classes of any object. A class $C$
@@ -761,9 +755,8 @@ multiset and serves as an independent second route (ledger entry~G).
 \end{definition}
 
 \medskip
-\noindent\textbf{Standing assumption (this section).} Every $p$ considered
-is squarefree --- here each is irreducible --- and Lemma~\ref{lem:diag} uses
-this.
+\noindent\textbf{Standing assumption (this section): every $p$ considered
+is squarefree --- here each is irreducible.} Lemma~\ref{lem:diag} uses this.
 
 \begin{lemma}[Contact criterion]\label{lem:contact}
 Let $\alpha,\beta$ lie in a common shell. Then
@@ -813,6 +806,12 @@ If $p$ is squarefree, the multiplicity of $\Phi_1=x-1$ in $\Rat_p$ is exactly
 $n$ (the diagonal ratios $\alpha_i/\alpha_i$). Any excess multiplicity, or any
 contact with $\Phi_M$, $M\ge2$, certifies a nontrivial torsion ratio. \F
 \end{lemma}
+
+\begin{proof}
+The diagonal ratios $\alpha_i/\alpha_i=1$ account for $n$ roots of $x-1$;
+squarefreeness makes the $\alpha_i$ distinct, so $\alpha_j/\alpha_i=1$ iff
+$i=j$, and the multiplicity is exactly $n$.
+\end{proof}
 
 \begin{remark}[Scope of the probe]\label{rem:scope}
 Cyclotomic contact decides coherence \emph{within shells}. Cross-shell
@@ -882,14 +881,24 @@ Consider all $3^6=729$ monic reciprocal polynomials
 $x^{12}+c_1x^{11}+\dots+c_6x^6+\dots+c_1x+1$ with
 $c_1,\dots,c_6\in\{-1,0,1\}$. The sign twist $p(x)\mapsto p(-x)$ preserves
 the family and fixes $\Rat_p$ (a global sign cancels in every ratio), so the
-family splits into $378=(729+27)/2$ twist-classes, of which $27$ are
-twist-fixed --- an internal count check. Exactly $37$ twist-classes are
+family splits into twist-classes counted by Burnside's lemma: the involution
+fixes exactly the $3^3=27$ coefficient vectors with vanishing odd
+coefficients, giving $(729+27)/2=378$ orbits --- an internal count check
+reproduced by the enumeration. Exactly $37$ twist-classes are
 Salem, each certified as in Theorem~\ref{thm:inertmore}; the complete
 contact scan of every one ($\deg\Rat_p=144$, bound $41472=2\cdot144^2$)
 returns $\{\Phi_1^{\,12}\}$: \emph{every certified Salem number in the
 family is relationally inert} (ledger entry~T). \F{} per instance; the
 family statement is a complete finite verification, \C
 \end{theorem}
+
+\begin{remark}[Scope of the census]\label{rem:censusscope}
+The $\{-1,0,1\}$ family was chosen for exhaustive tractability, not
+representativeness; with Corollary~\ref{cor:allinert} below in hand the
+census is corroboration rather than evidence. Five further degree-$12$
+Salem instances with a coefficient outside $\{-1,0,1\}$ were spot-checked
+and are likewise inert (ledger entry~V).
+\end{remark}
 
 \begin{corollary}[Sharpened exclusion]\label{cor:sharpexcl}
 For these two instances, \cite[Lem.~6.1]{CMC} strengthens: not only does no
@@ -902,11 +911,117 @@ absence of one: each scan excludes \emph{every} candidate torsion relation
 among the $n^2$ ratios --- an infinite family of cyclotomic hypotheses --- in
 a single finite certificate, and it is exactly this that upgrades
 \cite[Lem.~6.1]{CMC} from ``no finite charge group'' to ``no rational phase
-structure whatsoever off the real axis'' for these witnesses. Whether
-\emph{every} Salem number is relationally inert is open (\S\ref{sec:open});
-each instance is decidable by
-Lemmas~\ref{lem:contact}--\ref{lem:complete}.
+structure whatsoever off the real axis'' for these witnesses. Every Salem
+number is in fact relationally inert (Corollary~\ref{cor:allinert} below);
+the per-instance decidability of
+Lemmas~\ref{lem:contact}--\ref{lem:complete} remains the general
+instrument beyond the pinned-modulus case.
 \end{corollary}
+
+\subsection{A general theorem: modulus pinning}
+
+\begin{theorem}[Modulus pinning]\label{thm:pinning}
+Let $p\in\Z[x]$ be irreducible with a root $\alpha_0$ whose modulus is
+attained by no other root of $p$. Then no two distinct roots of $p$ differ
+by a root-of-unity factor. More generally, if $q\in\Z[x]$ is irreducible,
+$q\neq p$, and no root of $q$ has modulus $|\alpha_0|$, then no root of $p$
+and root of $q$ differ by a root-of-unity factor. \F
+\end{theorem}
+
+\begin{proof}
+Suppose $\alpha\neq\beta$ are roots of $p$ with $\alpha/\beta=\zeta$ a root
+of unity. Let $G$ be the Galois group of the splitting field of $p$; by
+irreducibility $G$ acts transitively on the roots, so some $\sigma\in G$
+has $\sigma\alpha=\alpha_0$. Then
+$\sigma\alpha/\sigma\beta=\sigma(\zeta)$ is again a root of unity, so
+$|\sigma\beta|=|\alpha_0|$; since $\sigma\beta$ is a root of $p$ and
+$\alpha_0$ is the only root of that modulus, $\sigma\beta=\alpha_0
+=\sigma\alpha$, whence $\alpha=\beta$ --- a contradiction. For the mixed
+statement, work in a Galois extension containing both splitting fields: the
+restriction map onto $\mathrm{Gal}$ of the splitting field of $p$ is
+surjective, so again some $\sigma$ carries the $p$-root of the pair to
+$\alpha_0$, and the image of the $q$-root would be a root of $q$ of modulus
+$|\alpha_0|$, which does not exist.
+\end{proof}
+
+\begin{corollary}[Every Salem number is relationally inert]
+\label{cor:allinert}
+Every Salem number is relationally inert; open problem P1 of the earlier
+revisions of this note is resolved in the negative, and
+Theorems~\ref{thm:inert}, \ref{thm:inertmore}, \ref{thm:census} become
+corroborations of a general fact. \F
+\end{corollary}
+
+\begin{proof}
+The modulus $\tau$ is attained only by $\tau$, so
+Theorem~\ref{thm:pinning} applies. A non-singleton class not contained in
+the real axis would contain either two distinct circle conjugates ---
+coherent iff their ratio is a root of unity (Lemma~\ref{lem:contact}),
+excluded --- or a real and a circle conjugate $\lambda$: coherence would
+force $t(\lambda)\in\Q/\Z$, making $\lambda/\overline{\lambda}$
+(unimodular, rational angle) a root of unity, again excluded. So every
+class is real-contained or a singleton, with real block $\{\tau,1/\tau\}$
+of trivial class group.
+\end{proof}
+
+\begin{corollary}[No two Salem numbers circle-lock]\label{cor:nolock}
+No two distinct Salem numbers are circle-locked; indeed no root of one and
+root of another differ by a root-of-unity factor. Open problem P2 is
+resolved in the negative; Theorem~\ref{thm:notlocked} and
+Remark~\ref{rem:allpairs} are corroborations. \F
+\end{corollary}
+
+\begin{proof}
+Apply the mixed statement with $\alpha_0=\tau_p$: a root of $q$ of modulus
+$\tau_p$ would force $\tau_p\in\{\tau_q,1/\tau_q,1\}$, i.e.\
+$\tau_p=\tau_q$, hence the same minimal polynomial, $p=q$.
+\end{proof}
+
+\begin{corollary}[Pisot numbers]\label{cor:pisot}
+No two distinct conjugates of a Pisot number differ by a root-of-unity
+factor, and no non-real conjugate is coherent with a real one. (The full
+type of a Pisot number can still carry mirrored cross-shell classes;
+deciding those is the $\nu$-criterion of Remark~\ref{rem:scope}.) \F
+\end{corollary}
+
+\begin{proof}
+The dominant root pins its modulus; the real--non-real piece follows as in
+Corollary~\ref{cor:allinert}: coherence with a real conjugate would make
+$t(\lambda)$ rational and $\lambda/\overline{\lambda}$ a torsion ratio.
+\end{proof}
+
+\begin{example}[Sharpness, and an irreducible non-inert witness]
+\label{ex:twistshell}
+The pinning hypothesis is necessary: $x^4-2$, with all four roots on one
+shell, is irreducible with torsion ratios $\zeta_4^{\,j}$ (ledger
+entry~C). And irreducible \emph{inadmissible} non-inert objects exist: for
+$p(x)=q(x^k)$ with $q$ irreducible carrying a non-real root at irrational
+angle, each fiber of $k$-th roots is a size-$k$ coherence class with class
+group $\Z/k\Z$ at an irrational offset. Concretely,
+$p=x^4+x^2+2=q(x^2)$ with $q=x^2+x+2$: $p$ is irreducible; $q$'s angle is
+irrational (complete scan of $\Rat_q$: $\{\Phi_1^{\,2}\}$, ledger
+entry~U), so $p$ is inadmissible; and $\Rat_p$ has signature
+$\{\Phi_1^{\,4},\Phi_2^{\,4}\}$ --- the fibers $\pm\sqrt{\rho}$,
+$\pm\sqrt{\overline\rho}$ are non-real size-$2$ classes, so $p$ is not
+inert; $\Mah(p)=2$. Salem polynomials can never arise this way: $q(x^k)$
+with $k\ge2$ would duplicate the maximal modulus --- pinning and the
+twisted-shell mechanism exclude each other. \F
+\end{example}
+
+\begin{remark}[Degeneracy, and the literature]\label{rem:degen}
+In the language of linear recurrence sequences, distinct characteristic
+roots with a root-of-unity ratio are precisely the \emph{degenerate} case
+(see~\cite{EPSW}); Theorem~\ref{thm:pinning} says that irreducible
+polynomials with a pinned modulus --- in particular all Salem and Pisot
+polynomials --- are non-degenerate. The argument is elementary and may well
+be classical in that literature; we have not located a statement covering
+the mixed two-polynomial case or the coherence-type packaging, and we
+record the proof self-containedly. What the relational framework adds
+beyond non-degeneracy is the rest of the type: offsets, mirrored classes,
+the real and mixed bookkeeping, the descent laws, and the shell-complete
+decision procedure that corroborated the theorem on forty-six instances
+before it was proved.
+\end{remark}
 
 \section{Cross-object locking}\label{sec:locking}
 
@@ -928,7 +1043,9 @@ circle-by-circle ones (the real conjugates of distinct Salem numbers never share
 a modulus: $\tau_p=\tau_q$ is excluded by distinctness and
 $\tau_p=1/\tau_q$ by $\tau>1$), so the contact scan on $\Rat_{p,q}$ is a
 complete decision for circle-locking; contact with $\Phi_1$ would mean a shared
-root, excluded when $\gcd(p,q)=1$.
+root, excluded when $\gcd(p,q)=1$. (Corollary~\ref{cor:nolock} now settles
+circle-locking for the entire Salem class; the scans below stand as the
+original exact corroboration.)
 
 \begin{theorem}[$\beta_4$ and Lehmer's number are not circle-locked]
 \label{thm:notlocked}
@@ -1000,10 +1117,10 @@ digests of the deliverables (source, PDF, scripts) accompany the artifacts
 in \texttt{SHA256SUMS}.
 
 \textbf{Second engine.} Following review, the complete contact signatures
-of ledger entries A--I, together with the round-three rows P and Q, were
+of ledger entries A--I, together with rows P, Q, U, and V, were
 recomputed independently in PARI/GP~2.15.4 via
 \texttt{polresultant}, integer factorization, and \texttt{poliscyclo}; all
-nine signatures agree with the \texttt{sympy} computations (ledger
+twenty-three signatures agree with the \texttt{sympy} computations (ledger
 entry~M). The two stacks share no computer-algebra code: \texttt{sympy}'s
 resultants and factorizations are pure Python, PARI's are its own C library.
 
@@ -1025,18 +1142,23 @@ operator is not. Independent replication by external researchers is welcomed:
 the scripts, inputs, expected signatures, and digests are provided for
 exactly this purpose (\texttt{relational\_charge\_probe.py},
 \texttt{supplement\_for\_paper.py}, \texttt{supplement\_round3.py},
-\texttt{census\_deg12.py}, \texttt{cross\_check.gp},
-\texttt{SHA256SUMS}); a DOI-archived deposit of
-these artifacts alongside the manuscript is the intended distribution
-channel, enabling verification by a distinct operator. Concretely:
-\texttt{python3 relational\_charge\_probe.py} reruns entries A--H under
-assertions (expected: the signatures of Appendix~A, e.g.\
-$\{\Phi_1^{\,10}\}$ for Lehmer, about one second);
-\texttt{python3 supplement\_round3.py} reruns O--S;
-\texttt{python3 census\_deg12.py} reruns the census of
-Theorem~\ref{thm:census} (about two minutes); and
-\texttt{gp -q cross\_check.gp} reproduces the sixteen cross-engine
-signatures. Any deviation from Appendix~A is a finding.
+\texttt{census\_deg12.py}, \texttt{supplement\_round6.py},
+\texttt{cross\_check.gp}, \texttt{cross\_round6.gp},
+\texttt{SHA256SUMS}); the project repository is DOI-archived at
+\url{10.5281/zenodo.21121863}; the scripts above now ship in that deposit
+(added in v1.0.1, in the \texttt{relational-charge-verification/} package
+alongside this manuscript), enabling verification by a distinct operator. Concretely (expected
+outputs are the signatures of Appendix~A; any deviation is a finding):
+\begin{itemize}
+\item \texttt{python3 relational\_charge\_probe.py} --- entries A--H under
+assertions (e.g.\ $\{\Phi_1^{\,10}\}$ for Lehmer; about one second);
+\item \texttt{python3 supplement\_round3.py} --- entries O--S;
+\item \texttt{python3 supplement\_round6.py} --- entries U--V;
+\item \texttt{python3 census\_deg12.py} --- the census of
+Theorem~\ref{thm:census} (about two minutes);
+\item \texttt{gp -q cross\_check.gp} and \texttt{gp -q cross\_round6.gp}
+--- the twenty-three cross-engine signatures.
+\end{itemize}
 
 \section{Scope, limitations, and open problems}\label{sec:open}
 
@@ -1060,8 +1182,11 @@ Parity floor (Thm.~\ref{thm:parityrel}) & $\mu_{\mathrm{rel}}(\text{even})=\varp
  & lower bound $\varphi$ & conditional on (EG), Rem.~\ref{rem:gapstatus}\\
 Inertness (Thm.~\ref{thm:inert}) & $\beta_4$, Lehmer relationally inert & \F{} per instance\\
 Extension (Thm.~\ref{thm:inertmore}) & $S_6$, $S_8$ certified Salem; inert & \F{} per instance\\
-Not locked (Thm.~\ref{thm:notlocked}, Rem.~\ref{rem:allpairs}) & no pair among the four circle-locks & \F{} per instance\\
-Census (Thm.~\ref{thm:census}) & $37/37$ degree-$12$ family Salems inert & \F{} per inst.; \C{} family\\
+Pinning (Thm.~\ref{thm:pinning}) & pinned modulus forbids torsion ratios & \F\\
+Salem inertness (Cor.~\ref{cor:allinert}) & every Salem number inert; P1 closed & \F\\
+No locking (Cor.~\ref{cor:nolock}) & no two Salem numbers circle-lock; P2 closed & \F\\
+Not locked (Thm.~\ref{thm:notlocked}, Rem.~\ref{rem:allpairs}) & six pairwise scans & corroboration\\
+Census (Thm.~\ref{thm:census}) & $37/37$ degree-$12$ family Salems inert & corroboration; \C{} family\\
 Cross-engine (App.~A, entry M) & PARI/GP reproduces signatures A--I, P, Q & \C\\
 \hline
 \end{tabular}
@@ -1070,34 +1195,25 @@ Cross-engine (App.~A, entry M) & PARI/GP reproduces signatures A--I, P, Q & \C\\
 \medskip
 \noindent\textbf{Open problems.}
 \begin{enumerate}
-\item[(P1)] \textbf{Internal Salem coherence.} Does any Salem number have two
-circle conjugates at rational phase difference? Each instance is decidable by
-the contact scan; a survey over the small-Salem census
-(cf.~\cite{Boyd1977, Mossinghoff}) is the natural next
-computation. A negative answer in general would say the Salem spectrum is
-relationally inert as a class --- the strongest possible form of its
-charge-inadmissibility. Forty-one certified instances --- the four canonical
-test cases of degrees $4$--$10$ (the minimal degree-$4$ Salem number and
-Lehmer's number among them; Theorems~\ref{thm:inert}, \ref{thm:inertmore})
-plus the $37$ of the exhaustive degree-$12$ family
-(Theorem~\ref{thm:census}) --- are a base, not a class; the full small-Salem
-census is the required step. No naturally occurring \emph{irreducible}
-non-inert example is known --- Example~\ref{ex:tensorsq}'s witness is
-composite by construction --- and finding one, or proving none exists, is
-precisely this problem. Where to look: a torsion ratio $\zeta_M$ between
-conjugates forces $\Q(\zeta_M)$ into the splitting field, so irreducible
-candidates are Salem polynomials whose splitting fields contain roots of
-unity of nontrivial order. By contrast, \emph{reducible} inadmissible
-objects with nontrivial coherence provably exist: any tensor square
-$O\otimes O$ of a Salem object contains the equal-angle non-real pair
-$(\tau\lambda,\ \tau^{-1}\lambda)$, coherent with relative charge $0$
-(Proposition~\ref{prop:tensor}(iii)), so it is not inert --- computed
-concretely in Example~\ref{ex:tensorsq}. \Op
-\item[(P2)] \textbf{Cross-Salem locking.} Do any two distinct Salem numbers
-circle-lock? Equivalently: do the circle angles of the Salem spectrum, viewed in
-$(\R/\Z)/\Q$, ever collide? Theorem~\ref{thm:notlocked} and
-Remark~\ref{rem:allpairs} settle all six pairs among the certified instances
-negatively. \Op
+\item[(P1)] \textbf{Internal Salem coherence --- resolved in the negative.}
+Corollary~\ref{cor:allinert}: every Salem number is relationally inert.
+The forty-six certified instance decisions of this note --- the four
+canonical test cases of degrees $4$--$10$, the exhaustive degree-$12$
+family, and the five larger-coefficient spot checks (ledger entries G, H,
+P, T, V) --- stand as exact corroboration, obtained \emph{before} the
+theorem. The successor problem is the characterization: \textbf{(P1$'$)}
+which irreducible integer polynomials carry nontrivial coherence? A torsion
+ratio $\zeta_M$ forces $\Q(\zeta_M)$ into the splitting field; a pinned
+modulus forbids torsion (Theorem~\ref{thm:pinning}); twisted shells
+$q(x^k)$ suffice (Example~\ref{ex:twistshell}); and composite objects
+manufacture coherence freely (Example~\ref{ex:tensorsq}). In recurrence
+language: characterize degenerate irreducibles beyond the
+pinned/twisted-shell dichotomy (cf.~\cite{EPSW}), and, beyond torsion,
+classify the cross-shell mirrored classes the $\nu$-criterion governs. \Op
+\item[(P2)] \textbf{Cross-Salem locking --- resolved in the negative.}
+Corollary~\ref{cor:nolock}: the circle angles of distinct Salem numbers,
+viewed in $(\R/\Z)/\Q$, never collide. Theorem~\ref{thm:notlocked} and
+Remark~\ref{rem:allpairs} (six pairs) are exact corroboration. \F
 \item[(P3)] \textbf{The odd floor.} Prove $\mu_{\mathrm{rel}}(m)=2$ for all odd
 $m$. By Lemma~\ref{lem:twist} this is \emph{exactly} the companion's principal
 open problem~\cite[\S8]{CMC} --- the relational refinement adds no new burden,
@@ -1167,9 +1283,9 @@ behind Lemma~\ref{lem:qk}, all $k$.\\[2pt]
 L & coset arithmetic & $e$ odd, $m$ odd $\Rightarrow(e+m)/2m\in\frac1m\Z/\Z$;
 engine corroboration of Lemma~\ref{lem:twist}'s one-line step,
 $m\in\{3,5,7,9\}$, all odd $e<2m$.\\[2pt]
-M & cross-engine replication & contact signatures of entries A--I, P, and Q
-recomputed in PARI/GP~2.15.4 (\texttt{polresultant} $+$
-\texttt{poliscyclo}); all sixteen identical to the \texttt{sympy}
+M & cross-engine replication & contact signatures of entries A--I, P, Q, U,
+and V recomputed in PARI/GP~2.15.4 (\texttt{polresultant} $+$
+\texttt{poliscyclo}); all twenty-three identical to the \texttt{sympy}
 signatures.\\[2pt]
 N & totient bound & $2\,\phi(M)^2\ge M$ verified by exact integer sieve for
 all $1\le M\le2\cdot10^{5}$; unique tight case $M=2$
@@ -1194,8 +1310,16 @@ run (Example~\ref{ex:tensorsq}).\\[2pt]
 T & degree-$12$ census & $729$ reciprocal $\{-1,0,1\}$-polynomials; $378$
 twist-classes ($27$ twist-fixed; $378=(729+27)/2$); $37$ certified Salem;
 all $37$ complete scans ($\deg144$, bound $41472$) return
-$\{\Phi_1^{\,12}\}$. Runtime $93$\,s; single-engine
-(\texttt{census\_deg12.py}).\\
+$\{\Phi_1^{\,12}\}$. Runtime $93$\,s (\texttt{census\_deg12.py});
+cross-engine for the four canonical instances via entry~M.\\[2pt]
+U & twisted-shell witness & $q=x^2+x+2$: $\Rat_q$ contacts
+$\{\Phi_1^{\,2}\}$ (angle irrational, complete); $p=x^4+x^2+2=q(x^2)$:
+irreducible, $\Rat_p$ contacts $\{\Phi_1^{\,4},\Phi_2^{\,4}\}$,
+$\Mah=2$ --- non-inert (Example~\ref{ex:twistshell}).\\[2pt]
+V & larger-coefficient spot checks & first five degree-$12$ Salem
+twist-classes with a coefficient outside $\{-1,0,1\}$ (lexicographic in
+$\{-2,\dots,2\}^6$): all five scans return $\{\Phi_1^{\,12}\}$
+(Remark~\ref{rem:censusscope}).\\
 \hline
 \end{tabular}
 \end{center}
@@ -1264,7 +1388,8 @@ second polynomial: $\Rat_{p,q}=\Res_y\bigl(q(y),\,p(xy)\bigr)$.
 
 Reference~\cite{CMC} is a technical note of the same project
 (the \texttt{math-research-pipelines} corpus), distributed alongside this
-one and intended for the same repository. So that the present note can be
+one and archived with the repository at DOI
+\url{10.5281/zenodo.21121863}. So that the present note can be
 read, and its dependence structure audited, without~\cite{CMC} in hand, the
 table below lists every
 statement imported from it, the status \emph{as tagged there}, and where it
@@ -1350,11 +1475,11 @@ Thm.~6.2]{CMC}.
 
 \bibitem{CMC} \emph{The Charge--Measure Coupling on a Spectral Semiring:
 Cyclicity, Composition, and a Parity-Graded Mahler Floor},
-math-research-pipelines technical note, 30 June 2026. Distributed with the
-present note; intended for the project's papers drop-zone at
+math-research-pipelines technical note, 30 June 2026. Archived within the project repository deposit at DOI
+\url{10.5281/zenodo.21121863} (v1.0.0, as
+\texttt{papers/charge\_measure\_coupling.tex}); served at
 \texttt{https://echo-s-studios.github.io/math-research-pipelines/}.
-Appendix~\ref{app:inherited} lists every statement imported from it. (DOI
-deposit pending.)
+Appendix~\ref{app:inherited} lists every statement imported from it.
 
 \bibitem{Kronecker} L.~Kronecker, \emph{Zwei S\"atze \"uber Gleichungen mit
 ganzzahligen Coefficienten}, J.~Reine Angew.~Math.\ 53 (1857), 173--175.
@@ -1392,11 +1517,15 @@ relations connecting conjugate algebraic numbers}, J.~Number Theory 23
 \bibitem{Mossinghoff} M.~J.~Mossinghoff, \emph{Polynomials with small
 Mahler measure}, Math.~Comp.\ 67 (1998), 1697--1705.
 
+\bibitem{EPSW} G.~Everest, A.~van der Poorten, I.~Shparlinski, and
+T.~Ward, \emph{Recurrence Sequences}, Math.\ Surveys Monogr.\ 104,
+Amer.\ Math.\ Soc., 2003.
+
 \end{thebibliography}
 
 \medskip
 \noindent\textbf{Citation provenance:} reference~\cite{CMC} is the
-companion note of this project. The bibliographic metadata of
+companion note of this project (DOI \url{10.5281/zenodo.21121863}). The bibliographic metadata of
 \cite{Kronecker}--\cite{Bertin} was machine-checked against the Crossref
 registry on 1~July~2026. Confirmed in full: \cite{Lehmer}
 (DOI~\texttt{10.2307/1968172}), \cite{Mahler}
@@ -1417,6 +1546,7 @@ page field, so the range 153--172 stands as supplied. References
 \url{10.1215/s0012-7094-77-04413-1} (Duke's registry record, as for
 \cite{Salem}, carries no page field, so 315--328 stands as supplied),
 \url{10.4064/aa-34-4-391-401}, \url{10.1016/0022-314x(86)90094-6}, and
-\url{10.1090/s0025-5718-98-01006-0}.
+\url{10.1090/s0025-5718-98-01006-0}. Reference~\cite{EPSW} was
+machine-checked at DOI \url{10.1090/surv/104}.
 
 \end{document}

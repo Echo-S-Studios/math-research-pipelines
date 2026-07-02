@@ -20,6 +20,7 @@ on:
       - 'lambda2c-emissiongap-verification/papers/**'
       - 'residual-return-verification/L00M/paper/*.tex'
       - 'residual-return-verification/L00M/paper/*.pdf'
+      - 'relational-charge-verification/relational_charge_paper.pdf'
       - 'matrix-plates/web/matrix_plates.html'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
@@ -65,7 +66,6 @@ jobs:
             charge_measure_coupling.tex
             z5_no_salem_dichotomy.tex
             lehmers_box.tex
-            relational_charge_paper.tex
 
       - name: Compile the residual-return papers (.tex -> PDF)
         # Compiled from source (not served from the committed PDF) so the site always
@@ -92,6 +92,9 @@ jobs:
           cp lambda2c-emissiongap-verification/papers/emission_gap_paper.pdf   _site/papers/
           cp residual-return-verification/L00M/paper/vector_substrate.pdf      _site/papers/
           cp residual-return-verification/L00M/paper/residual_return_learning.pdf _site/papers/
+          # Relational-charge paper: served from the sealed, manifest-verified deposit PDF
+          # (canonical DOI-patched 23pp build), not recompiled, so the site matches the archive.
+          cp relational-charge-verification/relational_charge_paper.pdf         _site/papers/
           cp matrix-plates/web/matrix_plates.html                              _site/tool/index.html
           # Contributed drop-zone: catalog + every PDF, plus raw .md sources (except the folder README).
           cp papers/catalog.json _site/papers/catalog.json
