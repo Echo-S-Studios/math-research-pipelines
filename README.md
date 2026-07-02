@@ -10,14 +10,14 @@ yourself rather than trust a rendered PDF.
 [![lambda2c CI](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/lambda2c.yml/badge.svg)](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/lambda2c.yml)
 [![residual-return CI](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml/badge.svg)](https://github.com/Echo-S-Studios/math-research-pipelines/actions/workflows/residual-return.yml)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-<!-- DOI-BADGE: replaced with the Zenodo DOI badge once the first GitHub release is archived (see .zenodo.json + tools/apply_doi_patch.py) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21121863.svg)](https://doi.org/10.5281/zenodo.21121863)
 
 **🌐 Live site — [echo-s-studios.github.io/math-research-pipelines](https://echo-s-studios.github.io/math-research-pipelines/)** ·
 read every paper, open the interactive tools, and browse the build spec. Each card is described in
 [**Live site (GitHub Pages)**](#live-site-github-pages) below.
 
-> The three top-level pipeline directories are the **canonical source of truth**.
-> `Zipped-Tarred-Pipelines/` holds duplicate offline-distribution archives only.
+> The three top-level pipeline directories and the `relational-charge-verification/` deposit are the
+> **canonical source of truth**. `Zipped-Tarred-Pipelines/` holds duplicate offline-distribution archives only.
 
 ---
 
@@ -55,10 +55,13 @@ The landing page has three sections; here is every card it links, with the file 
 
 | Card | On the site | Behind it | What it is |
 |---|---|---|---|
-| **Lehmer's Box** | `/papers/lehmers_box.pdf` | [`papers/lehmers_box.pdf`](papers/lehmers_box.pdf) (14 pp) | The golden floor and the angle lattice that confine emission away from Salem numbers — without resolving Lehmer's problem. |
+| **Lehmer's Box** | `/papers/lehmers_box.pdf` | [`papers/lehmers_box.tex`](papers/lehmers_box.tex) (14 pp, compiled in CI) | The golden floor and the angle lattice that confine emission away from Salem numbers — without resolving Lehmer's problem. |
 | **The Occupant of the Salem Slot** | `/papers/salem_slot.pdf` | [`papers/salem_slot.pdf`](papers/salem_slot.pdf) (11 pp) | The positive content of the empty slot: the trace redirection, the grow channel, and the √5 limit at the floor. |
 | **The Generative Content of a Conserved Emptiness** | `/papers/generative_emptiness.pdf` | [`papers/generative_emptiness.pdf`](papers/generative_emptiness.pdf) (7 pp) | Kinematic voids as superselection generators: the ℤ/4ℤ charge and the five objects it produces. |
 | **The Operator Algebra of the Emission Semiring** | `/papers/operatoralgebrawhitepaper.pdf` | [`papers/operatoralgebrawhitepaper.pdf`](papers/operatoralgebrawhitepaper.pdf) (6 pp) | The spectral operators ⊕, ⊗, (·)² as a λ-ring with two characters (Mahler measure and the ℤ/4ℤ charge). |
+| **The Charge–Measure Coupling** | `/papers/charge_measure_coupling.pdf` | [`papers/charge_measure_coupling.tex`](papers/charge_measure_coupling.tex) (13 pp, compiled in CI) | Two orthogonal characters on the spectral semiring (Mahler measure + a cyclic conjugate-angle charge), a parity-graded floor, and the matrix commutator as the one exit that re-admits the Salem spectrum. |
+| **The ℤ/5ℤ Case of the No-Salem Dichotomy** | `/papers/z5_no_salem_dichotomy.pdf` | [`papers/z5_no_salem_dichotomy.tex`](papers/z5_no_salem_dichotomy.tex) (9 pp, compiled in CI) | The pentagon sector: four forced results sharpen the floor to μ_S = 1.3247, while the full μ(5) = 2 stays computed. |
+| **Relational Charge on the Spectral Semiring** | `/papers/relational_charge_paper.pdf` | [`relational-charge-verification/`](relational-charge-verification/) (23 pp, sealed deposit + exact engines) | Refactors the charge into a reference-free relational invariant; a rigidity theorem (integrality fixes the gauge); exactly-decidable coherence types on the Salem sector (β₄, Lehmer, a 37-instance degree-12 census, all inert). |
 | **Lehmer's Problem: An Introduction** | `/papers/lehmersproblemanintroduction.html` | rendered from [`papers/lehmersproblemanintroduction.md`](papers/lehmersproblemanintroduction.md) | A from-scratch primer on Lehmer's problem — the Mahler measure, Lehmer's number, and why the Salem case is the open heart. |
 | **Building on the Emission Algebra — a build spec** | `/papers/EMISSIONALGEBRASPEC.html` | rendered from [`papers/EMISSIONALGEBRASPEC.md`](papers/EMISSIONALGEBRASPEC.md) | A build specification over the substrate, with every fact mapped to the file in this repo that checks it. |
 
@@ -181,10 +184,11 @@ is auditable:
 
 ```
 math-research-pipelines/
-├── README.md  LICENSE  CITATION.cff  .gitignore        # repo root: this file + governance
+├── README.md  LICENSE  CITATION.cff  .zenodo.json  .gitignore   # repo root: this file + governance + Zenodo metadata
 ├── lambda2c-emissiongap-verification/   # λ = 2c & Emission-Gap: 95 FORCED claims under pytest
 ├── matrix-plates/                       # Mahler-measure plates + companion closure + browser tool
 ├── residual-return-verification/        # exact learning substrate: verify.py drives Parts A–C
+├── relational-charge-verification/      # Relational Charge paper (sealed deposit PDF) + exact engines (sympy + PARI/GP)
 ├── papers/                              # Pages drop-zone: contributed PDFs / docs / HTML tools + catalog.json
 ├── site/                               # GitHub Pages source: the landing page (index.html, render_docs.py)
 ├── .github/                            # CI workflows (incl. Pages deploy) + community files
@@ -194,9 +198,9 @@ math-research-pipelines/
     └── residual-return-verification-v2.tar
 ```
 
-The three pipeline directories are the **canonical source of truth**. The contents of
-`Zipped-Tarred-Pipelines/` are convenience snapshots for offline distribution — do not edit them
-or treat them as authoritative.
+The three pipeline directories, together with the `relational-charge-verification/` deposit, are the
+**canonical source of truth**. The contents of `Zipped-Tarred-Pipelines/` are convenience snapshots
+for offline distribution — do not edit them or treat them as authoritative.
 
 ---
 

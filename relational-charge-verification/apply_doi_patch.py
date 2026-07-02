@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# APPLIED 2026-07-02 with DOI 10.5281/zenodo.21121863 (bespoke wording:
+# deposit contents were verified first -- companion present as
+# papers/charge_measure_coupling.tex, this paper's scripts not yet in v1.0.0,
+# so section-9 wording was scoped to the deposit's next version).
+# Kept for provenance; anchors below no longer exist in the source.
+raise SystemExit("already applied -- see banner")
 """Close review finding F1 once the companion note has a DOI.
 
 Usage:  python3 apply_doi_patch.py 10.5281/zenodo.XXXXXXX
@@ -35,6 +41,9 @@ channel, enabling verification by a distinct operator.""",
      f"""the artifacts are deposited at DOI \\texttt{{{doi}}}, enabling
 verification by a distinct operator."""),
 ]
+
+PAIRS.append((""" (Repository public; DOI
+deposit via Zenodo in progress.)""", ""))
 
 for old, new in PAIRS:
     assert src.count(old) == 1, f"anchor drifted (count={src.count(old)}):\n{old[:60]}..."
