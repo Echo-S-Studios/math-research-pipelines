@@ -97,5 +97,41 @@
     "pages": "read",
     "tag": "TOOL",
     "description": "A guided compendium of the whole stack: the confinement, the occupant, the generative emptiness, the generation rates, and the finitely generated Mahler-measure monoid — 175 exact checks, every displayed number re-derived."
+  },
+  {
+    "kind": "pdf",
+    "file": "pisot_residue_whitepaper_v14.pdf",
+    "title": "The Pisot Cross-Shell Residue",
+    "series": "Pisot cross-shell residue · session note v1.4",
+    "pages": "12 pp",
+    "tag": "PDF",
+    "description": "A reduction lemma, sharpness witnesses, and the exhaustive execution of the ν-criterion: 2,016 live instances across degrees 5–7 and three quintic boxes, zero mirrored cross-shell classes. With the executed N2–N4 and P-series addenda, three degenerate-chain Pisots the certificate paths cannot see, and the referee errata folded — every claim exact, every artifact SHA-pinned."
+  },
+  {
+    "kind": "pdf",
+    "file": "relational_charge_postarchive.pdf",
+    "title": "Relational Charge — post-archive build (K/L/M folds)",
+    "series": "Pisot cross-shell residue · parent paper, working build",
+    "pages": "26 pp",
+    "tag": "PDF",
+    "description": "The relational-charge paper with the post-archive folds applied: the gp harness rules beside the engine pins, ledger row M's live third run (237/237), the session note's Z* witness and real-pair ν-reduction folded in place, and Cor. 7.16 sharpened with the executed residue evidence. The sealed v1.0.x deposit card above remains the DOI record; this is the working head."
+  },
+  {
+    "kind": "doc",
+    "file": "pisotresidueprogram.md",
+    "title": "The Pisot Cross-Shell Residue — program record",
+    "series": "Pisot cross-shell residue · overview",
+    "pages": "read",
+    "tag": "DOC",
+    "description": "One day of machine mathematics: what the residue is, the five executed rounds (83 → 2,016 live instances, zero falsifiers), the three census surprises — Pisots hiding in degenerate certificate chains, the degree-2 reciprocal counterexample, the non-generic Galois witnesses — and how to re-run all of it yourself."
+  },
+  {
+    "kind": "tool",
+    "file": "pisot_census_explorer.html",
+    "title": "Pisot Census Explorer",
+    "series": "interactive",
+    "pages": "live",
+    "tag": "TOOL",
+    "description": "All 2,780 certified Pisot polynomials from the program's censuses (degrees 2–7, five coefficient boxes) in one filterable table: patterns, θ values, the three adjudicated degenerate-chain Pisots, the P7 reducible-Rat° witnesses, and the golden equality case — data embedded from the SHA-pinned census records."
   }
 ]

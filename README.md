@@ -59,10 +59,11 @@ The landing page has three sections; here is every card it links, with the file 
 | **The Vector Substrate** | `/papers/vector_substrate.pdf` | [`vector_substrate.pdf`](residual-return-verification/L00M/paper/vector_substrate.pdf) (29 pp) | Number fields as exact learning geometry — verified by the **residual-return** suite. |
 | **Residual Return** | `/papers/residual_return_learning.pdf` | [`residual_return_learning.pdf`](residual-return-verification/L00M/paper/residual_return_learning.pdf) (30 pp) | Exact learning dynamics and language; capture ⟺ residual = 0. |
 
-### Interactive — three in-browser tools
+### Interactive — four in-browser tools
 
 | Card | On the site | Behind it | What it is |
 |---|---|---|---|
+| **Pisot Census Explorer** | `/papers/pisot_census_explorer.html` | [`papers/pisot_census_explorer.html`](papers/pisot_census_explorer.html) | All 2,780 certified Pisot polynomials from the residue program's censuses (degrees 2–7, five boxes) in one filterable table — patterns, θ values, the three adjudicated degenerate-chain Pisots, the P7 witnesses; data embedded from the SHA-pinned records. |
 | **Matrix Plates explorer** | `/tool/` | [`matrix-plates/web/matrix_plates.html`](matrix-plates/web/matrix_plates.html) | Build integer matrices graded by Mahler measure, run the `companion ∘ charpoly` closure, read invariant factors / similarity verdicts, export JSON/LaTeX/SymPy — all in exact in-browser BigInt arithmetic. |
 | **Lehmer's Box — closure instrument** | `/papers/lehmers_box_instrument.html` | [`papers/lehmers_box_instrument.html`](papers/lehmers_box_instrument.html) | A live closure instrument: plot roots, compose seeds with the spectral operators, watch emissions stay in the box, then throw a Salem number at it. Math computed in-browser. |
 | **The Emission Algebra — a machine-verified account** | `/papers/emissionalgebracompendium.html` | [`papers/emissionalgebracompendium.html`](papers/emissionalgebracompendium.html) | A guided compendium of the whole stack — the confinement, the occupant, the generative emptiness, the generation rates, and the finitely generated Mahler-measure monoid. |
@@ -80,6 +81,9 @@ The landing page has three sections; here is every card it links, with the file 
 | **Relational Charge on the Spectral Semiring** | `/papers/relational_charge_paper.pdf` | [`relational-charge-verification/`](relational-charge-verification/) (23 pp, sealed deposit + exact engines) | Refactors the charge into a reference-free relational invariant; a rigidity theorem (integrality fixes the gauge); exactly-decidable coherence types on the Salem sector (β₄, Lehmer, a 37-instance degree-12 census, all inert). |
 | **Lehmer's Problem: An Introduction** | `/papers/lehmersproblemanintroduction.html` | rendered from [`papers/lehmersproblemanintroduction.md`](papers/lehmersproblemanintroduction.md) | A from-scratch primer on Lehmer's problem — the Mahler measure, Lehmer's number, and why the Salem case is the open heart. |
 | **Building on the Emission Algebra — a build spec** | `/papers/EMISSIONALGEBRASPEC.html` | rendered from [`papers/EMISSIONALGEBRASPEC.md`](papers/EMISSIONALGEBRASPEC.md) | A build specification over the substrate, with every fact mapped to the file in this repo that checks it. |
+| **The Pisot Cross-Shell Residue** | `/papers/pisot_residue_whitepaper_v14.pdf` | [`pisot-residue-whitepaper/`](pisot-residue-whitepaper/) (12 pp, session note v1.4) | The reduction lemma, sharpness witnesses, and the exhaustive ν-criterion execution — 2,016 live instances, zero mirrored classes, referee errata folded. |
+| **Relational Charge — post-archive build** | `/papers/relational_charge_postarchive.pdf` | [`relational-charge-verification/post-archive-folds/`](relational-charge-verification/post-archive-folds/) (26 pp, working head) | The parent paper with the K/L/M folds applied (harness rules, ledger-M live run, the session-note folds, referee sync); the sealed deposit card above stays the DOI record. |
+| **The Pisot Cross-Shell Residue — program record** | `/papers/pisotresidueprogram.html` | rendered from [`papers/pisotresidueprogram.md`](papers/pisotresidueprogram.md) | The one-day program narrative: the residue, the five executed rounds, the three census surprises, and how to re-run everything. |
 
 ---
 
