@@ -1,7 +1,7 @@
 # n4-degree67 — N4 executed: Pisot censuses and cross-shell scans at degrees 6–7
 
-Execution of whitepaper next-step **N4** (`pisot_residue_whitepaper.v12.tex`,
-§"Box and degree extensions", subsection N4). Exact arithmetic only.
+Execution of whitepaper next-step **N4** (`../pisot-residue-whitepaper/pisot_residue_whitepaper.v14.tex`,
+§"Box and degree extensions", subsection N4; introduced at v1.2). Exact arithmetic only.
 
 ## Results
 

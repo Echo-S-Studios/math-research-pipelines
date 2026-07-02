@@ -846,6 +846,28 @@ $\{\Phi_1^3,\Phi_3^3\}$, both reading the common relational group $\Z/3\Z$
 (ledger entries~A, B). \F
 \end{remark}
 
+\medskip
+\noindent\textbf{Real-pair $\nu$-reduction (session-note fold).}
+Against a \emph{real} partner the cross-shell criterion simplifies
+completely. Let $O$ be conjugation-closed, $\beta\in O$ real, $\alpha\in O$
+non-real: $t(\beta)\in\{0,\tfrac12\}$, so
+$t(\alpha)-t(\beta)\in\Q\iff2\,t(\alpha)\in\Q$, and
+$\alpha/\overline{\alpha}$ is unimodular with
+$t(\alpha/\overline{\alpha})=2\,t(\alpha)$; hence
+\[
+\alpha\approx\beta\iff\alpha/\overline{\alpha}\ \text{is a root of unity}.
+\]
+When $O$ is the root set of $p$, the quantity $\alpha/\overline{\alpha}$ is
+an ordered ratio, i.e.\ a root of $\Rat_p$: every real$\times$non-real
+coherence question --- same shell or cross shell --- is decided by the
+complete contact scan of $\Rat_p$ alone, with no $\nu$-computation and no
+$2$-part loss (\F; \cite[Lem.~4.1]{pisotnote}). Combined with
+Theorem~\ref{thm:pinning} this forces relational inertness for every Pisot
+number whose minimal polynomial has at most one pair of non-real
+conjugates, and localizes the first genuinely open case of the cross-shell
+residue at the quintic two-pair pattern
+(\cite[Thm.~4.2, Cor.~4.3]{pisotnote}).
+
 \subsection{The two keystone occupants are relationally inert}
 
 \begin{definition}[Relationally inert]\label{def:inert}
@@ -998,8 +1020,18 @@ $\tau_p=\tau_q$, hence the same minimal polynomial, $p=q$.
 \begin{corollary}[Pisot numbers]\label{cor:pisot}
 No two distinct conjugates of a Pisot number differ by a root-of-unity
 factor, and no non-real conjugate is coherent with a real one. (The full
-type of a Pisot number can still carry mirrored cross-shell classes;
-deciding those is the $\nu$-criterion of Remark~\ref{rem:scope}.) \F
+type of a Pisot number can still carry mirrored cross-shell classes among
+its non-real shells; deciding those is the $\nu$-criterion of
+Remark~\ref{rem:scope}. The session-note fold sharpens the location: by the
+real-pair $\nu$-reduction following that remark, the residue is empty for every
+Pisot number with at most one pair of non-real conjugates, so its first
+live case is the quintic two-pair pattern; the executed scans of
+\cite{pisotnote} find \emph{zero} mirrored cross-shell classes on every
+live instance of the boxes $[-2,2]^5$ ($67$ two-pair), $[-3,3]^5$ ($313$),
+$[-4,4]^5$ ($1063$), $[-2,2]^6$ ($159$ two-pair with real spectator), and
+$[-2,2]^7$ ($414$: $105$ two-pair, $309$ three-pair --- the first
+three-pair population); the counts are live instances, not census
+totals.) \F
 \end{corollary}
 
 \begin{proof}
@@ -1078,6 +1110,25 @@ inert; $\Mah(p)=2$. Salem polynomials can never arise this way: $q(x^k)$
 with $k\ge2$ would duplicate the maximal modulus --- pinning and the
 twisted-shell mechanism exclude each other. \F
 \end{example}
+
+\medskip
+\noindent\textbf{Hypothesis-necessity witness $Z^{*}$ (session-note fold).}
+The example above shows the pinning hypothesis necessary for an irreducible
+input. The reducible witness
+$Z^{*}=x^4-3x^2+1=(x^2-x-1)(x^2+x-1)$ isolates the remaining hypotheses of
+Theorem~\ref{thm:pinning}: each factor is irreducible with \emph{both} of
+its root moduli ($\varphi$ and $\varphi^{-1}$) uniquely attained within
+that factor, so per-factor pinning holds; yet the roots $\varphi$ (of the
+first factor) and $-\varphi$ (of the second) carry the torsion ratio $-1$
+at the shared modulus $\varphi$. Hence irreducibility cannot be dropped
+from Theorem~\ref{thm:pinning}, and the disjoint-modulus clause cannot be
+dropped from its mixed statement --- the two failure routes are exactly
+transitivity and the excluded shared shell. The complete scan reads
+$\Rat_{Z^{*}}\leadsto\{\Phi_1^{\,4},\Phi_2^{\,4}\}$ ($\Phi_1$ from the
+diagonal, $\Phi_2$ from the two antipodal pairs, ordered), engine-confirmed
+in both stacks (\F; \cite[Prop.~3.3]{pisotnote}). Together with $x^4-2$,
+the two witnesses isolate every hypothesis of the theorem and its mixed
+form.
 
 \begin{remark}[Degeneracy, the Dubickas program, and attribution]
 \label{rem:degen}
@@ -1269,10 +1320,10 @@ Theorem~\ref{thm:census} (about two minutes);
 $x^4-x+1$: Kronecker-square factorization and the complete $\nu$-scan);
 \item \texttt{gp -q cross\_check.gp}, \texttt{gp -q cross\_round6.gp}, and
 \texttt{gp -q cross\_round8.gp}
-\item live replication of ledger row~M (run~3): drivers and transcripts
-SHA-pinned in the companion package
-\texttt{pisot-residue-verification.zip} (SHA-256 \texttt{f803ce52dbdfd070390df72749c3e77}\allowbreak\texttt{829783e732a5f231e2d60e31be9160404})
 --- the twenty-three cross-engine signatures.
+\item live replication of ledger row~M (run~3, $237$ signatures): drivers
+and transcripts SHA-pinned in the companion package
+\texttt{pisot-residue-verification.zip} (SHA-256 \texttt{f803ce52dbdfd070}\allowbreak\texttt{390df72749c3e778}\allowbreak\texttt{29783e732a5f231e}\allowbreak\texttt{2d60e31be9160404})
 \end{itemize}
 
 \section{Scope, limitations, and open problems}\label{sec:open}
@@ -1638,6 +1689,14 @@ math-research-pipelines technical note, 30 June 2026. Archived within the projec
 \texttt{papers/charge\_measure\_coupling.tex}); served at
 \texttt{https://echo-s-studios.github.io/math-research-pipelines/}.
 Appendix~\ref{app:inherited} lists every statement imported from it.
+
+\bibitem{pisotnote} J.~Turner, \emph{The Pisot Cross-Shell Residue: A
+Reduction Lemma, Sharpness Witnesses, and an Exhaustive Quintic Execution
+of the $\nu$-Criterion}, session note (v1.4; box, degree, and P-series
+extensions executed), Echo-S Studios \texttt{math-research-pipelines},
+July 2026; drivers and transcripts SHA-pinned in the companion package
+\texttt{pisot-residue-verification.zip} (SHA-256
+\texttt{f803ce52dbdfd070}\allowbreak\texttt{390df72749c3e778}\allowbreak\texttt{29783e732a5f231e}\allowbreak\texttt{2d60e31be9160404}) and its N2--N4 successors.
 
 \bibitem{Kronecker} L.~Kronecker, \emph{Zwei S\"atze \"uber Gleichungen mit
 ganzzahligen Coefficienten}, J.~Reine Angew.~Math.\ 53 (1857), 173--175.

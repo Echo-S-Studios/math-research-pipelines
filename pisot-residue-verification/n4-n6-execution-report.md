@@ -32,7 +32,7 @@ first three-pair population)** + 105 two-pair with two real spectators.
 Degenerate chains 13 598 (250 / 13 316 / 31 / **1**). The 1 is the headline
 census finding: a genuine Pisot,
 
-    x⁷ − 2x⁶ + 2x⁵ + 2x⁴ − 2x³ − x² + 1,   c = (1, −1, −2, 2, 2, −2, −2),
+    x⁷ − 2x⁶ − 2x⁵ + 2x⁴ + 2x³ − 2x² − x + 1,   c = (1, −1, −2, 2, 2, −2, −2),
 
 is invisible to all four certificate paths (c₀ = 1 degenerates Schur–Cohn at
 δ₁ = c₀²−1 = 0 and both Routh tables) and was caught only by the exact
@@ -103,3 +103,14 @@ three-pair executions), zero falsifiers, nothing promoted. The lasting
 methodological yields: unconditional adjudication is now mandatory census
 discipline (a real degree-7 Pisot lives in the degenerate-chain population),
 and P7's reducible-Rat° instances exist and remain inert.
+
+## Erratum (2026-07-02 referee pass, applied)
+
+**E2.** The displayed expansion of the degree-7 adjudicated Pisot
+contradicted its c-vector; the machine sides with the c-vector (the
+originally displayed polynomial is not even chain-empty). Corrected above
+and in whitepaper v1.4: the instance is
+x⁷−2x⁶−2x⁵+2x⁴+2x³−2x²−x+1, c = (1,−1,−2,2,2,−2,−2). All surrounding
+claims (all-four-degenerate, irreducible, interior 6, two-pair with two
+real spectators, clean scans, GP agreement) were re-verified for the
+c-vector polynomial and stand.

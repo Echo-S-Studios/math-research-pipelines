@@ -21,6 +21,22 @@ read every paper, open the interactive tools, and browse the build spec. Each ca
 
 ---
 
+## The Pisot cross-shell residue program (2026-07-02 session)
+
+A follow-on campaign to the relational-charge deposit: the session-note
+whitepaper, its box/degree/P-series extensions, and their machine
+verification. Five locations, each with its own README:
+
+| directory | contents |
+|---|---|
+| [`pisot-residue-verification/`](pisot-residue-verification/) | all campaign reports + evidence transcripts (zero-shot bundle verification, N2–N3, N4+N6, P-series) |
+| [`n4-degree67/`](n4-degree67/) | N4 artifact package: degree 6–7 censuses and composed-square scans, GP cross-engine deck, zero-shot RUNBOOK, ERRATA |
+| [`p-series/`](p-series/) | P-series artifact package: P4 totally-real sweep, the [−4,4]⁵ box, aggregates, zero-shot RUNBOOK, ERRATA |
+| [`pisot-residue-whitepaper/`](pisot-residue-whitepaper/) | the whitepaper version chain v1.1 → **v1.4** (head) with its anchored fold patchers |
+| [`relational-charge-verification/post-archive-folds/`](relational-charge-verification/post-archive-folds/) | the parent paper's post-archive K/L/**M** (head) fold chain; the archived v1.0.x deposit above it is untouched |
+
+---
+
 ## Live site (GitHub Pages)
 
 The project's public face is **[echo-s-studios.github.io/math-research-pipelines](https://echo-s-studios.github.io/math-research-pipelines/)**

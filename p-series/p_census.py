@@ -41,12 +41,34 @@ def census_box(n, lo, hi, out_path, log=print):
             P = Poly(desc, x, domain=ZZ)
             rev = Poly(list(reversed(desc)), x, domain=ZZ)
             if P == rev or P == -rev:
-                tal["empty_reciprocal"] += 1
+                # [FORCED] for n >= 3 only (erratum E1): at degree 2 the
+                # reciprocals x^2 - kx + 1, k >= 3, ARE Pisot (theta, 1/theta)
+                if n >= 3:
+                    tal["empty_reciprocal"] += 1
+                    continue
+                if not P.is_irreducible:
+                    tal["empty_reducible"] += 1
+                    continue
+                # degree-2 self-inversive, irreducible: decide by the exact
+                # discriminant (the sandwich cannot separate unimodular pairs)
+                disc = c[1] * c[1] - 4 * c[0]
+                if disc < 0:                      # unimodular pair: not Pisot
+                    tal["empty_interior"] += 1
+                    continue
+                # real pair theta, 1/theta: interior count 1 automatically
+                if int(P.count_roots(1, len(coeffs) + 3)) == 1:
+                    tal["empty_pisot"] += 1
+                    log(f"*** ADJUDICATED PISOT (degenerate chain): {c} ***")
+                    rows.append(_row(c, P, n, B, "adjudicated"))
+                else:
+                    tal["empty_interior"] += 1
                 continue
             if not P.is_irreducible:
                 tal["empty_reducible"] += 1
                 continue
             assert Poly(sgcd(P, rev), x).degree() == 0, ("unimodular risk", c)
+            # the sandwich is self-certifying: count agreement at rational
+            # radii straddling 1 forces #{|z|<1} == #{|z|<=1} (no circle roots)
             inside = interior_sandwich(coeffs)
             if inside == target and int(P.count_roots(1, B + 1)) == 1:
                 tal["empty_pisot"] += 1
