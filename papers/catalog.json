@@ -54,6 +54,15 @@
     "description": "The pentagon sector worked as the first instance where the elementary ℤ/3ℤ argument breaks (2cos72° is irrational): four forced results sharpen the general floor to μ_S = 1.3247 and pin the degree-four gap at φ⁴, while the full claim μ(5) = 2 stays computed — the reciprocal/Salem core of Lehmer's problem specialized to the pentagon lattice."
   },
   {
+    "kind": "pdf",
+    "file": "relational_charge_paper.pdf",
+    "title": "Relational Charge on the Spectral Semiring",
+    "series": "λ=2c & Emission-Gap · companion",
+    "pages": "21 pp",
+    "tag": "PDF",
+    "description": "Refactors the emission algebra's phase charge into a reference-free relational invariant (the rational phase difference between conjugates). A rigidity theorem shows integrality fixes the gauge — the relational theory admits no new admissible objects and the absolute charge is pinned to an anchor n ∈ {m, 2m} — the composition laws descend verbatim, and the parity floor becomes reference-free. On the charge-inadmissible sector the absolute theory discards (Salem numbers), every object carries a finite, exactly-decidable coherence type, computed for β₄, Lehmer, and an exhaustive degree-12 census (37 certified Salem numbers), all relationally inert."
+  },
+  {
     "kind": "doc",
     "file": "lehmersproblemanintroduction.md",
     "title": "Lehmer's Problem: An Introduction",
