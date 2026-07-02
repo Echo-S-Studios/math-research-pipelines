@@ -1,0 +1,185 @@
+== 0. manifests ==
+heavy_check.py: OK
+n1_c2_scan.jsonl: OK
+pisot83.jsonl: OK
+spot.gp: OK
+spot_gp.err: OK
+spot_gp.out: OK
+stage_a_certify.py: OK
+stage_bc.py: OK
+n2_c2_scan.jsonl: OK
+n2_scan_driver.py: OK
+n2_stage_a.py: OK
+n3_census.jsonl: OK
+n3_census.py: OK
+pisot_n2.jsonl: OK
+my_chain_audit.py: OK
+empty_adjudicate.py: OK
+empty_adjudication.jsonl: OK
+fold_k_series.py: OK
+FOLD-INSTRUCTIONS.md: OK
+crossengine_appendix_delta.tex: OK
+bundle_readme_delta.md: OK
+README.md: OK
+RUNBOOK.sh: OK
+n1-symmetrize/MANIFEST.sha256: OK
+n2-n3-box-extensions/MANIFEST.sha256: OK
+n2-chain-audit/MANIFEST.sha256: OK
+deposit-crossengine-fold/MANIFEST.sha256: OK
+== 1. assemble runtime layout (/home/claude/n1) ==
+== 2. N1: certify + scan + symbolic H3 + GP spot ==
+{
+  "candidates": 3125,
+  "c0_nonzero": 2500,
+  "sc_pass": 166,
+  "sturm_pass": 83,
+  "irreducible_pisot": 83,
+  "sc_degenerate": 1754,
+  "dual_path_checked": 83,
+  "dual_path_mismatch": 0
+}
+PISOT 83  two-pair 67  mixed 16
+TARGET  83        two-pair 67          mixed 16   -> MATCH
+pisot83.jsonl sha256 aeff3c3d01ee94e0...  elapsed 0.4s
+building totient table + candidate orders (once)...
+  candidates M>=3 with phi(M)<=380: 728 (max M = 1470), 0.2s
+[1/67] c=[-2, -2, -2, -2, -2] det=2 verdict={Phi1^20} 0.45s OK 
+[2/67] c=[-2, -2, -2, -2, -1] det=2 verdict={Phi1^20} 0.58s OK 
+[3/67] c=[-2, -2, -1, -2, -2] det=2 verdict={Phi1^20} 0.75s OK 
+[4/67] c=[-2, -2, -1, -2, -1] det=2 verdict={Phi1^20} 0.77s OK 
+[5/67] c=[-2, -2, 0, -2, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[6/67] c=[-2, -1, -2, -2, -2] det=2 verdict={Phi1^20} 1.01s OK 
+[7/67] c=[-2, -1, -2, -1, -2] det=2 verdict={Phi1^20} 0.99s OK 
+[8/67] c=[-2, -1, -1, -2, -2] det=2 verdict={Phi1^20} 1.06s OK 
+[9/67] c=[-2, -1, -1, -1, -2] det=2 verdict={Phi1^20} 1.01s OK 
+[10/67] c=[-2, -1, 0, -2, -2] det=2 verdict={Phi1^20} 0.99s OK 
+[11/67] c=[-2, -1, 1, -2, -2] det=2 verdict={Phi1^20} 1.02s OK 
+[12/67] c=[-2, 0, -2, 0, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[13/67] c=[-2, 0, -1, -1, -2] det=2 verdict={Phi1^20} 0.75s OK 
+[14/67] c=[-2, 0, 0, -1, -2] det=2 verdict={Phi1^20} 0.65s OK 
+[15/67] c=[-2, 0, 1, -2, -2] det=2 verdict={Phi1^20} 0.74s OK 
+[16/67] c=[-2, 0, 1, -1, -2] det=2 verdict={Phi1^20} 0.77s OK 
+[17/67] c=[-2, 0, 2, -2, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[18/67] c=[-1, -2, -2, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[19/67] c=[-1, -2, -2, -2, -1] det=2 verdict={Phi1^20} 0.41s OK 
+[20/67] c=[-1, -2, -2, -1, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[21/67] c=[-1, -2, -2, -1, 0] det=2 verdict={Phi1^20} 0.4s OK 
+[22/67] c=[-1, -2, -1, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[23/67] c=[-1, -2, -1, -1, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[24/67] c=[-1, -1, -2, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[25/67] c=[-1, -1, -2, -2, -1] det=2 verdict={Phi1^20} 0.41s OK 
+[26/67] c=[-1, -1, -2, -1, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[27/67] c=[-1, -1, -2, -1, -1] det=2 verdict={Phi1^20} 0.4s OK 
+[28/67] c=[-1, -1, -2, 0, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[29/67] c=[-1, -1, -1, -2, -2] det=2 verdict={Phi1^20} 0.44s OK 
+[30/67] c=[-1, -1, -1, -2, -1] det=2 verdict={Phi1^20} 0.41s OK 
+[31/67] c=[-1, -1, -1, -1, -2] det=2 verdict={Phi1^20} 0.5s OK 
+[32/67] c=[-1, -1, -1, -1, -1] det=2 verdict={Phi1^20} 0.4s OK 
+[33/67] c=[-1, -1, -1, -1, 0] det=2 verdict={Phi1^20} 0.41s OK 
+[34/67] c=[-1, -1, -1, 0, -2] det=2 verdict={Phi1^20} 0.44s OK 
+[35/67] c=[-1, -1, 0, -2, -2] det=2 verdict={Phi1^20} 0.43s OK 
+[36/67] c=[-1, -1, 0, -1, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[37/67] c=[-1, -1, 0, -1, -1] det=2 verdict={Phi1^20} 0.4s OK 
+[38/67] c=[-1, -1, 1, -1, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[39/67] c=[-1, 0, -2, -2, -2] det=2 verdict={Phi1^20} 0.47s OK 
+[40/67] c=[-1, 0, -2, -1, -2] det=2 verdict={Phi1^20} 0.47s OK 
+[41/67] c=[-1, 0, -2, 0, -2] det=2 verdict={Phi1^20} 0.43s OK 
+[42/67] c=[-1, 0, -2, 1, -2] det=2 verdict={Phi1^20} 0.46s OK 
+[43/67] c=[-1, 0, -1, -2, -2] det=2 verdict={Phi1^20} 0.43s OK 
+[44/67] c=[-1, 0, -1, -1, -2] det=2 verdict={Phi1^20} 0.52s OK 
+[45/67] c=[-1, 0, -1, -1, -1] det=2 verdict={Phi1^20} 0.39s OK 
+[46/67] c=[-1, 0, -1, 0, -2] det=2 verdict={Phi1^20} 0.39s OK 
+[47/67] c=[-1, 0, -1, 0, -1] det=2 verdict={Phi1^20} 0.38s OK 
+[48/67] c=[-1, 0, 0, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[49/67] c=[-1, 0, 0, -2, -1] det=2 verdict={Phi1^20} 0.4s OK 
+[50/67] c=[-1, 0, 0, -1, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[51/67] c=[-1, 0, 0, -1, -1] det=2 verdict={Phi1^20} 0.39s OK 
+[52/67] c=[-1, 0, 0, 0, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[53/67] c=[-1, 0, 1, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[54/67] c=[-1, 0, 1, -1, -2] det=2 verdict={Phi1^20} 0.45s OK 
+[55/67] c=[-1, 0, 1, -1, -1] det=2 verdict={Phi1^20} 0.39s OK 
+[56/67] c=[-1, 0, 1, 0, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[57/67] c=[-1, 0, 2, -1, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[58/67] c=[-1, 1, -2, 1, -2] det=2 verdict={Phi1^20} 0.39s OK 
+[59/67] c=[-1, 1, -1, -1, -2] det=2 verdict={Phi1^20} 0.45s OK 
+[60/67] c=[-1, 1, -1, 0, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[61/67] c=[-1, 1, -1, 1, -2] det=2 verdict={Phi1^20} 0.38s OK 
+[62/67] c=[-1, 1, 0, -2, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[63/67] c=[-1, 1, 0, -1, -2] det=2 verdict={Phi1^20} 0.45s OK 
+[64/67] c=[-1, 1, 0, 0, -2] det=2 verdict={Phi1^20} 0.41s OK 
+[65/67] c=[-1, 1, 1, -2, -2] det=2 verdict={Phi1^20} 0.42s OK 
+[66/67] c=[-1, 1, 1, -1, -2] det=2 verdict={Phi1^20} 0.4s OK 
+[67/67] c=[-1, 1, 2, -2, -2] det=2 verdict={Phi1^20} 0.41s OK 
+clean {Phi1^20, det=2} verdicts this run: 67/67
+symbolic resultant done 7.7 s; deg 400
+IDENTICAL
+== 3. N2: census + chain audit + adjudication + scans ==
+431/313/118 reproduced; sub-box 83/67 MATCH; 580a21d2298dec0b... 3.1s
+candidates (c0 != 0): 14406 (expect 14406)
+per-path degeneracy tallies: {'SC': 7748, 'RH': 2604, 'RHneg': 2604, 'SCneg': 7748}
+A. empty chains (all four degenerate): 2602
+   EMPTY (-3, -3, -3, -3, 1)
+   EMPTY (-3, -3, -3, -2, 0)
+   EMPTY (-3, -3, -3, -2, 2)
+   EMPTY (-3, -3, -3, -1, 3)
+   EMPTY (-3, -3, -3, 1, 1)
+   EMPTY (-3, -3, -2, -3, 0)
+   EMPTY (-3, -3, -2, -2, 1)
+   EMPTY (-3, -3, -2, -1, 2)
+   EMPTY (-3, -3, -2, 0, 3)
+   EMPTY (-3, -3, -2, 2, 2)
+   EMPTY (-3, -3, -1, -3, -1)
+   EMPTY (-3, -3, -1, -2, 0)
+   EMPTY (-3, -3, -1, -2, 2)
+   EMPTY (-3, -3, -1, -1, 1)
+   EMPTY (-3, -3, -1, 0, 2)
+   EMPTY (-3, -3, -1, 1, 3)
+   EMPTY (-3, -3, -1, 3, 3)
+   EMPTY (-3, -3, 0, -3, -2)
+   EMPTY (-3, -3, 0, -2, -1)
+   EMPTY (-3, -3, 0, -2, 3)
+   EMPTY (-3, -3, 0, -1, 0)
+   EMPTY (-3, -3, 0, 0, 1)
+   EMPTY (-3, -3, 0, 1, 2)
+   EMPTY (-3, -3, 0, 2, 3)
+   EMPTY (-3, -3, 0, 3, 2)
+   ... (2577 more; full population re-derived and adjudicated by empty_adjudicate.py)
+B. cross-path disagreements among ok verdicts: 0
+SOUNDNESS: CLEAN (0 cross-path disagreements)
+COMPLETENESS: 2602 empty chains -> exact adjudication required (empty_adjudicate.py)
+empty-chain candidates re-derived: 2602
+  adjudicated 500/2602  2s
+  adjudicated 1000/2602  3s
+  adjudicated 1500/2602  5s
+  adjudicated 2000/2602  7s
+  adjudicated 2500/2602  7s
+empties inside [-2,2]^5 sub-box: 622
+{"total": 2602, "reducible": 2594, "interior_ne_4": 8, "pisot_found": 0}
+ADJUDICATION CLEAN: zero Pisots among the 2602 skipped candidates; the 431/313 census is complete [COMPUTED].
+total 7s
+DONE
+== 4. N3: {-2..2}^6 census ==
+twist-classes: 7875 (Burnside verified)  0.0s
+  scanned 50 Salem classes... 3s
+  scanned 100 Salem classes... 6s
+  scanned 150 Salem classes... 9s
+  scanned 200 Salem classes... 13s
+  scanned 250 Salem classes... 16s
+  scanned 300 Salem classes... 19s
+  scanned 350 Salem classes... 22s
+  scanned 400 Salem classes... 25s
+  scanned 450 Salem classes... 29s
+  scanned 500 Salem classes... 33s
+  scanned 550 Salem classes... 38s
+{"classes": 7875, "straddle_fail": 6548, "straddle_pass_reducible": 738, "salem": 589}
+REGRESSION sub-box: classes 378 (target 378), salem 37 (target 37), clean scans 37/37  -> MATCH
+FULL BOX: salem 589, inert verdicts {Phi1^12}: 589/589
+total 46s
+== 5. regenerated artifacts vs pinned copies ==
+OK  pisot83.jsonl byte-identical to pin
+OK  pisot_n2.jsonl byte-identical to pin
+OK  empty_adjudication.jsonl byte-identical to pin
+OK  n1_c2_scan.jsonl == pin (minus secs)
+OK  n2_c2_scan.jsonl == pin (minus secs)
+OK  n3_census.jsonl == pin (minus secs)
+RUNBOOK: ALL GREEN

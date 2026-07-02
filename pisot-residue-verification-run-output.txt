@@ -1,0 +1,246 @@
+python 3.11.15
+sympy 1.14.0
+GP/PARI CALCULATOR Version 2.15.4 (released)
+
+===== S0  manifest pre-check (committed artifact integrity) =====
+OK       pinning_scan_scratch.py
+OK       front1_census.py
+OK       front1_scans.py
+OK       front2_pisot_sweep.py
+OK       front3_cross_engine.py
+OK       cross_live.gp
+OK       nu_quintic_cert.py
+OK       nu_quintic_scan.py
+OK       quintic_c2.gp
+OK       quintic_pisots.json
+OK       ledgerM_header.gp
+OK       ledgerM_live.gp
+OK       build_ledgerM.py
+OK       pisot103.json
+OK       paper/pisot_residue_whitepaper.tex
+OK       paper/pisot_residue_whitepaper.pdf
+manifest: ALL OK
+
+===== S1  canonical ledger + Z* + totient bound + Salem certs =====
+[   0.08s] totient          2*phi(M)^2 >= M on [1,200000]: violations=[], tight cases=[2]
+[   0.12s] signature        A  x^3-2         degRat=  9 bound=  162 -> {Phi1^3, Phi3^3}  OK
+[   0.13s] signature        B  x^3+2         degRat=  9 bound=  162 -> {Phi1^3, Phi3^3}  OK
+[   0.15s] signature        C  x^4-2         degRat= 16 bound=  512 -> {Phi1^4, Phi2^4, Phi4^4}  OK
+[   0.17s] signature        D  x^4+x^2-1     degRat= 16 bound=  512 -> {Phi1^4, Phi2^4}  OK
+[   0.18s] signature        E  x^4+5x^2+5    degRat= 16 bound=  512 -> {Phi1^4, Phi2^4}  OK
+[   0.20s] signature        F  x^4+5x^2-5    degRat= 16 bound=  512 -> {Phi1^4, Phi2^4}  OK
+[   0.22s] signature        G  beta4         degRat= 16 bound=  512 -> {Phi1^4}  OK
+[   0.23s] signature        W  x^3-x-1       degRat=  9 bound=  162 -> {Phi1^3}  OK
+[   0.24s] signature        U1 x^2+x+2       degRat=  4 bound=   32 -> {Phi1^2}  OK
+[   0.25s] signature        U2 x^4+x^2+2     degRat= 16 bound=  512 -> {Phi1^4, Phi2^4}  OK
+[   0.27s] signature        Z* x^4-3x^2+1    degRat= 16 bound=  512 -> {Phi1^4, Phi2^4}  OK
+[   0.38s] Lehmer RatL      deg=100 built in 0.11s
+[   1.25s] Lehmer scan      complete bound M<=20000: {Phi1^10} in 0.87s
+[   1.25s] Salem cert       beta4    irreducible=True  trace Sturm (>2, <=-2, inside) = (1, 0, 1)  expect (1,0,1)  OK
+[   1.25s] Salem cert       S6       irreducible=True  trace Sturm (>2, <=-2, inside) = (1, 0, 2)  expect (1,0,2)  OK
+[   1.26s] Salem cert       S8       irreducible=True  trace Sturm (>2, <=-2, inside) = (1, 0, 3)  expect (1,0,3)  OK
+[   1.26s] Salem cert       Lehmer   irreducible=True  trace Sturm (>2, <=-2, inside) = (1, 0, 4)  expect (1,0,4)  OK
+[   1.34s] mixed LxB4       gcd=1, deg=40, complete bound M<=3200: contacts={}
+[   1.35s] two-route        charpoly(C (x) C^-1)  ==  primitive Res_y(p(y), p(xy))   OK
+[   1.38s] x^4-x+1          charpoly(C(x)C) = S6^2 * (x^4+2x^2-x+1) = S6^2 * psi^2-image;  Rat contacts {Phi1^4}   OK
+[   1.38s] witness Z*       x^4-3x^2+1 = (x^2-x-1)(x^2+x-1): per-factor pins hold (phi, 1/phi each unique within its factor), shared modulus phi across factors, torsion ratio -1 -> Phi2 contact
+
+ALL ASSERTIONS PASSED in 1.4s -- every decision in Z[x]; no float anywhere.
+
+===== S2  degree-12 census: Burnside + rejection cascade =====
+[   0.0s] Burnside   vectors=729 twist-fixed=27 orbits=378 (expect 729, 27, 378)
+[   1.4s] cascade    rejects: +-1=39 (exp 39)  sturm=257 (exp 257)  reducible=45 (exp 45)  Salem=37 (exp 37)  sum=378 (exp 378)
+[   1.6s] twist      Rat_p == Rat_p(-x) verified on Salem representative c=(-1, -1, -1, -1, -1, -1)
+[   1.6s] done       37 Salem coefficient vectors -> salem12.json
+
+===== S3  degree-12 census: 37 complete scans (deg 144) =====
+[   0.7s] prep        complete bound M<=41472; candidates with phi(m)<=144: 290 (largest m = 630)
+[   2.4s] scan  1/37  c=(-1, -1, -1, -1, -1, -1) -> {'1': 12} OK (1.6s)
+[   4.2s] scan  2/37  c=(-1, -1, -1, -1, -1, 0) -> {'1': 12} OK (1.8s)
+[   6.0s] scan  3/37  c=(-1, -1, -1, -1, -1, 1) -> {'1': 12} OK (1.8s)
+[   7.8s] scan  4/37  c=(-1, -1, -1, -1, 0, -1) -> {'1': 12} OK (1.9s)
+[   9.7s] scan  5/37  c=(-1, -1, -1, -1, 0, 0) -> {'1': 12} OK (1.8s)
+[  11.5s] scan  6/37  c=(-1, -1, -1, -1, 0, 1) -> {'1': 12} OK (1.8s)
+[  13.3s] scan  7/37  c=(-1, -1, -1, -1, 1, 1) -> {'1': 12} OK (1.8s)
+[  15.2s] scan  8/37  c=(-1, -1, -1, 0, -1, 0) -> {'1': 12} OK (1.9s)
+[  17.1s] scan  9/37  c=(-1, -1, -1, 0, 0, -1) -> {'1': 12} OK (1.9s)
+[  18.9s] scan 10/37  c=(-1, -1, -1, 0, 0, 0) -> {'1': 12} OK (1.8s)
+[  20.7s] scan 11/37  c=(-1, -1, -1, 0, 0, 1) -> {'1': 12} OK (1.8s)
+[  22.6s] scan 12/37  c=(-1, -1, -1, 0, 1, 0) -> {'1': 12} OK (1.9s)
+[  24.5s] scan 13/37  c=(-1, -1, -1, 1, -1, -1) -> {'1': 12} OK (1.8s)
+[  26.3s] scan 14/37  c=(-1, -1, -1, 1, 0, 1) -> {'1': 12} OK (1.8s)
+[  28.1s] scan 15/37  c=(-1, -1, 0, -1, -1, -1) -> {'1': 12} OK (1.8s)
+[  29.9s] scan 16/37  c=(-1, -1, 0, -1, -1, 0) -> {'1': 12} OK (1.8s)
+[  31.8s] scan 17/37  c=(-1, -1, 0, -1, 0, 1) -> {'1': 12} OK (1.9s)
+[  33.7s] scan 18/37  c=(-1, -1, 0, 0, -1, 0) -> {'1': 12} OK (1.9s)
+[  35.5s] scan 19/37  c=(-1, -1, 0, 0, 0, -1) -> {'1': 12} OK (1.8s)
+[  37.1s] scan 20/37  c=(-1, -1, 0, 0, 0, 0) -> {'1': 12} OK (1.6s)
+[  38.9s] scan 21/37  c=(-1, -1, 1, -1, -1, 1) -> {'1': 12} OK (1.8s)
+[  40.8s] scan 22/37  c=(-1, -1, 1, 0, -1, 0) -> {'1': 12} OK (1.8s)
+[  42.6s] scan 23/37  c=(-1, 0, -1, -1, -1, -1) -> {'1': 12} OK (1.8s)
+[  44.4s] scan 24/37  c=(-1, 0, -1, -1, 0, -1) -> {'1': 12} OK (1.8s)
+[  46.2s] scan 25/37  c=(-1, 0, -1, 0, -1, -1) -> {'1': 12} OK (1.8s)
+[  47.9s] scan 26/37  c=(-1, 0, -1, 0, -1, 0) -> {'1': 12} OK (1.7s)
+[  49.8s] scan 27/37  c=(-1, 0, -1, 0, -1, 1) -> {'1': 12} OK (1.8s)
+[  51.5s] scan 28/37  c=(-1, 0, -1, 0, 0, 0) -> {'1': 12} OK (1.7s)
+[  53.2s] scan 29/37  c=(-1, 0, 0, -1, 0, -1) -> {'1': 12} OK (1.7s)
+[  54.9s] scan 30/37  c=(-1, 0, 0, 0, -1, 1) -> {'1': 12} OK (1.7s)
+[  56.6s] scan 31/37  c=(-1, 1, -1, 0, 0, -1) -> {'1': 12} OK (1.8s)
+[  58.4s] scan 32/37  c=(0, -1, -1, -1, -1, -1) -> {'1': 12} OK (1.8s)
+[  60.3s] scan 33/37  c=(0, -1, -1, -1, 0, 1) -> {'1': 12} OK (1.8s)
+[  62.0s] scan 34/37  c=(0, -1, -1, 0, 0, 0) -> {'1': 12} OK (1.8s)
+[  63.8s] scan 35/37  c=(0, -1, 0, 0, -1, -1) -> {'1': 12} OK (1.8s)
+[  65.5s] scan 36/37  c=(0, 0, -1, -1, -1, -1) -> {'1': 12} OK (1.7s)
+[  67.3s] scan 37/37  c=(0, 0, 0, -1, -1, -1) -> {'1': 12} OK (1.7s)
+
+CENSUS COMPLETE: 37/37 relationally inert; every complete scan returned exactly {Phi1^12}. Total 67s.
+
+===== S4  quartic Pisot sweep + (EG) probe + pisot103 dump =====
+[   3.2s] certify   2401 candidates in [-3,3]^4; certified Pisot quartics: 103 (totally real: 1, complex pair: 102)
+[   4.6s] scans     103/103 complete scans returned exactly {Phi1^4}
+[   4.6s] EG probe  totally-real Pisot quartics: 1; theta > phi certified for all: True
+[   4.8s] min c2    smallest complex-pair Pisot in box: x^4-1x^3+0x^2+0x-1, theta ~ 1.380278 (display only)
+[   4.8s] min r4    smallest totally-real Pisot in box: x^4-3x^3-2x^2+2x+1, theta ~ 3.390257 (display only)
+
+SWEEP COMPLETE in 5s -- pinning prediction and (EG) both unfalsified on the box; first 5 complex-pair Pisots -> pisot5.json for cross-engine.
+pisot103.json sha256 fb349dc136e149718726df2e729184681b33fd22abb68585e077df7b0dfe792d
+S4 OK: front2 sweep re-asserted via runpy; 103 quartic Pisots persisted, SHA pinned
+
+===== S5  cross-engine run 2: 55 signatures (PARI/GP) =====
+cross-engine: 55/55 signatures identical (sympy 1.14.0 trial division vs PARI/GP 2.15.4 factor+poliscyclo) in 0.4s
+
+===== S6  quintic Pisot certification (83 instances) =====
+[  62.0s] sweep     3125 candidates; rejects {'skip_e0': 625, 'recip': 50, 'reducible': 638, 'pattern': 1318, 'disk': 411}; certified Pisot quintics: 83 (real5=0, mixed=16, 2pair=67)
+[  62.0s] done      -> quintic_pisots.json
+
+===== S7  quintic cross-shell residue decision (C2, GP) =====
+[   0.2s] prep        master candidates phi(m)<=400: 790 (largest m=1680); Rat-scan candidates: 53
+[   2.5s] Rat scans   83/83 complete scans = {Phi1^5} exactly (2.3s) -- pinning holds; all mixed instances now fully typed
+[   4.4s] S* build    67 instances: distinct shells (circle=4): 67, same shell (circle=12): 0; deg S* values seen: [20]; anomalies: none (1.9s)
+[  43.3s] C2 scans    67 composed squares scanned in GP (38.9s); expected [[1, deg S*]] each; deviations: 0
+[  59.3s] two-route   P2_01 c=(-2, -2, -2, -2, -2): sympy composed square + complete scan -> {Phi1^20} == GP (9.9s)
+[  68.1s] two-route   P2_67 c=(0, -1, -1, -1, -1): sympy composed square + complete scan -> {Phi1^20} == GP (8.8s)
+[  68.1s] EG probe    totally-real quintic Pisots in box: 0 -- probe vacuous here
+
+NU FRONT COMPLETE in 68s: 67 two-pair instances (67 distinct-shell, 0 same-shell); mirrored cross-shell classes found: 0.
+
+===== S8  ledger M run 3: 237 dual-path signatures (GP) =====
+BURNSIDE (729, 27, 378)  CASCADE (39, 257, 45, 37)  -- GP-native selection == run-1 selection (37/37, as sets)
+ledger-O certifications: 4/4 OK
+signatures agreeing: 237/237 (canonical 14/14, census 37/37, P4 103/103, P5 83/83); mismatches: 0
+each signature dual-path-asserted in-engine (trial division == factor+poliscyclo): 474 scan executions
+GP wall time 1.7s; total 1.7s
+
+===== S9  supplementary claims (P5, Prop 5.2, Z*, counts) =====
+[   0.0s] C1  15625 vectors, twist-fixed 125 (expect 125), orbits 7875 (expect 7875)
+[   1.1s] C2  67/67 instances: Rat0 has no real roots -> every modulus attained >= twice (level-2 pinning inapplicable, Prop. 5.2)
+[   1.1s] C3  Z*: factors irreducible & non-reciprocal (per-factor pins hold); (x+1) | mixed ratio object -> the torsion ratio -1 sits across the factors
+[   1.1s] C4  counts: 83 quintic Pisots (0 real5 / 16 mixed / 67 two-pair), 103 quartic, 37 census Salems
+
+S9 OK: supplementary claims verified in 1.1s -- all decisions exact
+
+===== S11  N1 (extended): full sympy C2 re-derivation, 67x =====
+[    6.4s] prep      67/67 instances; 790 master candidates (phi(m) <= 400)
+[   16.9s]  1/67     c=(-2, -2, -2, -2, -2) deg S*=20 -> {Phi1^20} (10.5s)
+[   28.1s]  2/67     c=(-2, -2, -2, -2, -1) deg S*=20 -> {Phi1^20} (11.2s)
+[   41.3s]  3/67     c=(-2, -2, -2, -1, -2) deg S*=20 -> {Phi1^20} (13.2s)
+[   52.1s]  4/67     c=(-2, -2, -2, -1, -1) deg S*=20 -> {Phi1^20} (10.8s)
+[   63.3s]  5/67     c=(-2, -2, -2, 0, -1) deg S*=20 -> {Phi1^20} (11.1s)
+[   76.0s]  6/67     c=(-2, -2, -1, -2, -2) deg S*=20 -> {Phi1^20} (12.7s)
+[   87.3s]  7/67     c=(-2, -2, -1, -2, -1) deg S*=20 -> {Phi1^20} (11.4s)
+[  100.6s]  8/67     c=(-2, -2, -1, -1, -2) deg S*=20 -> {Phi1^20} (13.3s)
+[  112.3s]  9/67     c=(-2, -2, -1, -1, -1) deg S*=20 -> {Phi1^20} (11.7s)
+[  123.6s] 10/67     c=(-2, -2, -1, 0, -1) deg S*=20 -> {Phi1^20} (11.3s)
+[  134.2s] 11/67     c=(-2, -2, 0, -2, -2) deg S*=20 -> {Phi1^20} (10.6s)
+[  147.5s] 12/67     c=(-2, -2, 0, -1, -2) deg S*=20 -> {Phi1^20} (13.3s)
+[  158.2s] 13/67     c=(-2, -2, 0, -1, -1) deg S*=20 -> {Phi1^20} (10.7s)
+[  168.7s] 14/67     c=(-2, -2, 0, 0, -1) deg S*=20 -> {Phi1^20} (10.5s)
+[  179.9s] 15/67     c=(-2, -2, 0, 1, -1) deg S*=20 -> {Phi1^20} (11.2s)
+[  192.7s] 16/67     c=(-2, -2, 1, -1, -2) deg S*=20 -> {Phi1^20} (12.8s)
+[  204.3s] 17/67     c=(-2, -2, 1, 0, -2) deg S*=20 -> {Phi1^20} (11.6s)
+[  214.4s] 18/67     c=(-2, -2, 1, 0, -1) deg S*=20 -> {Phi1^20} (10.1s)
+[  224.8s] 19/67     c=(-2, -2, 1, 1, -1) deg S*=20 -> {Phi1^20} (10.4s)
+[  234.5s] 20/67     c=(-2, -2, 2, 0, -2) deg S*=20 -> {Phi1^20} (9.7s)
+[  244.7s] 21/67     c=(-2, -2, 2, 1, -1) deg S*=20 -> {Phi1^20} (10.2s)
+[  255.1s] 22/67     c=(-2, -1, -2, -2, -1) deg S*=20 -> {Phi1^20} (10.4s)
+[  267.1s] 23/67     c=(-2, -1, -2, -1, -2) deg S*=20 -> {Phi1^20} (12.1s)
+[  277.5s] 24/67     c=(-2, -1, -2, -1, -1) deg S*=20 -> {Phi1^20} (10.4s)
+[  287.8s] 25/67     c=(-2, -1, -2, 0, -1) deg S*=20 -> {Phi1^20} (10.3s)
+[  298.4s] 26/67     c=(-2, -1, -1, -2, -1) deg S*=20 -> {Phi1^20} (10.6s)
+[  310.2s] 27/67     c=(-2, -1, -1, -1, -2) deg S*=20 -> {Phi1^20} (11.8s)
+[  320.1s] 28/67     c=(-2, -1, -1, -1, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  331.3s] 29/67     c=(-2, -1, -1, 0, -2) deg S*=20 -> {Phi1^20} (11.3s)
+[  341.2s] 30/67     c=(-2, -1, -1, 0, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  351.6s] 31/67     c=(-2, -1, -1, 1, -1) deg S*=20 -> {Phi1^20} (10.4s)
+[  361.8s] 32/67     c=(-2, -1, 0, -1, -1) deg S*=20 -> {Phi1^20} (10.3s)
+[  372.2s] 33/67     c=(-2, -1, 0, 0, -2) deg S*=20 -> {Phi1^20} (10.4s)
+[  382.0s] 34/67     c=(-2, -1, 0, 0, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  392.1s] 35/67     c=(-2, -1, 0, 1, -1) deg S*=20 -> {Phi1^20} (10.1s)
+[  402.1s] 36/67     c=(-2, -1, 1, -1, -1) deg S*=20 -> {Phi1^20} (10.0s)
+[  413.2s] 37/67     c=(-2, -1, 1, 0, -2) deg S*=20 -> {Phi1^20} (11.1s)
+[  422.8s] 38/67     c=(-2, -1, 1, 0, -1) deg S*=20 -> {Phi1^20} (9.5s)
+[  432.3s] 39/67     c=(-2, -1, 1, 1, -1) deg S*=20 -> {Phi1^20} (9.5s)
+[  441.9s] 40/67     c=(-2, -1, 2, 0, -1) deg S*=20 -> {Phi1^20} (9.6s)
+[  452.1s] 41/67     c=(-2, 0, -2, -1, -1) deg S*=20 -> {Phi1^20} (10.2s)
+[  461.7s] 42/67     c=(-2, 0, -2, 0, -2) deg S*=20 -> {Phi1^20} (9.6s)
+[  471.6s] 43/67     c=(-2, 0, -2, 0, -1) deg S*=20 -> {Phi1^20} (9.9s)
+[  481.5s] 44/67     c=(-2, 0, -1, -1, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  491.2s] 45/67     c=(-2, 0, -1, 0, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  501.1s] 46/67     c=(-2, 0, -1, 1, -1) deg S*=20 -> {Phi1^20} (9.9s)
+[  510.8s] 47/67     c=(-2, 0, 0, 0, -1) deg S*=20 -> {Phi1^20} (9.6s)
+[  520.1s] 48/67     c=(-2, 0, 0, 1, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  529.2s] 49/67     c=(-2, 0, 1, 0, -1) deg S*=20 -> {Phi1^20} (9.1s)
+[  538.5s] 50/67     c=(-2, 1, -2, 0, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  547.8s] 51/67     c=(-2, 1, -2, 1, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  557.1s] 52/67     c=(-2, 1, -1, 1, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  566.8s] 53/67     c=(-1, -2, -2, -2, -2) deg S*=20 -> {Phi1^20} (9.7s)
+[  576.6s] 54/67     c=(-1, -2, -2, -2, -1) deg S*=20 -> {Phi1^20} (9.8s)
+[  586.2s] 55/67     c=(-1, -2, -2, -1, -1) deg S*=20 -> {Phi1^20} (9.6s)
+[  597.1s] 56/67     c=(-1, -2, -1, -2, -2) deg S*=20 -> {Phi1^20} (10.8s)
+[  606.7s] 57/67     c=(-1, -2, -1, -1, -1) deg S*=20 -> {Phi1^20} (9.6s)
+[  616.3s] 58/67     c=(-1, -2, 0, 0, -1) deg S*=20 -> {Phi1^20} (9.6s)
+[  625.7s] 59/67     c=(-1, -1, -2, -1, -1) deg S*=20 -> {Phi1^20} (9.4s)
+[  635.0s] 60/67     c=(-1, -1, -1, -1, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  644.3s] 61/67     c=(-1, -1, -1, 0, -1) deg S*=20 -> {Phi1^20} (9.3s)
+[  653.5s] 62/67     c=(-1, -1, 0, -1, -1) deg S*=20 -> {Phi1^20} (9.2s)
+[  662.4s] 63/67     c=(-1, -1, 0, 0, -1) deg S*=20 -> {Phi1^20} (8.9s)
+[  671.0s] 64/67     c=(-1, -1, 1, 0, -1) deg S*=20 -> {Phi1^20} (8.5s)
+[  679.8s] 65/67     c=(-1, 0, -1, 0, -1) deg S*=20 -> {Phi1^20} (8.8s)
+[  689.0s] 66/67     c=(0, -1, -2, -2, -1) deg S*=20 -> {Phi1^20} (9.2s)
+[  697.9s] 67/67     c=(0, -1, -1, -1, -1) deg S*=20 -> {Phi1^20} (8.8s)
+
+S11 COMPLETE (N1): 67/67 sympy C2 scans returned exactly {Phi1^(deg S*)} in 698s -- C2 coverage now fully symmetric across engines.
+
+===== S10  manifest post-check (byte-identical regeneration) =====
+OK       pinning_scan_scratch.py
+OK       front1_census.py
+OK       front1_scans.py
+OK       front2_pisot_sweep.py
+OK       front3_cross_engine.py
+OK       cross_live.gp
+OK       nu_quintic_cert.py
+OK       nu_quintic_scan.py
+OK       quintic_c2.gp
+OK       quintic_pisots.json
+OK       ledgerM_header.gp
+OK       ledgerM_live.gp
+OK       build_ledgerM.py
+OK       pisot103.json
+OK       paper/pisot_residue_whitepaper.tex
+OK       paper/pisot_residue_whitepaper.pdf
+manifest: ALL OK
+
+===== PIPELINE SUMMARY =====
+S0   PASS     0.0s  manifest pre-check (committed artifact integrity)
+S1   PASS     1.7s  canonical ledger + Z* + totient bound + Salem certs
+S2   PASS     1.9s  degree-12 census: Burnside + rejection cascade
+S3   PASS    67.6s  degree-12 census: 37 complete scans (deg 144)
+S4   PASS     5.2s  quartic Pisot sweep + (EG) probe + pisot103 dump
+S5   PASS     0.8s  cross-engine run 2: 55 signatures (PARI/GP)
+S6   PASS    62.5s  quintic Pisot certification (83 instances)
+S7   PASS    68.5s  quintic cross-shell residue decision (C2, GP)
+S8   PASS     1.8s  ledger M run 3: 237 dual-path signatures (GP)
+S9   PASS     1.4s  supplementary claims (P5, Prop 5.2, Z*, counts)
+S11  PASS   698.3s  N1 (extended): full sympy C2 re-derivation, 67x
+S10  PASS     0.0s  manifest post-check (byte-identical regeneration)
+total 910s

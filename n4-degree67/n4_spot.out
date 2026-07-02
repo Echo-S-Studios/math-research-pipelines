@@ -1,0 +1,4 @@
+GPN4 n=5 c=[-2, -2, -2, -2, -2] ratsig=[[1, 5]] degS*=20 det=2 c2sig=[[1, 20]] c2noncyc=380 degC2=400
+GPN4 n=6 c=[-2, -2, -2, -2, -2, -2] ratsig=[[1, 6]] degS*=30 det=2 c2sig=[[1, 30]] c2noncyc=870 degC2=900
+GPN4 n=7 c=[1, -1, -2, 2, 2, -2, -2] ratsig=[[1, 7]] degS*=42 det=2 c2sig=[[1, 42]] c2noncyc=1722 degC2=1764
+GPN4 n=7 c=[-2, -2, -2, -2, -2, -2, -2] ratsig=[[1, 7]] degS*=42 det=3 c2sig=[[1, 42]] c2noncyc=1722 degC2=1764

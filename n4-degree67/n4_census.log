@@ -1,0 +1,9 @@
+deg 5: {"candidates": 3125, "c0_zero": 625, "chain_target": 166, "chain_reject": 1712, "empty": 622, "empty_reciprocal": 50, "empty_reducible": 568, "empty_interior": 4, "empty_pisot": 0, "sturm_reject": 83, "reducible": 0, "pisot": 83}
+deg 5: 83 Pisot, patterns {'1r2p': 67, '3r1p': 16}  1.1s
+REGRESSION deg 5: 83/67/16 and instance set MATCH archived pisot83
+deg 6: {"candidates": 15625, "c0_zero": 3125, "chain_target": 320, "chain_reject": 9230, "empty": 2950, "empty_reciprocal": 150, "empty_reducible": 2794, "empty_interior": 6, "empty_pisot": 0, "sturm_reject": 160, "reducible": 0, "pisot": 160}
+deg 6: 160 Pisot, patterns {'2r2p': 159, '4r1p': 1}  5.9s
+*** ADJUDICATED PISOT (degenerate chain): (1, -1, -2, 2, 2, -2, -2) ***
+deg 7: {"candidates": 78125, "c0_zero": 15625, "chain_target": 826, "chain_reject": 48076, "empty": 13598, "empty_reciprocal": 250, "empty_reducible": 13316, "empty_interior": 31, "empty_pisot": 1, "sturm_reject": 413, "reducible": 0, "pisot": 414}
+deg 7: 414 Pisot, patterns {'1r3p': 309, '3r2p': 105}  35.0s
+N4 CENSUS COMPLETE
