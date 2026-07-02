@@ -1,0 +1,26 @@
+{
+  "title": "math-research-pipelines: exact-arithmetic verification pipelines",
+  "upload_type": "software",
+  "description": "Three machine-verified, exact-arithmetic mathematics pipelines (matrix-plates, lambda2c-emissiongap-verification, residual-return-verification), each re-deriving every load-bearing claim of its companion paper(s) in exact arithmetic so that no float crosses a decision boundary. Every claim is graded by epistemic status ([forced]/[computed]/[plausible]/[declared]/[open]) and pinned to a named, runnable test, so every number is reproducible rather than trusted from a rendered PDF. The companion papers and interactive tools are published at https://echo-s-studios.github.io/math-research-pipelines/.",
+  "creators": [
+    { "name": "Echo-S Studios" }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "mathematics",
+    "verification",
+    "exact-arithmetic",
+    "mahler-measure",
+    "number-fields",
+    "salem-numbers",
+    "lehmer-problem"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://echo-s-studios.github.io/math-research-pipelines/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    }
+  ]
+}
